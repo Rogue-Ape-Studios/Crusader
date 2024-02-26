@@ -38,7 +38,7 @@ Static fields may exist in a private context, but should not exist in a public o
 
 Serialisation using `[SerializedField]` must be done on the same line as the field name, for clarity. Additional Attributes, such as range, can be defined as `[SerializedField, Range(0,10)]`.
 
-Additionally, they must always be private, and specify the m
+Additionally, they must always be private.
 
 ## Local Variables
 
@@ -53,7 +53,7 @@ private float GetArea(float height, float width)
 
 ## Constants
 
-Cosntants should be written in PascalCase.
+Contants should be written in PascalCase.
 
 ``` C#
 public constant string EnemyName = "BulletBill";
@@ -107,6 +107,7 @@ Should be avoided, but may be required in specific use cases.
 ## Enumeration
 
 Should always have an accessor, and written as a Singular as well as Pascal Case.
+They have their own file.
 
 ``` C#
 internal enum Colour
@@ -189,7 +190,7 @@ Instantiate(prefab,
 
 ### Encouraged
 
-- When using a switch statement, add a default. This can always be used for a `NotImplementedException`, allwoing the next developer to know they need to add addtional cases.
+- When using a switch statement, add a default. This can always be used for a `NotImplementedException`, allowing the next developer to know they need to add addtional cases.
 
 - When using a switch statement, a [Switch Expression](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/switch-expression) can be used if you are simply pattern matching.
 
@@ -222,8 +223,8 @@ private Gun _railGun = new();
         /// <param name="position">The position of the plate on the texture</param>
         /// <param name="licensePlateNumber">The output string</param>
         /// <returns>If the conversion was successful</returns>
-        /// <exception cref="ArgumentNullException"
-        /// <exception cref="ArgumentOutOfRangeException"
+        /// <exception cref="ArgumentNullException">
+        /// <exception cref="ArgumentOutOfRangeException">
         public bool ReadLicensePlate(Texture licensePlate, Vector2 area, Vector2 position)
         {
             ///
@@ -256,8 +257,6 @@ private void SpawnEnemy()
 
 ## Asynchronous Programming
 
-**Note: most suggestions are based on [UniTask](https://github.com/Cysharp/UniTask)**
-
 - Favour `async` over `Coroutines`. There are several advantages:
   - It can be invoked from any method marked `async`, instead of only `Monobehaviour` classes.
   - It provides better error handling (`yield` cannot be declared in `try/catch/finally`).
@@ -269,8 +268,8 @@ private void SpawnEnemy()
 - Favour UniTask over C# vanilla Tasks. It has fewer GC allocations, and has some useful Unity   specific API calls.
 
 - Methods marked `async` should always be awaited, unless:
-      - They are event handlers. In that case, use `async avoid`.
-      - They are unity event methods, such as `Awake` or `Start`. In that case, use `async avoid`.
+      - They are event handlers. In that case, use `async void`.
+      - They are unity event methods, such as `Awake` or `Start`. In that case, use `async void`.
 
 - Avoid `UniTask.Forget`. Methods should mostly be awaited.
 
