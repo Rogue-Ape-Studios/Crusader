@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,58 +9,114 @@ namespace RogueApeStudio.Crusader.Player.Movement
     public class PlayerController : MonoBehaviour
     {
         private CrusaderInputActions _crusaderInputActions;
-        private InputAction _movement;
-        private int _moveSpeed = 5;
-        private Vector3 _moveDirection = Vector3.zero;
-        
+        private InputAction _moventInput;
+        private InputAction _dashInput;
+
         [SerializeField] private Rigidbody _rb;
+
+        [Header("Movement Options"), SerializeField] private int _moveSpeed = 5;
+
+        [Header("Dash Options"), SerializeField] private float _dashSpeed = 10f;
+        [SerializeField] private float _dashDuration = 0.5f;
+        [SerializeField] private float _dashCooldown = 1f;
+        [SerializeField] private bool _isDashing = false;
+        [SerializeField] private float _dashTimer = 0.5f;
+        [SerializeField] private float _dashCooldownTimer = 0f;
 
         private void Awake()
         {
             _crusaderInputActions = new();
+            _moventInput = _crusaderInputActions.Player.Move;
+            _dashInput = _crusaderInputActions.Player.Dash;
         }
 
         private void OnEnable()
         {
-            _movement = _crusaderInputActions.Player.Move;
+            _dashInput.started += OnDash;
+            EnableDash();
             EnableMovement();
         }
 
         private void OnDisable()
         {
             DisableMovement();
+            DisableDash();
+            _dashInput.started -= OnDash;
+        }
+
+        private void OnDash(InputAction.CallbackContext context)
+        {
+            if (context.started && !_isDashing && _dashCooldownTimer <= 0)
+            {
+                Vector2 _inputDirection = _moventInput.ReadValue<Vector2>();
+                Vector3 _dashDirection = Vector3.forward;
+
+                _dashCooldownTimer = _dashCooldown;
+                _isDashing = true;
+                _dashTimer = _dashDuration;
+
+                if (_inputDirection != Vector2.zero)
+                {
+                    _dashDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
+                }
+
+                _rb.velocity = _dashSpeed * _dashDirection;
+
+            }
+        }
+
+        private void OnMove()
+        {
+            Vector2 _inputDirection = _moventInput.ReadValue<Vector2>();
+
+            if (_inputDirection != Vector2.zero && !_isDashing)
+            {
+                Vector3 _movementDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
+
+                // Calculate movement vector with the specified speed
+                Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * _movementDirection;
+
+                // Move the character using Rigidbody
+                _rb.MovePosition(_rb.position + _movement);
+            }
+        }
+
+        private void HandleDashTimers()
+        {
+            if (_dashCooldownTimer > 0) _dashCooldownTimer -= Time.fixedDeltaTime;
+
+            if (_dashTimer <= 0)
+            {
+                _isDashing = false;
+                _rb.velocity = Vector3.Lerp(_rb.velocity, Vector3.zero, 0.01f);
+
+            }
+            else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
+        }
+
+        private void FixedUpdate()
+        {
+            OnMove();
+            HandleDashTimers();
         }
 
         private void EnableMovement()
         {
-            _movement.Enable();
+            _moventInput.Enable();
         }
 
         private void DisableMovement()
         {
-            _movement.Disable();
+            _moventInput.Disable();
+        }
+        private void EnableDash()
+        {
+            _dashInput.Enable();
         }
 
-        private void Move()
+        private void DisableDash()
         {
-            Vector2 inputDirection = _movement.ReadValue<Vector2>();
-
-            if (inputDirection != Vector2.zero)
-            {
-                Vector3 movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-
-                // Calculate movement vector with the specified speed
-                Vector3 movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
-
-                // Move the character using Rigidbody
-                _rb.MovePosition(_rb.position + movement);
-            }
-        }
-
-        // Update is called once per frame
-        private void FixedUpdate()
-        {
-            Move();
+            _dashInput.Disable();
         }
 
     }
