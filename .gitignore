@@ -791,4 +791,6 @@ sysinfo.txt
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/rider,visualstudio,visualstudiocode,csharp,jetbrains+all,unity
+# Sandbox Files
+Assets/Scenes/Sandbox.meta
+Assets/Scenes/Sandbox/*
