@@ -60,7 +60,10 @@ namespace RogueApeStudio.Crusader.Player.Movement
                     _dashDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
                 }
 
-                _rb.velocity = _dashSpeed * _dashDirection;
+                Vector3 dashForce = _dashDirection * _dashSpeed;
+
+               _rb.AddForce(dashForce, ForceMode.Impulse);
+                
 
             }
         }
@@ -83,12 +86,14 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void HandleDashTimers()
         {
+          
             if (_dashCooldownTimer > 0) _dashCooldownTimer -= Time.fixedDeltaTime;
 
-            if (_dashTimer <= 0)
+            if (_dashTimer <= 0 && _isDashing)
             {
+
                 _isDashing = false;
-                _rb.velocity = Vector3.Lerp(_rb.velocity, Vector3.zero, 0.01f);
+                _rb.velocity = Vector3.zero;
 
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
