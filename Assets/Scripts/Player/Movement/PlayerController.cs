@@ -9,7 +9,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
     public class PlayerController : MonoBehaviour
     {
         private CrusaderInputActions _crusaderInputActions;
-        private InputAction _moventInput;
+        private InputAction _movementInput;
         private InputAction _dashInput;
 
         [SerializeField] private Rigidbody _rb;
@@ -26,7 +26,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private void Awake()
         {
             _crusaderInputActions = new();
-            _moventInput = _crusaderInputActions.Player.Move;
+            _movementInput = _crusaderInputActions.Player.Move;
             _dashInput = _crusaderInputActions.Player.Dash;
         }
 
@@ -48,7 +48,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (context.started && !_isDashing && _dashCooldownTimer <= 0)
             {
-                Vector2 _inputDirection = _moventInput.ReadValue<Vector2>();
+                Vector2 _inputDirection = _movementInput.ReadValue<Vector2>();
                 Vector3 _dashDirection = Vector3.forward;
 
                 _dashCooldownTimer = _dashCooldown;
@@ -70,7 +70,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnMove()
         {
-            Vector2 _inputDirection = _moventInput.ReadValue<Vector2>();
+            Vector2 _inputDirection = _movementInput.ReadValue<Vector2>();
 
             if (_inputDirection != Vector2.zero && !_isDashing)
             {
@@ -86,15 +86,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void HandleDashTimers()
         {
-          
             if (_dashCooldownTimer > 0) _dashCooldownTimer -= Time.fixedDeltaTime;
 
             if (_dashTimer <= 0 && _isDashing)
             {
-
                 _isDashing = false;
                 _rb.velocity = Vector3.zero;
-
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
         }
@@ -107,12 +104,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void EnableMovement()
         {
-            _moventInput.Enable();
+            _movementInput.Enable();
         }
 
         private void DisableMovement()
         {
-            _moventInput.Disable();
+            _movementInput.Disable();
         }
         private void EnableDash()
         {
