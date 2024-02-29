@@ -28,6 +28,15 @@ namespace RogueApeStudio.Crusader.HealthSystem
 
         #endregion
 
+        #region Start
+
+        private void Start()
+        {
+            _currentHealth = MaxHealth;
+        }
+
+        #endregion
+
         #region Public Methods
 
         public void Hit(float damage)
