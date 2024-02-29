@@ -1,0 +1,14 @@
+{
+    "name": "RogueApeStudio.Crusader.HealthSystem",
+    "rootNamespace": "RogueApeStudio.Crusader.HealthSystem",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
