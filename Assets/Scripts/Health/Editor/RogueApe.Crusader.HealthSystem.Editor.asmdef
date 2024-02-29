@@ -1,0 +1,16 @@
+{
+    "name": "RogueApeStudio.Crusader.HealthSystem.Editor",
+    "rootNamespace": "RogueApeStudio.Crusader.HealthSystem.Editor",
+    "references": [
+        "GUID:f7682a76ed81e8c49915bc28ca915c12"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
