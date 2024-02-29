@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -24,6 +25,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private CancellationTokenSource _attackToken;
         private int _attackState = 0; // 0: Idle, 1: Attack 1, 2: Attack 2 (combo), etc.
         private const float _attackWindow = 0.5f; // Time window for combo attack
+
+        private float _timerDuration = 1f; // Duration of the timer in seconds
+        private CancellationTokenSource _cancellationTokenSource;
 
         private void Awake()
         {
@@ -118,60 +122,146 @@ namespace RogueApeStudio.Crusader.Player.Combat
         //    return fullAnimationLength;
         //}
 
-        private async void Start()
-        {
-            
+        //private async void Start()
+        //{
 
-            while (true)
-            {
-                await UniTask.Yield(PlayerLoopTiming.Update);
 
-                if (_attackToken != null && !_attackToken.IsCancellationRequested)
-                {
-                    // Reset attack state if the attack button hasn't been pressed within the time window
-                    _attackToken.Cancel();
-                    _attackToken.Dispose();
-                    _attackState = 0;
-                    _animator.SetInteger("Attack", _attackState);
-                }
-            }
-        }
+        //    while (true)
+        //    {
+        //        await UniTask.Yield(PlayerLoopTiming.Update);
+
+        //        if (_attackToken != null && _attackToken.IsCancellationRequested)
+        //        {
+        //            // Reset attack state if the attack button hasn't been pressed within the time window
+        //            print("we are here for some reason");
+        //            _attackState = 0;
+        //            _animator.SetInteger("Attack", _attackState);
+        //        }
+        //    }
+        //}
+
+        //public async void OnAttack(InputAction.CallbackContext context)
+        //{
+        //    if (context.started)
+        //    {
+
+
+        //        _attackToken = new();
+
+        //        switch (_attackState)
+        //        {
+        //            case 0:
+        //                _attackState = 1;
+        //                print("hello" + _attackState);
+        //                break;
+        //            case 1:
+        //                _attackState = 2; 
+        //                print("hello" + _attackState);
+        //                break;
+        //            case 2:
+        //                _attackState = 3;
+        //                print("hello" + _attackState);
+        //                break;
+        //            default:
+        //                _attackState = 1; // Reset to first attack in combo if button pressed during window
+        //                break;
+        //        }
+
+        //        _animator.SetInteger("Attack", _attackState);
+
+        //        // Start a new window for the next attack
+        //        //UniTask.Delay(TimeSpan.FromSeconds(_attackWindow), cancellationToken: _attackToken.Token).Forget();
+
+        //        // Start a new window for the next attack
+        //        await UniTask.Delay((int)(_attackWindow * 1000));
+        //        print("Attack window started");
+        //        if (_attackToken != null && !_attackToken.IsCancellationRequested)
+        //        {
+        //            print("trueeeeeeeeee");
+        //            // If the attack button is pressed within the time window, restart the window
+        //            _attackToken.Cancel();
+        //            _attackToken.Dispose();
+        //        }
+        //    }
+        //}
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.started)
+            StartTimer();
+
+            switch (_attackState)
             {
-                if (_attackToken != null && !_attackToken.IsCancellationRequested)
-                {
-                    // If the attack button is pressed within the time window, restart the window
-                    _attackToken.Cancel();
-                    _attackToken.Dispose();
-                }
-
-                _attackToken = new CancellationTokenSource();
-
-                switch (_attackState)
-                {
-                    case 0:
-                        print("hello");
-                        _attackState = 1;
-                        break;
-                    case 1:
-                        _attackState = 2; 
-                        break;
-                    case 2:
-                        _attackState = 3;
-                        break;
-                    default:
-                        _attackState = 1; // Reset to first attack in combo if button pressed during window
-                        break;
-                }
-
-                _animator.SetInteger("Attack", _attackState);
-
-                // Start a new window for the next attack
-                UniTask.Delay(TimeSpan.FromSeconds(_attackWindow), cancellationToken: _attackToken.Token).Forget();
+                case 0:
+                    _attackState = 1;
+                    print("hello" + _attackState);
+                    break;
+                case 1:
+                    _attackState = 2;
+                    print("hello" + _attackState);
+                    break;
+                case 2:
+                    _attackState = 3;
+                    print("hello" + _attackState);
+                    break;
+                default:
+                    _attackState = 1; // Reset to first attack in combo if button pressed during window
+                    break;
             }
+
+            _animator.SetInteger("Attack", _attackState);
+        }
+
+
+        private void Start()
+        {
+            // Initialize the cancellation token source
+            _cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        private async UniTask TimerFunction(CancellationToken cancellationToken)
+        {
+            var startTime = Time.time; // Record the start time of the timer
+
+            // Loop until the timer duration has elapsed or cancellation is requested
+            while (!cancellationToken.IsCancellationRequested && Time.time - startTime < _timerDuration)
+            {
+                // Wait for a short period to avoid busy waiting
+                await UniTask.Yield();
+                print("timer is done");
+            }
+
+
+            // Check if cancellation is requested before proceeding
+            cancellationToken.ThrowIfCancellationRequested();
+            // Timer has completed, perform actions here
+            _attackState = 0;
+            _animator.SetInteger("Attack", _attackState);
+
+        }
+
+        private async void StartTimer()
+        {
+            // Cancel any existing timer
+            CancelTimer();
+
+            // Create a new cancellation token source
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            // Start a new timer
+            try
+            {
+                await TimerFunction(_cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Timer was cancelled, handle accordingly
+            }
+        }
+
+        private void CancelTimer()
+        {
+            // Cancel the timer by cancelling the cancellation token source
+            _cancellationTokenSource?.Cancel();
         }
 
 
