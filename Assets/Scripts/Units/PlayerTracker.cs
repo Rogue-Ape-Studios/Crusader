@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerTracker : MonoBehaviour
 {
-    #region Singleton
     public static PlayerTracker instance;
+    public Transform playerTransform;
 
     private void Awake()
     {
         instance = this;
     }
-    #endregion
 
-    public Transform playerTransform;
 }
