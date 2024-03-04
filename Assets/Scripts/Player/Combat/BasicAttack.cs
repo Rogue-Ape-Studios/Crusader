@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -18,11 +19,13 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
         private InputAction _movementInput;
-        private int _comboCounter = 0;
+        [SerializeField] private int _comboCounter = 0;
+        private float _delay = 0f;
+        [SerializeField] private float _attackWindow = 0.5f;
+        [SerializeField] private bool _canAttack = true;
+        [SerializeField] private bool _windowCountdown = false;
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip[] _animations;
-        private float _delay = 0f;
-        private bool _canAttack = true;
 
         private void Awake()
         {
@@ -53,21 +56,25 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 switch (_comboCounter)
                 {
                     case 1:
-                        _animator.Play(_animations[_comboCounter - 1].name);
-                        _delay = _animations[_comboCounter - 1].length;
-                        break;
                     case 2:
-                        _animator.Play(_animations[_comboCounter - 1].name);
-                        _delay = _animations[_comboCounter - 1].length;
-                        break;
                     case 3:
-                        _animator.Play(_animations[_comboCounter - 1].name);
-                        _delay = _animations[_comboCounter - 1].length;
-                        _comboCounter = 0;
+                        Attack();
                         break;
+                    default:
+                        throw new NotImplementedException($"Case {_comboCounter} is not implemented.");
                 }
                 Cooldown();
             }
+        }
+
+        private void Attack()
+        {
+            _animator.Play(_animations[_comboCounter - 1].name);
+            _delay = _animations[_comboCounter - 1].length;
+            _attackWindow = 0.5f;
+            _windowCountdown = true;
+            if (_comboCounter == 3)
+                _comboCounter = 0;
         }
 
         private async void Cooldown()
@@ -75,6 +82,22 @@ namespace RogueApeStudio.Crusader.Player.Combat
             _canAttack = false;
             await UniTask.WaitForSeconds(_delay);
             _canAttack = true;
+        }
+
+        private void Update()
+        {
+            if (_canAttack && _windowCountdown)
+            {
+                _attackWindow -= Time.deltaTime;
+            }
+
+            if (_attackWindow <= 0)
+            {
+                _attackWindow = 0.5f;
+                _comboCounter = 0;
+                _animator.Play("Idle");
+                _windowCountdown = false;
+            }
         }
 
         private void EnableBasicAttack()
