@@ -62,6 +62,42 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability_1"",
+                    ""type"": ""Button"",
+                    ""id"": ""703e3d31-5e45-44d5-9470-46e6364f7d37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability_2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0d056ec-389b-4e5a-a358-841ee824e26d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability_3"",
+                    ""type"": ""Button"",
+                    ""id"": ""63ed1b17-edb8-4d0a-8641-68bff08b7f93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Active_Item"",
+                    ""type"": ""Button"",
+                    ""id"": ""dce3e870-14de-4d9c-9df1-8e4f38e1d4cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,6 +351,94 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2d2199f-9abb-44c6-8fd4-ceeec7d86c0a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Ability_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0dba858-1791-4aac-8fe1-08def7f6a96f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ac32ffa-2e85-4bff-a02e-41b8100445d3"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Ability_3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebae2c30-936c-48be-925a-96e698c58503"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability_3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7866844e-187a-4842-9ae9-de60bfa2f6a5"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Ability_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fb5c30b-6356-4a23-b892-2642d9f2f390"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc0a259c-a0c0-4258-a110-c228d4f60171"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Active_Item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e7965eb-213e-4e65-8187-24a827d05f99"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Active_Item"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -906,6 +1030,10 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_BasicAttack = m_Player.FindAction("BasicAttack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Ability_1 = m_Player.FindAction("Ability_1", throwIfNotFound: true);
+        m_Player_Ability_2 = m_Player.FindAction("Ability_2", throwIfNotFound: true);
+        m_Player_Ability_3 = m_Player.FindAction("Ability_3", throwIfNotFound: true);
+        m_Player_Active_Item = m_Player.FindAction("Active_Item", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -983,6 +1111,10 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_BasicAttack;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Ability_1;
+    private readonly InputAction m_Player_Ability_2;
+    private readonly InputAction m_Player_Ability_3;
+    private readonly InputAction m_Player_Active_Item;
     public struct PlayerActions
     {
         private @CrusaderInputActions m_Wrapper;
@@ -991,6 +1123,10 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @BasicAttack => m_Wrapper.m_Player_BasicAttack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Ability_1 => m_Wrapper.m_Player_Ability_1;
+        public InputAction @Ability_2 => m_Wrapper.m_Player_Ability_2;
+        public InputAction @Ability_3 => m_Wrapper.m_Player_Ability_3;
+        public InputAction @Active_Item => m_Wrapper.m_Player_Active_Item;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1012,6 +1148,18 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Ability_1.started += instance.OnAbility_1;
+            @Ability_1.performed += instance.OnAbility_1;
+            @Ability_1.canceled += instance.OnAbility_1;
+            @Ability_2.started += instance.OnAbility_2;
+            @Ability_2.performed += instance.OnAbility_2;
+            @Ability_2.canceled += instance.OnAbility_2;
+            @Ability_3.started += instance.OnAbility_3;
+            @Ability_3.performed += instance.OnAbility_3;
+            @Ability_3.canceled += instance.OnAbility_3;
+            @Active_Item.started += instance.OnActive_Item;
+            @Active_Item.performed += instance.OnActive_Item;
+            @Active_Item.canceled += instance.OnActive_Item;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1028,6 +1176,18 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Ability_1.started -= instance.OnAbility_1;
+            @Ability_1.performed -= instance.OnAbility_1;
+            @Ability_1.canceled -= instance.OnAbility_1;
+            @Ability_2.started -= instance.OnAbility_2;
+            @Ability_2.performed -= instance.OnAbility_2;
+            @Ability_2.canceled -= instance.OnAbility_2;
+            @Ability_3.started -= instance.OnAbility_3;
+            @Ability_3.performed -= instance.OnAbility_3;
+            @Ability_3.canceled -= instance.OnAbility_3;
+            @Active_Item.started -= instance.OnActive_Item;
+            @Active_Item.performed -= instance.OnActive_Item;
+            @Active_Item.canceled -= instance.OnActive_Item;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1214,6 +1374,10 @@ public partial class @CrusaderInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnBasicAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnAbility_1(InputAction.CallbackContext context);
+        void OnAbility_2(InputAction.CallbackContext context);
+        void OnAbility_3(InputAction.CallbackContext context);
+        void OnActive_Item(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
