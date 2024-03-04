@@ -53,16 +53,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             if (context.started && _canAttack)
             {
                 _comboCounter++;
-                switch (_comboCounter)
-                {
-                    case 1:
-                    case 2:
-                    case 3:
-                        Attack();
-                        break;
-                    default:
-                        throw new NotImplementedException($"Case {_comboCounter} is not implemented.");
-                }
+                Attack();
                 Cooldown();
             }
         }
