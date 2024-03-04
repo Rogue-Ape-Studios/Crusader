@@ -27,12 +27,6 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _waveAbility = _actions.Player.Ability_2;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         private void OnEnable()
         {
             _waveAbility.started += OnWaveAbility;
