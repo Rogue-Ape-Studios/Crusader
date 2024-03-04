@@ -2,13 +2,14 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.PlasticSCM.Editor.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Rendering.Universal;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -18,16 +19,10 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private InputAction _attackInput;
         private InputAction _movementInput;
         private int _comboCounter = 0;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private AnimationClip[] _animations;
+        private float _delay = 0f;
         private bool _canAttack = true;
-        private float _firstClickTime;
-        private List<float> _clickTimes = new();
-        [SerializeField] Animator _animator;
-        private CancellationTokenSource _attackToken;
-        private int _attackState = 0; // 0: Idle, 1: Attack 1, 2: Attack 2 (combo), etc.
-        private const float _attackWindow = 0.5f; // Time window for combo attack
-
-        private float _timerDuration = 1f; // Duration of the timer in seconds
-        private CancellationTokenSource _cancellationTokenSource;
 
         private void Awake()
         {
@@ -50,224 +45,36 @@ namespace RogueApeStudio.Crusader.Player.Combat
             EnableMovement();
         }
 
-        //private void OnAttack(InputAction.CallbackContext obj)
-        //{
-        //    print("MEP MEP MEEEEEEEEEEEEEEP");
-        //    float _timeDifference = 0f;
-        //    float _attackCooldown = 1.2f;
-
-        //    _clickTimes.Add(Time.time);
-
-        //    // If there are at least two click times recorded
-        //    if (_clickTimes.Count >= 2)
-        //    {
-        //        // Calculate the time difference between consecutive clicks
-        //        _timeDifference = _clickTimes[^1] - _clickTimes[^2];
-        //        print("Time difference between clicks " + (_clickTimes.Count - 1) + " and " + _clickTimes.Count + ": " + _timeDifference + " seconds");
-
-        //        if (_timeDifference <= _attackCooldown)
-        //            // Remove the first item from the list to keep it containing only the last two click times
-        //            _clickTimes.RemoveAt(0);
-        //        else _clickTimes.Clear();
-        //    }
-
-        //    if (_timeDifference <= _attackCooldown)
-        //    {
-        //        switch (_comboCounter)
-        //        {
-        //            case 0:
-        //                print("attack 1");
-        //                AttackComboAsync();
-        //                break;
-        //            case 1:
-        //                print("attack 2");
-        //                AttackComboAsync();
-        //                break;
-        //            case 2:
-        //                print("attack 3");
-        //                AttackComboAsync();
-        //                break;
-        //            default:
-        //                return;
-
-        //        }
-        //    }
-        //    else _comboCounter = 0;
-        //}
-
-        //private void AttackComboAsync()
-        //{
-
-        //    _animator.SetInteger("Attack", _comboCounter + 1);
-
-
-        //    // Increment combo count, looping back to 0 after 2
-        //    _comboCounter = (_comboCounter + 1) % 3;
-        //    print(_comboCounter);
-
-
-        //}
-
-        //private float GetCurrentAnimationLengthInSeconds()
-        //{
-        //    // Get the current state information of the Animator for layer 0
-        //    AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
-        //    // Get the length of the current animation clip in seconds
-        //    float animationLength = _animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-
-        //    // Calculate the full length of the animation in seconds based on normalized time
-        //    float fullAnimationLength = animationLength / stateInfo.speed;
-
-        //    return fullAnimationLength;
-        //}
-
-        //private async void Start()
-        //{
-
-
-        //    while (true)
-        //    {
-        //        await UniTask.Yield(PlayerLoopTiming.Update);
-
-        //        if (_attackToken != null && _attackToken.IsCancellationRequested)
-        //        {
-        //            // Reset attack state if the attack button hasn't been pressed within the time window
-        //            print("we are here for some reason");
-        //            _attackState = 0;
-        //            _animator.SetInteger("Attack", _attackState);
-        //        }
-        //    }
-        //}
-
-        //public async void OnAttack(InputAction.CallbackContext context)
-        //{
-        //    if (context.started)
-        //    {
-
-
-        //        _attackToken = new();
-
-        //        switch (_attackState)
-        //        {
-        //            case 0:
-        //                _attackState = 1;
-        //                print("hello" + _attackState);
-        //                break;
-        //            case 1:
-        //                _attackState = 2; 
-        //                print("hello" + _attackState);
-        //                break;
-        //            case 2:
-        //                _attackState = 3;
-        //                print("hello" + _attackState);
-        //                break;
-        //            default:
-        //                _attackState = 1; // Reset to first attack in combo if button pressed during window
-        //                break;
-        //        }
-
-        //        _animator.SetInteger("Attack", _attackState);
-
-        //        // Start a new window for the next attack
-        //        //UniTask.Delay(TimeSpan.FromSeconds(_attackWindow), cancellationToken: _attackToken.Token).Forget();
-
-        //        // Start a new window for the next attack
-        //        await UniTask.Delay((int)(_attackWindow * 1000));
-        //        print("Attack window started");
-        //        if (_attackToken != null && !_attackToken.IsCancellationRequested)
-        //        {
-        //            print("trueeeeeeeeee");
-        //            // If the attack button is pressed within the time window, restart the window
-        //            _attackToken.Cancel();
-        //            _attackToken.Dispose();
-        //        }
-        //    }
-        //}
-
-        public void OnAttack(InputAction.CallbackContext context)
+        private void OnAttack(InputAction.CallbackContext context)
         {
-            StartTimer();
-
-            switch (_attackState)
+            if (context.started && _canAttack)
             {
-                case 0:
-                    _attackState = 1;
-                    print("hello" + _attackState);
-                    break;
-                case 1:
-                    _attackState = 2;
-                    print("hello" + _attackState);
-                    break;
-                case 2:
-                    _attackState = 3;
-                    print("hello" + _attackState);
-                    break;
-                default:
-                    _attackState = 1; // Reset to first attack in combo if button pressed during window
-                    break;
-            }
-
-            _animator.SetInteger("Attack", _attackState);
-        }
-
-
-        private void Start()
-        {
-            // Initialize the cancellation token source
-            _cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        private async UniTask TimerFunction(CancellationToken cancellationToken)
-        {
-            var startTime = Time.time; // Record the start time of the timer
-
-            // Loop until the timer duration has elapsed or cancellation is requested
-            while (!cancellationToken.IsCancellationRequested && Time.time - startTime < _timerDuration)
-            {
-                // Wait for a short period to avoid busy waiting
-                await UniTask.Yield();
-                print("timer is done");
-            }
-
-
-            // Check if cancellation is requested before proceeding
-            cancellationToken.ThrowIfCancellationRequested();
-            // Timer has completed, perform actions here
-            _attackState = 0;
-            _animator.SetInteger("Attack", _attackState);
-
-        }
-
-        private async void StartTimer()
-        {
-            // Cancel any existing timer
-            CancelTimer();
-
-            // Create a new cancellation token source
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            // Start a new timer
-            try
-            {
-                await TimerFunction(_cancellationTokenSource.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                // Timer was cancelled, handle accordingly
+                _comboCounter++;
+                switch (_comboCounter)
+                {
+                    case 1:
+                        _animator.Play(_animations[_comboCounter - 1].name);
+                        _delay = _animations[_comboCounter - 1].length;
+                        break;
+                    case 2:
+                        _animator.Play(_animations[_comboCounter - 1].name);
+                        _delay = _animations[_comboCounter - 1].length;
+                        break;
+                    case 3:
+                        _animator.Play(_animations[_comboCounter - 1].name);
+                        _delay = _animations[_comboCounter - 1].length;
+                        _comboCounter = 0;
+                        break;
+                }
+                Cooldown();
             }
         }
 
-        private void CancelTimer()
+        private async void Cooldown()
         {
-            // Cancel the timer by cancelling the cancellation token source
-            _cancellationTokenSource?.Cancel();
-        }
-
-
-        private void FixedUpdate()
-        {
-
+            _canAttack = false;
+            await UniTask.WaitForSeconds(_delay);
+            _canAttack = true;
         }
 
         private void EnableBasicAttack()
