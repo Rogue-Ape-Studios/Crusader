@@ -431,6 +431,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3647941949534522007, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5262799366227108612, guid: 5d9d66c559d32c14db3716c130e2601a,
         type: 3}
       propertyPath: StartAttackDistance
@@ -490,6 +495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779329054702628555, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1261,6 +1271,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3276392655733169649, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276392655733169649, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262799366227108612, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262799366227108612, guid: 5d9d66c559d32c14db3716c130e2601a,
+        type: 3}
+      propertyPath: StartAttackDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5454138250792501355, guid: 5d9d66c559d32c14db3716c130e2601a,
         type: 3}
       propertyPath: m_Name
@@ -1316,11 +1346,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8673172172453988476, guid: 5d9d66c559d32c14db3716c130e2601a,
-        type: 3}
-      propertyPath: _playerTracker
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1334,6 +1359,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5620890706302365885, guid: 1fc9d3921c5bc2b4398a6084ff2d5491,
+        type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 5ed19a55789a13a46a632042c08e5ef6,
+        type: 2}
     - target: {fileID: 5658991691214281876, guid: 1fc9d3921c5bc2b4398a6084ff2d5491,
         type: 3}
       propertyPath: m_Name

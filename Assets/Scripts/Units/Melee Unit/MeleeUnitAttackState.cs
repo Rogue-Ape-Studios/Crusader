@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeUnitAttackState : IMeleeUnitState
+namespace RogueApeStudio.Crusader.Units.MeleeUnit
 {
-    public void EnterState(MeleeUnit meleeUnit)
+    public class MeleeUnitAttackState : IMeleeUnitState
     {
+        public void EnterState(MeleeUnit meleeUnit)
+        {
+            meleeUnit.LocalAnimator.SetTrigger("Attack");
+        }
 
-    }
+        public void ExitState(MeleeUnit meleeUnit)
+        {
+            
+        }
 
-    public void ExitState(MeleeUnit meleeUnit)
-    {
-        
-    }
-
-    public void UpdateState(MeleeUnit meleeUnit)
-    {
-        Debug.Log("Attack player!");
-        meleeUnit.ChangeState(meleeUnit.ChaseState);
+        public void UpdateState(MeleeUnit meleeUnit)
+        {
+            meleeUnit.ChangeState(meleeUnit.ChaseState);
+        }
     }
 }

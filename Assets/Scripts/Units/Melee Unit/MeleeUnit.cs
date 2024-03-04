@@ -2,28 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeUnit : MonoBehaviour
+namespace RogueApeStudio.Crusader.Units.MeleeUnit
 {
-    public UnitMovement UnitMovement;    
-    public IMeleeUnitState CurrentState;
-    public IMeleeUnitState ChaseState = new MeleeUnitChaseState();
-    public IMeleeUnitState AttackState = new MeleeUnitAttackState();
-    public float StartAttackDistance = 2.0f;
-
-    private void Awake()
-    {       
-        CurrentState = ChaseState;
-    }
-
-    void Update()
+    public class MeleeUnit : MonoBehaviour
     {
-        CurrentState.UpdateState(this);
-    }
+        public UnitMovement LocalUnitMovement;
+        public Animator LocalAnimator;
 
-    public void ChangeState(IMeleeUnitState newState)
-    {
-        CurrentState.ExitState(this);
-        CurrentState = newState;
-        CurrentState.EnterState(this);
+        public float StartAttackDistance = 2.0f;
+        [SerializeField] private float movementSpeed = 3.5f;
+
+        public IMeleeUnitState CurrentState;
+        public IMeleeUnitState ChaseState = new MeleeUnitChaseState();
+        public IMeleeUnitState AttackState = new MeleeUnitAttackState();   
+
+        private void Awake()
+        {
+            CurrentState = ChaseState;
+            LocalUnitMovement.SetStopDistance(StartAttackDistance - 0.2f);
+            LocalUnitMovement.SetSpeed(movementSpeed);
+        }
+
+        void Update()
+        {
+            CurrentState.UpdateState(this);
+        }
+
+        public void ChangeState(IMeleeUnitState newState)
+        {
+            CurrentState.ExitState(this);
+            CurrentState = newState;
+            CurrentState.EnterState(this);
+        }
     }
 }

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTracker : MonoBehaviour
+
+namespace RogueApeStudio.Crusader.Units
 {
-    public static PlayerTracker instance;
-    public Transform playerTransform;
-
-    private void Awake()
+    public class PlayerTracker : MonoBehaviour
     {
-        instance = this;
-    }
+        public static PlayerTracker instance;
+        public Transform playerTransform;
 
+        private void Awake()
+        {
+            instance = this;
+        }
+    }
 }
