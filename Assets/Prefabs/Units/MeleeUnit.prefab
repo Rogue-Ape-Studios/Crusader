@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2380139643267298977}
   - component: {fileID: 3647941949534522007}
   - component: {fileID: 106452270019244022}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: MeleeUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +86,7 @@ MonoBehaviour:
   LocalUnitMovement: {fileID: 2380139643267298977}
   LocalAnimator: {fileID: 106452270019244022}
   StartAttackDistance: 2
+  movementSpeed: 3.5
 --- !u!95 &106452270019244022
 Animator:
   serializedVersion: 5
@@ -120,7 +121,7 @@ GameObject:
   - component: {fileID: 4367531446779240425}
   - component: {fileID: 7898306849848799596}
   - component: {fileID: 8661744726804028055}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +247,7 @@ GameObject:
   - component: {fileID: 3007057845072603060}
   - component: {fileID: 6837995387923810963}
   - component: {fileID: 614487358987286876}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
