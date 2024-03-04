@@ -8,28 +8,27 @@ using UnityEngine.UIElements;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
-    public class SpearAbility : MonoBehaviour
+    public class SmiteAbility : MonoBehaviour
     {
         private CrusaderInputActions _actions;
-        private InputAction _spearAbility;
+        private InputAction _smiteAbility;
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
 
-        [SerializeField] private Rigidbody _spear;
+        [SerializeField] private GameObject _sword;
         [SerializeField] private Camera _cam;
         [SerializeField] private float _cooldown;
-        [SerializeField] private float _speed;
 
         private void Awake()
         {
             _actions = new();
-            _spearAbility = _actions.Player.Ability_1;
+            _smiteAbility = _actions.Player.Ability_3;
         }
 
         private void OnEnable()
         {
-            _spearAbility.canceled += ReleaseSpearAbility;
+            _smiteAbility.started += OnSmiteAbility;
             EnableWaveAbility();
         }
 
@@ -50,14 +49,13 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private void ReleaseSpearAbility(InputAction.CallbackContext context)
+        private void OnSmiteAbility(InputAction.CallbackContext context)
         {
             if (!_onCooldown)
             {
-                Rigidbody spear = Instantiate(_spear,
+                GameObject sword = Instantiate(_sword,
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
-                spear.AddForce(_direction * _speed, ForceMode.Impulse);
 
                 StartCooldown();
             }
@@ -65,7 +63,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void EnableWaveAbility()
         {
-            _spearAbility.Enable();
+            _smiteAbility.Enable();
         }
 
         private async void StartCooldown()
