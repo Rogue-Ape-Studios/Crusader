@@ -74,6 +74,7 @@ namespace RogueApeStudio.Crusader.Spawn
         {
             OnWaveComplete -= HandleWaveComplete;
             _tokenSource.Cancel();
+            _tokenSource.Dispose();
         }
 
         #endregion
