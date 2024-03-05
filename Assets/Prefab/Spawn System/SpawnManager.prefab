@@ -182,7 +182,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -248,19 +248,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3e99b43953dc04a838d8754d56a1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnLocationHolder: {fileID: 2380644688721146385}
   _spawnLocations:
   - {fileID: 1236915313544936354}
-  _enemies:
-  - {fileID: 8417348508377428480}
   _waves:
-  - _randomizeSpawns: 0
+  - _randomizeSpawns: 1
     _enemies:
     - _prefab: {fileID: 8417348508377428480}
-      _count: 1
-    _startDelay: 0
-    _timeBetweenSpawns: 0
+      _count: 3
+    _timeBetweenSpawns: 1
   _waveHolder: {fileID: 4502801388356231886}
-  _minimumEnemiesThreshold: 8
+  _minimumEnemiesThreshold: 3
 --- !u!1001 &3555147784108789605
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -32,8 +32,7 @@ namespace RogueApeStudio.Crusader.Spawn.Editor
 
             if(GUILayout.Button("Add Spawn"))
             {
-                var newSpawn = Instantiate(new GameObject("Spawn" + _spawnManager.GetSpawnCount()),  _spawnManager.SpawnHolder);
-                _spawnManager.AddSpawn(newSpawn.transform);
+                _spawnManager.AddSpawn();
             }   
 
             if(GUILayout.Button("Remove Spawn"))
@@ -42,7 +41,8 @@ namespace RogueApeStudio.Crusader.Spawn.Editor
             }
 
             GUILayout.EndHorizontal();
-            GUILayout.EndVertical();        }
+            GUILayout.EndVertical();       
+        }
 
         private void DrawBezierSettings()
         {

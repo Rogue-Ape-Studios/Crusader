@@ -101,21 +101,14 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Public
 
-        /// <summary>
-        /// Used to add spawns to the Spawn system.
-        /// </summary>
-        /// <param name="newSpawn">The spawn to add.</param>
-        public void AddSpawn(Transform newSpawn)
+        public void AddSpawn()
         {
-            if(newSpawn == null)
-            {
-                throw new ArgumentNullException(nameof(newSpawn), "A new spawn should not be null!");
-            }
-            _spawnLocations.Add(newSpawn);
+            _spawnLocations.Add(Instantiate(_spawnLocations[0],_spawnLocationHolder));
         }
 
         public void DestroyLastSpawn()
         {
+            DestroyImmediate(_spawnLocations[_spawnLocations.Count - 1].gameObject);
             _spawnLocations.RemoveAt(_spawnLocations.Count - 1);
         }
 
