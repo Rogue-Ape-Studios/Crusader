@@ -28,11 +28,18 @@ namespace RogueApeStudio.Crusader.HealthSystem
 
         #endregion
 
-        #region Start
+        #region Unity Start
 
         private void Start()
         {
             _currentHealth = MaxHealth;
+        }
+
+        private void OnDestroy()
+        {
+            OnDamage = null;
+            OnHeal = null;
+            OnDamage = null;
         }
 
         #endregion
