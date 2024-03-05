@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using RogueApeStudio.Crusader.HealthSystem;
@@ -10,7 +11,7 @@ namespace RogueApeStudio.Crusader.Spawn
     public class SpawnManager : MonoBehaviour
     {
         #region Events
-        
+
         public event Action OnWaveComplete;
         public event Action OnLevelComplete;
 
@@ -19,10 +20,9 @@ namespace RogueApeStudio.Crusader.Spawn
         #region Serialized Fields
 
         [SerializeField] private List<Transform> _spawnLocations;
-        [SerializeField] private List<Health> _enemies;
         [SerializeField] private List<Wave> _waves;
         [SerializeField] private Transform _waveHolder;
-        [SerializeField, Range(0, 50)] private int _minimumEnemiesThreshold = 5;
+        [SerializeField, Range(1, 50)] private int _minimumEnemiesThreshold = 5;
 
         #endregion
 
@@ -30,6 +30,8 @@ namespace RogueApeStudio.Crusader.Spawn
 
         private int _currentWave = 0;
         private int _remainingEnemies;
+
+        private CancellationTokenSource _tokenSource = new();
 
         #endregion
 
@@ -47,7 +49,6 @@ namespace RogueApeStudio.Crusader.Spawn
 
                 if (_remainingEnemies < _minimumEnemiesThreshold)
                 {
-                    NextWave();
                     OnWaveComplete?.Invoke();
                 }
             }
@@ -56,6 +57,7 @@ namespace RogueApeStudio.Crusader.Spawn
         internal Wave CurrentWave => _waves[_currentWave];
 
         internal Vector3 SpawnPosition => _spawnLocations[UnityEngine.Random.Range(0, _spawnLocations.Count)].position;
+
 
         #endregion
 
@@ -71,6 +73,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private void OnDestroy()
         {
             OnWaveComplete -= HandleWaveComplete;
+            _tokenSource.Cancel();
         }
 
         #endregion
@@ -85,7 +88,23 @@ namespace RogueApeStudio.Crusader.Spawn
                 return;
             }
 
-            await StandardizedSpawnsAsync();
+            try
+            {
+                if (!CurrentWave.RandomizedSpawns)
+                {
+                    await StandardizedSpawnsAsync(_tokenSource.Token);
+                }
+                else
+                {
+                    await RandomizedSpawnsAsync(_tokenSource.Token);
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.LogError("Spawning a wave was cancelled, because the operation was cancelled!\n" + ex.Message);
+            }
+
+            _currentWave++;
         }
 
 
@@ -93,9 +112,9 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Private
 
-        private async UniTask StandardizedSpawnsAsync()
+        private async UniTask StandardizedSpawnsAsync(CancellationToken token)
         {
-            foreach (var enemySet in _waves[_currentWave].Enemies)
+            foreach (var enemySet in CurrentWave.Enemies)
             {
                 for (var i = 0; i < enemySet.Count; i++)
                 {
@@ -107,7 +126,36 @@ namespace RogueApeStudio.Crusader.Spawn
                     enemy.OnDeath += HandleEnemyDeath;
                     enemy.enabled = true;
                 }
-                await UniTask.WaitForSeconds(_waves[_currentWave].TimeBetweenSpawns);
+                await UniTask.Delay(TimeSpan.FromSeconds(CurrentWave.TimeBetweenSpawns), cancellationToken: token);
+            }
+        }
+
+        private async UniTask RandomizedSpawnsAsync(CancellationToken token)
+        {
+            int enemyIndex = 0, enemyCount;
+            while (CurrentWave.Enemies.Count != 0)
+            {
+                enemyIndex = UnityEngine.Random.Range(0, CurrentWave.Enemies.Count);
+                enemyCount = UnityEngine.Random.Range(0, CurrentWave.Enemies[enemyIndex].Count + 1);
+
+                for (int i = 0; i < enemyCount; i++)
+                {
+                    var enemy = Instantiate(CurrentWave.Enemies[enemyIndex].EnemyPrefab,
+                                            SpawnPosition,
+                                            Quaternion.identity,
+                                            _waveHolder);
+                    enemy.OnDeath += HandleEnemyDeath;
+                    enemy.enabled = true;
+                }
+
+                CurrentWave.Enemies[enemyIndex].ReduceCount(enemyCount);
+
+                if (CurrentWave.Enemies[enemyIndex].Count == 0)
+                {
+                    CurrentWave.Enemies.RemoveAt(enemyIndex);
+                }
+
+                await UniTask.Delay(TimeSpan.FromSeconds(CurrentWave.TimeBetweenSpawns), cancellationToken: token);
             }
         }
 
@@ -123,7 +171,6 @@ namespace RogueApeStudio.Crusader.Spawn
 
         private void HandleWaveComplete()
         {
-            _waves.RemoveAt(_currentWave);
             NextWave();
         }
 
