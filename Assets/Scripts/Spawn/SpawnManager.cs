@@ -129,7 +129,6 @@ namespace RogueApeStudio.Crusader.Spawn
 
         private void HandleLevelComplete()
         {
-            Debug.Log("Level Completed!");
             Disable();
         }
 
