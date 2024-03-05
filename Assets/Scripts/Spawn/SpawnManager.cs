@@ -19,10 +19,17 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Serialized Fields
 
+        [Header("Spawn Settings")]
+        [SerializeField] private Transform _spawnLocationHolder;
         [SerializeField] private List<Transform> _spawnLocations;
+
+        [Header("Wave Settings")]
         [SerializeField] private List<Wave> _waves;
         [SerializeField] private Transform _waveHolder;
         [SerializeField, Range(1, 50)] private int _minimumEnemiesThreshold = 5;
+
+        private Vector3 _beginTangent = new(0, 0, 0);
+        private Vector3 _endTangent = new(0, 20, 0);
 
         #endregion
 
@@ -58,6 +65,19 @@ namespace RogueApeStudio.Crusader.Spawn
 
         internal Vector3 SpawnPosition => _spawnLocations[UnityEngine.Random.Range(0, _spawnLocations.Count)].position;
 
+        public Vector3 BeginTangent
+        {
+            set {_beginTangent = value;}
+            get { return _beginTangent;}
+        }
+
+        public Vector3 EndTangent
+        {
+            set {_endTangent = value;}
+            get { return _endTangent;}
+        }
+
+        public Transform SpawnHolder => _spawnLocationHolder;
 
         #endregion
 
@@ -75,6 +95,33 @@ namespace RogueApeStudio.Crusader.Spawn
             OnWaveComplete -= HandleWaveComplete;
             _tokenSource.Cancel();
             _tokenSource.Dispose();
+        }
+
+        #endregion
+
+        #region Public
+
+        /// <summary>
+        /// Used to add spawns to the Spawn system.
+        /// </summary>
+        /// <param name="newSpawn">The spawn to add.</param>
+        public void AddSpawn(Transform newSpawn)
+        {
+            if(newSpawn == null)
+            {
+                throw new ArgumentNullException(nameof(newSpawn), "A new spawn should not be null!");
+            }
+            _spawnLocations.Add(newSpawn);
+        }
+
+        public void DestroyLastSpawn()
+        {
+            _spawnLocations.RemoveAt(_spawnLocations.Count - 1);
+        }
+
+        public int GetSpawnCount()
+        {
+            return _spawnLocations.Count + 1;
         }
 
         #endregion
@@ -178,6 +225,14 @@ namespace RogueApeStudio.Crusader.Spawn
         private void HandleLevelComplete()
         {
             Disable();
+        }
+
+        private void OnDrawGizmos()
+        {
+            foreach (var spawns in _spawnLocations)
+            {
+                UnityEditor.Handles.DrawBezier(transform.position, spawns.position, _beginTangent, _endTangent, Color.red, null, 2f);
+            }
         }
 
         #endregion
