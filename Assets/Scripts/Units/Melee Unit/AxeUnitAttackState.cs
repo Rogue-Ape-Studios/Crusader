@@ -4,19 +4,14 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.MeleeUnit
 {
-    public class MeleeUnitAttackState : IMeleeUnitState
+    public class AxeUnitAttackState : IAxeUnitState
     {
-        public void EnterState(MeleeUnit meleeUnit)
+        public void EnterState(AxeUnit meleeUnit)
         {
             meleeUnit.LocalAnimator.SetTrigger("Attack");
         }
 
-        public void ExitState(MeleeUnit meleeUnit)
-        {
-            
-        }
-
-        public void UpdateState(MeleeUnit meleeUnit)
+        public void UpdateState(AxeUnit meleeUnit)
         {
             meleeUnit.ChangeState(meleeUnit.ChaseState);
         }

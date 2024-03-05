@@ -4,23 +4,24 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.MeleeUnit
 {
-    public class MeleeUnit : MonoBehaviour
+    public class AxeUnit : MonoBehaviour
     {
         public UnitMovement LocalUnitMovement;
         public Animator LocalAnimator;
 
         public float StartAttackDistance = 2.0f;
-        [SerializeField] private float movementSpeed = 3.5f;
+        [SerializeField] private float _stopDistance = 1.8f;
+        [SerializeField] private float _movementSpeed = 3.5f;
 
-        public IMeleeUnitState CurrentState;
-        public IMeleeUnitState ChaseState = new MeleeUnitChaseState();
-        public IMeleeUnitState AttackState = new MeleeUnitAttackState();   
+        public IAxeUnitState CurrentState;
+        public IAxeUnitState ChaseState = new AxeUnitChaseState();
+        public IAxeUnitState AttackState = new AxeUnitAttackState();
 
         private void Awake()
         {
             CurrentState = ChaseState;
-            LocalUnitMovement.SetStopDistance(StartAttackDistance - 0.2f);
-            LocalUnitMovement.SetSpeed(movementSpeed);
+            LocalUnitMovement.SetStopDistance(_stopDistance);
+            LocalUnitMovement.SetSpeed(_movementSpeed);
         }
 
         void Update()
@@ -28,9 +29,8 @@ namespace RogueApeStudio.Crusader.Units.MeleeUnit
             CurrentState.UpdateState(this);
         }
 
-        public void ChangeState(IMeleeUnitState newState)
+        public void ChangeState(IAxeUnitState newState)
         {
-            CurrentState.ExitState(this);
             CurrentState = newState;
             CurrentState.EnterState(this);
         }

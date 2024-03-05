@@ -7,9 +7,10 @@ namespace RogueApeStudio.Crusader.Units
     public class UnitMovement : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
+        public Transform _playerTransform;
         public void MoveToPlayer()
         {
-            _navMeshAgent.SetDestination(PlayerTracker.instance.playerTransform.position);
+            _navMeshAgent.SetDestination(_playerTransform.position);
         }
 
         public void SetStopDistance(float stoppingdistance)
