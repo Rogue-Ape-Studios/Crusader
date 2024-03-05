@@ -99,7 +99,6 @@ namespace RogueApeStudio.Crusader.Spawn
             {
                 for (var i = 0; i < enemySet.Count; i++)
                 {
-                    Debug.Log("Spawning!");
                     var enemy = Instantiate(enemySet.EnemyPrefab,
                                             SpawnPosition,
                                             Quaternion.identity,
