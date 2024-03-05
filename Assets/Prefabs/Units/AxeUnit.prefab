@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3276392655733169649}
   - component: {fileID: 3073436314343583269}
-  - component: {fileID: 2380139643267298977}
   - component: {fileID: 106452270019244022}
+  - component: {fileID: 2380139643267298977}
   - component: {fileID: 3374309651560392023}
   m_Layer: 10
   m_Name: AxeUnit
@@ -58,20 +58,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2380139643267298977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664509093726977078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631d9509841605647a83c2efa72ba277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _navMeshAgent: {fileID: 3073436314343583269}
-  _playerTransform: {fileID: 0}
 --- !u!95 &106452270019244022
 Animator:
   serializedVersion: 5
@@ -93,6 +79,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2380139643267298977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664509093726977078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631d9509841605647a83c2efa72ba277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _navMeshAgent: {fileID: 3073436314343583269}
+  _playerTransform: {fileID: 0}
 --- !u!114 &3374309651560392023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,11 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb169f3d04aebb44bc18ffc5511cc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalUnitMovement: {fileID: 2380139643267298977}
-  LocalAnimator: {fileID: 106452270019244022}
-  StartAttackDistance: 2
   _stopDistance: 1.8
   _movementSpeed: 3.5
+  _localUnitMovement: {fileID: 2380139643267298977}
+  _localAnimator: {fileID: 106452270019244022}
+  _startAttackDistance: 2
 --- !u!1 &4247802419334897108
 GameObject:
   m_ObjectHideFlags: 0

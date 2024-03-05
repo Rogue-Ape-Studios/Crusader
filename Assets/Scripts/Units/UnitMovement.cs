@@ -12,7 +12,6 @@ namespace RogueApeStudio.Crusader.Units
         {
             _navMeshAgent.SetDestination(_playerTransform.position);
         }
-
         public void SetStopDistance(float stoppingdistance)
         {
             _navMeshAgent.stoppingDistance = stoppingdistance;
