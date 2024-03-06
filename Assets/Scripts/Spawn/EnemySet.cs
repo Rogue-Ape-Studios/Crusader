@@ -13,6 +13,11 @@ namespace RogueApeStudio.Crusader.Spawn
         public int Count => _count;
         public Health EnemyPrefab => _prefab;
 
+        /// <summary>
+        /// Reduce the number of enemies in the wave.
+        /// </summary>
+        /// <param name="reduceCountBy">The value to reduce the remaining count by.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when a value is greater than itself.</exception>
         public void ReduceCount(int reduceCountBy)
         {
             if(reduceCountBy > _count)

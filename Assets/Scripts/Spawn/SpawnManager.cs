@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using RogueApeStudio.Crusader.HealthSystem;
 using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Spawn
@@ -44,6 +42,9 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Properties
 
+        /// <summary>
+        /// The number of remaining enemies.
+        /// </summary>
         internal int RemainingEnemies
         {
             get
@@ -61,23 +62,33 @@ namespace RogueApeStudio.Crusader.Spawn
             }
         }
 
+        /// <summary>
+        /// The current wave.
+        /// </summary>
         internal Wave CurrentWave => _waves[_currentWave];
 
+        /// <summary>
+        /// A random spawn position in the list.
+        /// </summary>
         internal Vector3 SpawnPosition => _spawnLocations[UnityEngine.Random.Range(0, _spawnLocations.Count)].position;
 
+        /// <summary>
+        /// The begin tangent for the Bezier curve.
+        /// </summary>
         public Vector3 BeginTangent
         {
             set {_beginTangent = value;}
             get { return _beginTangent;}
         }
 
+        /// <summary>
+        /// The End Tangent for the Bezier curve.
+        /// </summary>
         public Vector3 EndTangent
         {
             set {_endTangent = value;}
             get { return _endTangent;}
         }
-
-        public Transform SpawnHolder => _spawnLocationHolder;
 
         #endregion
 
@@ -101,17 +112,32 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Public
 
+        /// <summary>
+        /// Add a spawn to the list.
+        /// </summary>
         public void AddSpawn()
         {
             _spawnLocations.Add(Instantiate(_spawnLocations[0],_spawnLocationHolder));
         }
 
+        /// <summary>
+        /// Destroy the last spawn in the list.
+        /// </summary>
         public void DestroyLastSpawn()
         {
+            if(_spawnLocations.Count <= 1)
+            {
+                Debug.LogError("Must have at least 1 spawnpoint!");
+                return;
+            }
             DestroyImmediate(_spawnLocations[_spawnLocations.Count - 1].gameObject);
             _spawnLocations.RemoveAt(_spawnLocations.Count - 1);
         }
 
+        /// <summary>
+        /// Get the last spawn ID.
+        /// </summary>
+        /// <returns>The last spawn ID, plus 1.</returns>
         public int GetSpawnCount()
         {
             return _spawnLocations.Count + 1;
@@ -121,6 +147,9 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #region Internal
 
+        /// <summary>
+        /// Triggers the next wave to be spawned, or indicates that the level is complete.
+        /// </summary>
         internal async void NextWave()
         {
             if (_currentWave >= _waves.Count)
