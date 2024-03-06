@@ -7,7 +7,9 @@ namespace RogueApeStudio.Crusader.Units
     public class UnitMovement : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
+
         public Transform _playerTransform;
+
         public void MoveToPlayer()
         {
             _navMeshAgent.SetDestination(_playerTransform.position);

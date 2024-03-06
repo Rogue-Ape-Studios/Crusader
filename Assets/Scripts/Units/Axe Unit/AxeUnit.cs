@@ -13,12 +13,13 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
 
+        private IAxeUnitState _currentState;
+        private IAxeUnitState[] _states;
+
         public UnitMovement LocalUnitMovement => _localUnitMovement;
         public Animator LocalAnimator => _localAnimator;
         public float StartAttackDistance => _startAttackDistance;
 
-        private IAxeUnitState _currentState;
-        private IAxeUnitState[] _states;
 
         private void Awake()
         {
