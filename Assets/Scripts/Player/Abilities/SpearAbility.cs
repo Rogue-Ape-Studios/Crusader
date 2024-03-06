@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
+using System.Threading;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -16,6 +17,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [SerializeField] private Rigidbody _spear;
         [SerializeField] private Camera _cam;
@@ -26,6 +28,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _actions = new();
             _spearAbility = _actions.Player.Ability_1;
+
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
@@ -34,7 +38,11 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             EnableWaveAbility();
         }
 
-
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
 
         private void Update()
         {
@@ -60,7 +68,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                     Quaternion.LookRotation(_direction));
                 spear.AddForce(_direction * _speed, ForceMode.Impulse);
 
-                StartCooldown();
+                StartCooldownAsync(_cancellationTokenSource);
             }
         }
 
@@ -69,8 +77,17 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _spearAbility.Enable();
         }
 
-        private async void StartCooldown()
+        private async void StartCooldownAsync(CancellationTokenSource cancellationToken)
         {
+            try
+            {
+
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled");
+            }
+
             _onCooldown = true;
             await UniTask.WaitForSeconds(_cooldown);
             _onCooldown = false;

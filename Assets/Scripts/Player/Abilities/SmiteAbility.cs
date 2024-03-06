@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
+using System.Threading;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -16,6 +17,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [SerializeField] private GameObject _sword;
         [SerializeField] private Camera _cam;
@@ -58,7 +60,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
 
-                StartCooldown();
+                StartCooldownAsync(_cancellationTokenSource);
             }
         }
 
@@ -67,8 +69,17 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _smiteAbility.Enable();
         }
 
-        private async void StartCooldown()
+        private async void StartCooldownAsync(CancellationTokenSource cancellationToken)
         {
+            try
+            {
+
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled");
+            }
+
             _onCooldown = true;
             await UniTask.WaitForSeconds(_cooldown);
             _onCooldown = false;
