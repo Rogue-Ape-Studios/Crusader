@@ -22,5 +22,12 @@ namespace RogueApeStudio.Crusader.Units
         {
             _navMeshAgent.speed = speed;
         }
+        public void StopMoving()
+        {
+            _navMeshAgent.SetDestination(transform.position);
+            Debug.Log("Stop");
+        }
+
+
     }
 }
