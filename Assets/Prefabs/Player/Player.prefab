@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd58cd1c094373d49bc8214768e51499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 5
-  _knockbackForce: 5
+  _radius: 2.5
+  _knockbackForce: 1
   _cooldown: 1
   _root: {fileID: 5465714956654886292}
   _Effect: {fileID: 5413210425134656482, guid: 8ff0818fcfeb470459a316e857bc6d31, type: 3}
@@ -575,6 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _comboCounter: 0
+  _attackSpeed: 5
   _attackWindow: 0.8
   _canAttack: 1
   _windowCountdown: 0

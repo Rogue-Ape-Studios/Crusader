@@ -52,7 +52,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
-                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
+                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
                     _direction = targetPosition - transform.position;
                     _direction.Normalize();
                 }
@@ -64,7 +64,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             if (!_onCooldown)
             {
                 Rigidbody spear = Instantiate(_spear,
-                    new Vector3(transform.position.x, 0, transform.position.z),
+                    new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
                 spear.AddForce(_direction * _speed, ForceMode.Impulse);
 
