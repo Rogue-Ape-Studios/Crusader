@@ -27,6 +27,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _actions = new();
             _smiteAbility = _actions.Player.Ability_3;
+
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
@@ -35,7 +37,11 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             EnableWaveAbility();
         }
 
-
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
 
         private void Update()
         {
@@ -57,7 +63,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             if (!_onCooldown)
             {
                 GameObject sword = Instantiate(_sword,
-                    new Vector3(transform.position.x, 1, transform.position.z),
+                    new Vector3(transform.position.x, 0, transform.position.z),
                     Quaternion.LookRotation(_direction));
 
                 StartCooldownAsync(_cancellationTokenSource.Token);
