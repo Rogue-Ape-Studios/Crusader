@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using RogueApeStudio.Crusader.Input;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {

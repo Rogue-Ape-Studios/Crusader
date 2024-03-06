@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using RogueApeStudio.Crusader.Input;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -37,7 +38,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void Update()
         {
-            Ray cameraRay = _cam.ScreenPointToRay(Input.mousePosition);
+            Ray cameraRay = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(cameraRay, out _cameraRayHit))
             {
