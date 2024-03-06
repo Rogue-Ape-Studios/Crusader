@@ -64,11 +64,11 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             if (!_onCooldown)
             {
                 Rigidbody spear = Instantiate(_spear,
-                    new Vector3(transform.position.x, 1, transform.position.z),
+                    new Vector3(transform.position.x, 0, transform.position.z),
                     Quaternion.LookRotation(_direction));
                 spear.AddForce(_direction * _speed, ForceMode.Impulse);
 
-                StartCooldownAsync(_cancellationTokenSource);
+                StartCooldownAsync(_cancellationTokenSource.Token);
             }
         }
 
@@ -77,20 +77,19 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _spearAbility.Enable();
         }
 
-        private async void StartCooldownAsync(CancellationTokenSource cancellationToken)
+        private async void StartCooldownAsync(CancellationToken token)
         {
             try
             {
-
+                _onCooldown = true;
+                await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
+                _onCooldown = false;
             }
             catch (OperationCanceledException)
             {
                 Debug.LogError("Cooldown was Canceled");
             }
 
-            _onCooldown = true;
-            await UniTask.WaitForSeconds(_cooldown);
-            _onCooldown = false;
         }
     }
 }
