@@ -1,0 +1,16 @@
+{
+    "name": "RogueApeStudios.Units.Axe",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c526a6e5ef6390b4bac811a244d297e6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
