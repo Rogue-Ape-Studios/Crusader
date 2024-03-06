@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using RogueApeStudio.Crusader.Input;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {

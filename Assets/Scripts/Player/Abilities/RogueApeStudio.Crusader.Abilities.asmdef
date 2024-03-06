@@ -1,0 +1,19 @@
+{
+    "name": "RogueApeStudio.Crusader.Abilities",
+    "rootNamespace": "RogueApeStudio.Crusader.Abilities",
+    "references": [
+        "RogueApeStudio.Crusader.Input",
+        "Unity.InputSystem",
+        "UniTask",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

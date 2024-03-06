@@ -1,16 +1,7 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Unity.PlasticSCM.Editor.UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.Rendering.Universal;
-using static UnityEngine.Rendering.DebugUI;
+using RogueApeStudio.Crusader.Input;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -61,7 +52,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void Attack()
         {
             _animator.Play(_animations[_comboCounter - 1].name);
-            _delay = _animations[_comboCounter - 1].length;
+            _delay = _animations[_comboCounter - 1].length / 5;
             _attackWindow = 0.5f;
             _windowCountdown = true;
             if (_comboCounter == 3)

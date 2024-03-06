@@ -1,0 +1,19 @@
+{
+    "name": "RogueApeStudio.Crusader.Player.Combat",
+    "rootNamespace": "RogueApeStudio.Crusader.Player.Combat",
+    "references": [
+        "UniTask",
+        "Unity.InputSystem",
+        "RogueApeStudio.Crusader.Input",
+        "RogueApeStudio.Crusader.HealthSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
