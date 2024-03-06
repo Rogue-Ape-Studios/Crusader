@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace RogueApeStudio
+namespace RogueApeStudio.Crusader.Player.Combat
 {
     public class AttckDamage : MonoBehaviour
     {
-        public float _damageAmount = 10f;
+        [SerializeField] private float _damageAmount = 10f;
         [SerializeField] string[] _tags;
 
         private void OnTriggerEnter(Collider other)
