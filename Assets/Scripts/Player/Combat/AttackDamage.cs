@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
-    public class AttckDamage : MonoBehaviour
+    public class AttackDamage : MonoBehaviour
     {
         [SerializeField] private float _damageAmount = 10f;
         [SerializeField] string[] _tags;
