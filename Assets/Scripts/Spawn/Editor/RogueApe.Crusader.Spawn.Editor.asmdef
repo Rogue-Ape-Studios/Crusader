@@ -1,0 +1,16 @@
+{
+    "name": "RogueApeStudio.Crusader.Spawn.Editor",
+    "rootNamespace": "RogueApeStudio.Crusader.Spawn.Editor",
+    "references": [
+        "GUID:8777e36ce92585c44a3f17a52392ae90"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
