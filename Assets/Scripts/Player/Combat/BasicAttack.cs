@@ -10,14 +10,23 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
         private InputAction _movementInput;
-        private float _delay = 0f;
+
+        [SerializeField] private Animator _animator;
+        [SerializeField] private AnimationClip[] _animations;
+        [SerializeField] private Camera _cam;
+        [SerializeField] private Rigidbody _rb;
+        [SerializeField] private int _rotationSpeed;
         [SerializeField] private int _comboCounter = 0;
         [SerializeField] private int _attackSpeed = 5;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
-        [SerializeField] private Animator _animator;
-        [SerializeField] private AnimationClip[] _animations;
+
+        private float _delay = 0f;
+        private Vector3 _direction;
+        private RaycastHit _cameraRayHit;
+        private Vector3 _targetDirection;
+        private bool _isTurning = false;
 
         private void Awake()
         {
@@ -45,8 +54,26 @@ namespace RogueApeStudio.Crusader.Player.Combat
             if (context.started && _canAttack)
             {
                 _comboCounter++;
+                TurnDirection();
                 Attack();
                 Cooldown();
+            }
+        }
+
+        private void TurnDirection()
+        {
+            Ray cameraRay = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(cameraRay, out _cameraRayHit))
+            {
+                if (_cameraRayHit.transform.CompareTag("Ground"))
+                {
+                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
+                    _targetDirection = targetPosition - transform.position;
+                    _targetDirection.y = 0;
+                    _targetDirection.Normalize();
+                    _isTurning = true;
+                }
             }
         }
 
@@ -80,6 +107,18 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 _comboCounter = 0;
                 _animator.Play("Idle");
                 _windowCountdown = false;
+            }
+
+            if (_isTurning)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(_targetDirection, Vector3.up);
+                _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime));
+
+                // Check if the player has reached the desired rotation
+                if (Quaternion.Angle(_rb.rotation, targetRotation) < 0.1f)
+                {
+                    _isTurning = false;
+                }
             }
         }
 
