@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using RogueApeStudio.Crusader.Input;
 using Codice.CM.Client.Differences;
 
 namespace RogueApeStudio.Crusader.Player.Movement
@@ -63,6 +62,8 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 if (_inputDirection != Vector2.zero)
                 {
                     _dashDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
+                    // Rotate the player's body towards the target rotation
+                    _rb.rotation = Quaternion.LookRotation(_dashDirection, Vector3.up);
                 }
 
                 Vector3 dashForce = _dashDirection * _dashSpeed;
@@ -75,19 +76,20 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnMove()
         {
-            Vector2 _inputDirection = _movementInput.ReadValue<Vector2>();
+            Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
 
-            if (_inputDirection != Vector2.zero && !_isDashing)
+            if (inputDirection != Vector2.zero && !_isDashing)
             {
-                Vector3 _movementDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
-
-                float targetAngle = Mathf.Atan2(_movementDirection.x, _movementDirection.z) * Mathf.Rad2Deg;
-                Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
-                // Smoothly rotate the player's body towards the target rotation
-                _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-
+                Vector3 movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
+                if (Gamepad.current != null)
+                {
+                    float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg;
+                    Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+                    // Smoothly rotate the player's body towards the target rotation
+                    _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                }
                 // Calculate movement vector with the specified speed
-                Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * _movementDirection;
+                Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
 
                 // Move the character using Rigidbody
                 _rb.MovePosition(_rb.position + _movement);
