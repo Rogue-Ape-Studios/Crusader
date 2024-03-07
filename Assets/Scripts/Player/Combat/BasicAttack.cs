@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using RogueApeStudio.Crusader.Input;
 using System.Linq;
 
 namespace RogueApeStudio.Crusader.Player.Combat
@@ -16,9 +15,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private AnimationClip[] _animations;
         [SerializeField] private Camera _cam;
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private int _rotationSpeed;
         [SerializeField] private int _comboCounter = 0;
         [SerializeField] private int _attackSpeed = 5;
+        [SerializeField] private float _rotationSpeed = 1000;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
@@ -55,7 +54,8 @@ namespace RogueApeStudio.Crusader.Player.Combat
             if (context.started && _canAttack)
             {
                 _comboCounter++;
-                TurnDirection();
+                if (Keyboard.current != null) 
+                    TurnDirection();
                 Attack();
                 Cooldown();
             }
