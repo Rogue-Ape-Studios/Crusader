@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1964152670842939908}
   - component: {fileID: 2022981104842037594}
+  - component: {fileID: 1188262743345748221}
+  - component: {fileID: 6526466856039711319}
   m_Layer: 0
   m_Name: Smite
   m_TagString: Untagged
@@ -46,6 +48,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeToDestroy: 1
+--- !u!114 &1188262743345748221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576037821882633470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d521ea59b76f59c4785b84b7866b1b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 100
+  _tags:
+  - Enemy
+--- !u!65 &6526466856039711319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576037821882633470}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.3}
 --- !u!1 &7358197210725067677
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +95,6 @@ GameObject:
   - component: {fileID: 2985218252870969663}
   - component: {fileID: 5295923796104079699}
   - component: {fileID: 8429291195641233183}
-  - component: {fileID: 2229376765418777639}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -130,24 +167,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2229376765418777639
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7358197210725067677}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

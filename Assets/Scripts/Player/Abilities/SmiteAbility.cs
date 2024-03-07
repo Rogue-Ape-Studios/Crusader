@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
+using System.Threading;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -16,6 +17,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [SerializeField] private GameObject _sword;
         [SerializeField] private Camera _cam;
@@ -25,6 +27,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _actions = new();
             _smiteAbility = _actions.Player.Ability_3;
+
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
@@ -33,7 +37,11 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             EnableWaveAbility();
         }
 
-
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
 
         private void Update()
         {
@@ -43,7 +51,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
-                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
+                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
                     _direction = targetPosition - transform.position;
                     _direction.Normalize();
                 }
@@ -58,7 +66,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
 
-                StartCooldown();
+                StartCooldownAsync(_cancellationTokenSource.Token);
             }
         }
 
@@ -67,11 +75,18 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _smiteAbility.Enable();
         }
 
-        private async void StartCooldown()
+        private async void StartCooldownAsync(CancellationToken token)
         {
-            _onCooldown = true;
-            await UniTask.WaitForSeconds(_cooldown);
-            _onCooldown = false;
+            try
+            {
+                _onCooldown = true;
+                await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
+                _onCooldown = false;
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled");
+            }
         }
     }
 }
