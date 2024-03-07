@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
+using Codice.CM.Client.Differences;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {
@@ -16,6 +17,9 @@ namespace RogueApeStudio.Crusader.Player.Movement
         [SerializeField] private Rigidbody _rb;
 
         [Header("Movement Options"), SerializeField] private int _moveSpeed = 5;
+        [SerializeField] private float _rotationSpeed;
+        private Vector3 _targetDirection;
+        private bool _canTurn = false;
 
         [Header("Dash Options"), SerializeField] private float _dashSpeed = 10f;
         [SerializeField] private float _dashDuration = 0.5f;
@@ -63,8 +67,8 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
                 Vector3 dashForce = _dashDirection * _dashSpeed;
 
-               _rb.AddForce(dashForce, ForceMode.Impulse);
-                
+                _rb.AddForce(dashForce, ForceMode.Impulse);
+
 
             }
         }
@@ -76,6 +80,11 @@ namespace RogueApeStudio.Crusader.Player.Movement
             if (_inputDirection != Vector2.zero && !_isDashing)
             {
                 Vector3 _movementDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
+
+                float targetAngle = Mathf.Atan2(_movementDirection.x, _movementDirection.z) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+                // Smoothly rotate the player's body towards the target rotation
+                _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
                 // Calculate movement vector with the specified speed
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * _movementDirection;
