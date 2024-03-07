@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
+using System.Linq;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -21,9 +22,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
+        [SerializeField] private string[] _clickableTags;
 
         private float _delay = 0f;
-        private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private Vector3 _targetDirection;
         private bool _isTurning = false;
@@ -66,9 +67,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
             if (Physics.Raycast(cameraRay, out _cameraRayHit))
             {
-                if (_cameraRayHit.transform.CompareTag("Ground"))
+                if (_clickableTags.Any(tag => _cameraRayHit.transform.CompareTag(tag)))
                 {
-                    Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
+                    Vector3 targetPosition = new(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
                     _targetDirection = targetPosition - transform.position;
                     _targetDirection.y = 0;
                     _targetDirection.Normalize();
