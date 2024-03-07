@@ -52,7 +52,6 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
                 }
             }
             return false;
-
         }
     }
 }

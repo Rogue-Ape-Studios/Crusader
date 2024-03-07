@@ -13,6 +13,10 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
         [SerializeField] private float _attackRange = 500.0f;
+        [SerializeField] private GameObject _projectile;
+        [SerializeField] private float _attackCooldown = 2.0f;
+        [SerializeField] private Transform _projectileSpawn;
+        [SerializeField] private float _projectileForce = 32f;
 
         private IJavelinUnitState _currentState;
         private IJavelinUnitState[] _states;
@@ -21,6 +25,10 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         public Animator LocalAnimator => _localAnimator;
         public float StartAttackDistance => _startAttackDistance;
         public float AttackRange => _attackRange;
+        public GameObject Projectile => _projectile;
+        public float AttackCooldown => _attackCooldown;
+        public Transform ProjectileSpawn => _projectileSpawn;
+        public float ProjectileForce => _projectileForce;
 
 
         private void Awake()
@@ -56,5 +64,32 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             _currentState = GetJavelinUnitState(stateId);
             _currentState.EnterState(this);
         }
+
+        #region Commen Methods
+        public bool IsInRange()
+        {
+            Vector3 vectorDistance = LocalUnitMovement._playerTransform.position - transform.position;
+            return vectorDistance.magnitude <= StartAttackDistance;
+        }
+
+        public bool HasLineOfSight()
+        {
+            Vector3 playerPosition = LocalUnitMovement._playerTransform.position;
+            Vector3 unitPosition = transform.position;
+
+            RaycastHit hit;
+            Vector3 playerDirection = playerPosition - unitPosition;
+            Debug.DrawLine(playerPosition, playerDirection, Color.red);
+            if (Physics.Raycast(unitPosition, playerDirection, out hit, AttackRange, ~LayerMask.GetMask("Character")))
+            {
+                Debug.DrawLine(unitPosition, playerDirection);
+                if (hit.transform.CompareTag("Player"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }
