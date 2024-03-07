@@ -140,7 +140,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &5443734498099995928
 MonoBehaviour:
@@ -556,6 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 6454073962320836968}
   _moveSpeed: 5
+  _rotationSpeed: 0
   _dashSpeed: 10
   _dashDuration: 0.5
   _dashCooldown: 1
@@ -574,15 +575,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86c4c7da31120647ac4b13053661472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _comboCounter: 0
-  _attackWindow: 0.8
-  _canAttack: 1
-  _windowCountdown: 0
   _animator: {fileID: 6241001038258853540}
   _animations:
   - {fileID: 7400000, guid: 754c74def9e263849987fdfe15fc52fc, type: 2}
   - {fileID: 7400000, guid: 6cc75eac9a489cc40a2f4c7c57f6b572, type: 2}
   - {fileID: 7400000, guid: f20d8f911e2ded94a97adaea877dc069, type: 2}
+  _cam: {fileID: 8285541979665591259}
+  _rb: {fileID: 6454073962320836968}
+  _rotationSpeed: 1000
+  _comboCounter: 0
+  _attackSpeed: 5
+  _attackWindow: 0.8
+  _canAttack: 1
+  _windowCountdown: 0
 --- !u!95 &6241001038258853540
 Animator:
   serializedVersion: 5
@@ -636,7 +641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3732949559955359395
 Transform:
   m_ObjectHideFlags: 0
