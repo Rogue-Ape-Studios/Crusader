@@ -6,12 +6,14 @@ namespace RogueApeStudio.Crusader.Items
 {
     public class ItemManager : MonoBehaviour
     {
+        public event Action OnPropertyUpdate;
+
         [SerializeField] private BasePlayerConfig _currentPlayer;
         [SerializeField] private List<Item> _items;
         [SerializeField] private List<Transform> _itemSpawns;
 
-        [ContextMenu("SpawnThing")]
-        private void TestSpawn()
+        [ContextMenu("Spawn Item")]
+        private void SpawnItem()
         {
             SpawnRandomItem(_itemSpawns[0].position);
         }
