@@ -89,7 +89,6 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 Debug.LogError("Cooldown was Canceled");
             }
-
         }
     }
 }

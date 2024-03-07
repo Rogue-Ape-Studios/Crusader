@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
+using System.Threading;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -14,6 +15,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private CrusaderInputActions _actions;
         private InputAction _waveAbility;
         private bool _onCooldown = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [SerializeField] private float _radius;
         [SerializeField] private float _knockbackForce;
@@ -34,11 +36,16 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             EnableWaveAbility();
         }
 
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
+
         private void OnWaveAbility(InputAction.CallbackContext context)
         {
             if (context.started && !_onCooldown)
             {
-                _onCooldown = true;
                 Instantiate(_Effect, gameObject.transform);
 
                 Collider[] hitColliders = Physics.OverlapSphere(_root.position, _radius);
@@ -55,7 +62,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                         hitCollider.transform.GetComponent<Rigidbody>().AddForce(-knockbackDiraction * force, ForceMode.Impulse);
                     }
                 }
-                StartCooldown();
+                StartCooldownAsync(_cancellationTokenSource.Token);
             }
         }
 
@@ -64,10 +71,18 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _waveAbility.Enable();
         }
 
-        private async void StartCooldown()
+        private async void StartCooldownAsync(CancellationToken token)
         {
-            await UniTask.WaitForSeconds(_cooldown);
-            _onCooldown = false;
+            try
+            {
+                _onCooldown = true;
+                await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
+                _onCooldown = false;
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled");
+            }
         }
     }
 }
