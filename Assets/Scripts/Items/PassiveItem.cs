@@ -5,9 +5,9 @@ namespace RogueApeStudio.Crusader.Items
 {
     internal class PassiveItem : Item
     {
-        internal event Action<PlayerProperty,int> OnCollect;
+        internal event Action<PlayerProperty,float> OnCollect;
         [SerializeField] private PlayerProperty _property;
-        [SerializeField] private int _percentage;
+        [SerializeField] private float _percentage;
 
         private void OnDestroy()
         {

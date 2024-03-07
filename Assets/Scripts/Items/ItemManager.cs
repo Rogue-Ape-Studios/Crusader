@@ -46,18 +46,18 @@ namespace RogueApeStudio.Crusader.Items
             throw new NotImplementedException();
         }
 
-        private void HandleCommonItemCollection(PlayerProperty property, int percentage)
+        private void HandleCommonItemCollection(PlayerProperty property, float percentage)
         {
             switch (property)
             {
                 case PlayerProperty.Hitpoints:
-                _currentPlayer.HitPoints *= percentage;
+                _currentPlayer.HitPoints = (int)(_currentPlayer.HitPoints * percentage);
                     break;
                 case PlayerProperty.AttackDamage:
-                _currentPlayer.AttackDamage *= percentage;
+                _currentPlayer.AttackDamage *= (int)(_currentPlayer.AttackDamage * percentage);;
                     break;
                 case PlayerProperty.AttackSpeed:
-                _currentPlayer.AttackSpeed *= percentage;
+                _currentPlayer.AttackSpeed *= (int)(_currentPlayer.AttackSpeed * percentage);;
                     break;
                 default:
                 throw new NotImplementedException("That property has not been implemented yet!");
