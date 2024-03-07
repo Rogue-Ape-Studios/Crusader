@@ -13,14 +13,16 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private InputAction _movementInput;
         private InputAction _dashInput;
 
+        private Vector3 _lastMovementDirection = Vector3.zero;
+
         [SerializeField] private Rigidbody _rb;
 
-        [Header("Movement Options"), SerializeField] private int _moveSpeed = 5;
+        [Header("Movement Options")]
+        [SerializeField] private int _moveSpeed = 5;
         [SerializeField] private float _rotationSpeed;
-        private Vector3 _targetDirection;
-        private bool _canTurn = false;
 
-        [Header("Dash Options"), SerializeField] private float _dashSpeed = 10f;
+        [Header("Dash Options")]
+        [SerializeField] private float _dashSpeed = 10f;
         [SerializeField] private float _dashDuration = 0.5f;
         [SerializeField] private float _dashCooldown = 1f;
         [SerializeField] private bool _isDashing = false;
@@ -65,6 +67,13 @@ namespace RogueApeStudio.Crusader.Player.Movement
                     // Rotate the player's body towards the target rotation
                     _rb.rotation = Quaternion.LookRotation(_dashDirection, Vector3.up);
                 }
+                else
+                {
+                    if (_lastMovementDirection != Vector3.zero)
+                    {
+                        _dashDirection = _lastMovementDirection.normalized;
+                    }
+                }
 
                 Vector3 dashForce = _dashDirection * _dashSpeed;
 
@@ -90,7 +99,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 }
                 // Calculate movement vector with the specified speed
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
-
+                _lastMovementDirection = movementDirection;
                 // Move the character using Rigidbody
                 _rb.MovePosition(_rb.position + _movement);
             }
