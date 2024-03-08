@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Codice.CM.Client.Differences;
+using RogueApeStudio.Crusader.Input;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {
