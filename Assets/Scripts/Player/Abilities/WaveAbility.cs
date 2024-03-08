@@ -28,6 +28,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _actions = new();
             _waveAbility = _actions.Player.Ability_2;
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void OnEnable()
