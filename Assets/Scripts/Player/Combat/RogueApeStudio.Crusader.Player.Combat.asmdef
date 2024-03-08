@@ -5,7 +5,8 @@
         "UniTask",
         "Unity.InputSystem",
         "RogueApeStudio.Crusader.Input",
-        "RogueApeStudio.Crusader.HealthSystem"
+        "RogueApeStudio.Crusader.HealthSystem",
+        "RogueApeStudio.Crusader.Movement"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

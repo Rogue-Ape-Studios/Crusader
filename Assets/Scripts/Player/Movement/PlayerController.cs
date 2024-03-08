@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Codice.CM.Client.Differences;
 using RogueApeStudio.Crusader.Input;
+using System.Linq;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {
@@ -15,8 +16,13 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private InputAction _dashInput;
 
         private Vector3 _lastMovementDirection = Vector3.zero;
+        private Vector3 _lastLookDirection = Vector3.zero;
+        private RaycastHit _cameraRayHit;
+        private bool _readInputs = true;
 
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Camera _cam;
+        [SerializeField] private string[] _rayTags;
 
         [Header("Movement Options")]
         [SerializeField] private int _moveSpeed = 5;
@@ -53,30 +59,30 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            if (context.started && !_isDashing && _dashCooldownTimer <= 0)
+            if (context.started && !_isDashing && _dashCooldownTimer <= 0 && _readInputs)
             {
-                Vector2 _inputDirection = _movementInput.ReadValue<Vector2>();
-                Vector3 _dashDirection = Vector3.forward;
+                Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
+                Vector3 dashDirection = Vector3.forward;
 
                 _dashCooldownTimer = _dashCooldown;
                 _isDashing = true;
                 _dashTimer = _dashDuration;
 
-                if (_inputDirection != Vector2.zero)
+                if (inputDirection != Vector2.zero)
                 {
-                    _dashDirection = new Vector3(_inputDirection.x, 0f, _inputDirection.y).normalized;
+                    dashDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
                     // Rotate the player's body towards the target rotation
-                    _rb.rotation = Quaternion.LookRotation(_dashDirection, Vector3.up);
+                    TurnPlayer(dashDirection);
                 }
                 else
                 {
                     if (_lastMovementDirection != Vector3.zero)
                     {
-                        _dashDirection = _lastMovementDirection.normalized;
+                        dashDirection = _lastLookDirection.normalized;
                     }
                 }
 
-                Vector3 dashForce = _dashDirection * _dashSpeed;
+                Vector3 dashForce = dashDirection * _dashSpeed;
 
                 _rb.AddForce(dashForce, ForceMode.Impulse);
 
@@ -88,21 +94,56 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
 
-            if (inputDirection != Vector2.zero && !_isDashing)
+            if (inputDirection != Vector2.zero && !_isDashing && _readInputs)
             {
                 Vector3 movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
                 if (Gamepad.current != null)
                 {
-                    float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg;
-                    Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
-                    // Smoothly rotate the player's body towards the target rotation
-                    _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                    TurnPlayer(movementDirection);
                 }
+
                 // Calculate movement vector with the specified speed
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
                 _lastMovementDirection = movementDirection;
+
                 // Move the character using Rigidbody
                 _rb.MovePosition(_rb.position + _movement);
+            }
+        }
+
+        private void TurnPlayer(Vector3 direction)
+        {
+            if (_isDashing)
+            {
+                _rb.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            else if (Gamepad.current != null && !_isDashing)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+                // Smoothly rotate the player's body towards the target rotation
+                _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+            }
+        }
+
+        private void TurnPlayer()
+        {
+            if (Keyboard.current != null)
+            {
+                Ray cameraRay = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+                if (Physics.Raycast(cameraRay, out _cameraRayHit))
+                {
+                    if (_rayTags.Any(tag => _cameraRayHit.transform.CompareTag(tag)))
+                    {
+                        Vector3 targetPosition = new(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
+                        _rb.transform.LookAt(targetPosition);
+                        _rb.transform.rotation = Quaternion.Euler(0, _rb.transform.rotation.eulerAngles.y, 0);
+                        _lastLookDirection = targetPosition - _rb.transform.position;
+                        _lastLookDirection.y = 0f;
+                    }
+                }
             }
         }
 
@@ -118,10 +159,29 @@ namespace RogueApeStudio.Crusader.Player.Movement
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
         }
 
+        public void AddForce(float force)
+        {
+            SetReadInput(false);
+            Vector3 forceDirection = _lastLookDirection.normalized * force;
+            print(_lastLookDirection.normalized);
+            _rb.AddForce(forceDirection, ForceMode.Impulse);
+        }
+
+        public void SetReadInput(bool readInput)
+        {
+            _readInputs = readInput;
+        }
+
         private void FixedUpdate()
         {
             OnMove();
             HandleDashTimers();
+        }
+
+        private void Update()
+        {
+            if (!_isDashing )
+                TurnPlayer();
         }
 
         private void EnableMovement()
