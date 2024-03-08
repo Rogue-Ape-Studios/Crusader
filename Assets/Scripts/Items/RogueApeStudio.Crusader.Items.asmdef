@@ -1,0 +1,14 @@
+{
+    "name": "RogueApeStudio.Crusader.Items",
+    "rootNamespace": "RogueApeStudio.Crusader.Items",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
