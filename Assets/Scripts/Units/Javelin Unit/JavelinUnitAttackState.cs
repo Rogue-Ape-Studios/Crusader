@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.JavelinUnit
 {
-    public class JavelinUnitAttackState : IJavelinUnitState 
+    public class JavelinUnitAttackState : MonoBehaviour, IJavelinUnitState
     {
         private float _timePast = 0;
 
