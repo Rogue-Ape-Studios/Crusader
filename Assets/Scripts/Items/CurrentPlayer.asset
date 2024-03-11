@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530272eb732899d41a2950b2bb3e69a0, type: 3}
   m_Name: CurrentPlayer
   m_EditorClassIdentifier: 
-  _hitPoints: 100
-  _regenPerSecond: 0
-  _attackDamage: 5
-  _attackSpeed: 1
-  _movementSpeed: 1
-  _dashSpeed: 1
+  HitPoints: 100
+  RegenPerSecond: 0
+  AttackDamage: 5
+  AttackSpeed: 1
+  MovementSpeed: 1
+  DashSpeed: 1
