@@ -18,8 +18,6 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
         private void Awake()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-
-            StartCooldown(5);
         }
 
         private void OnDestroy()
