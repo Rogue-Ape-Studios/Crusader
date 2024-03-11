@@ -22,7 +22,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Camera _cam;
-        [SerializeField] private string[] _rayTags;
+        [SerializeField] private string[] _tags;
 
         [Header("Movement Options")]
         [SerializeField] private int _moveSpeed = 5;
@@ -135,7 +135,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
                 if (Physics.Raycast(cameraRay, out _cameraRayHit))
                 {
-                    if (_rayTags.Any(tag => _cameraRayHit.transform.CompareTag(tag)))
+                    if (_tags.Any(tag => _cameraRayHit.transform.CompareTag(tag)))
                     {
                         Vector3 targetPosition = new(_cameraRayHit.point.x, 0, _cameraRayHit.point.z);
                         _rb.transform.LookAt(targetPosition);
