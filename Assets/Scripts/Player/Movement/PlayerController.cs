@@ -163,7 +163,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             SetReadInput(false);
             Vector3 forceDirection = _lastLookDirection.normalized * force;
-            print(_lastLookDirection.normalized);
             _rb.AddForce(forceDirection, ForceMode.Impulse);
         }
 
@@ -180,7 +179,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void Update()
         {
-            if (!_isDashing )
+            if (!_isDashing && _readInputs)
                 TurnPlayer();
         }
 
