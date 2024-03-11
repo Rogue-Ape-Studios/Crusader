@@ -7,12 +7,12 @@ namespace RogueApeStudio.Crusader.UI.Healthbar
 {
     public class HealthBar : MonoBehaviour
     {
+        [SerializeField] private RectTransform _bar;
+        [SerializeField] private Health _player;
+
         private float _barMaxWidth;
         private float _barWidth;
         private float _velocity;
-
-        [SerializeField] private RectTransform _bar;
-        [SerializeField] private Health _player;
 
         private void Start()
         {

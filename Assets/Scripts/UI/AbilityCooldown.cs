@@ -8,12 +8,12 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
 {
     public class AbilityCooldown : MonoBehaviour
     {
-        private CancellationTokenSource _cancellationTokenSource;
-        private int _currentCooldown;
-
         [SerializeField] private GameObject _icon;
         [SerializeField] private GameObject _emptyIcon;
         [SerializeField] private TextMeshProUGUI _counter;
+
+        private CancellationTokenSource _cancellationTokenSource;
+        private int _currentCooldown;
 
         private void Awake()
         {
@@ -51,7 +51,7 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
             }
             catch (OperationCanceledException)
             {
-                Debug.LogError("Cooldown was Canceled");
+                Debug.LogError("Cooldown was cancelled because the operation was cancelled.");
             }
         }
     }
