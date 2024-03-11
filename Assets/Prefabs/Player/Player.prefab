@@ -344,10 +344,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 6454073962320836968}
-  _cam: {fileID: 0}
-  _tags: []
+  _cam: {fileID: 97297719460600154}
+  _tags:
+  - Ground
+  - Enemy
+  - Player
   _moveSpeed: 5
-  _rotationSpeed: 0
+  _rotationSpeed: 1000
   _dashSpeed: 10
   _dashDuration: 0.5
   _dashCooldown: 1
@@ -366,14 +369,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86c4c7da31120647ac4b13053661472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerController: {fileID: 0}
+  _playerController: {fileID: 2048193060594582350}
   _force: 10
   _animator: {fileID: 6241001038258853540}
   _animations:
   - {fileID: 7400000, guid: 754c74def9e263849987fdfe15fc52fc, type: 2}
   - {fileID: 7400000, guid: 6cc75eac9a489cc40a2f4c7c57f6b572, type: 2}
   - {fileID: 7400000, guid: f20d8f911e2ded94a97adaea877dc069, type: 2}
-  _rb: {fileID: 0}
+  _rb: {fileID: 6454073962320836968}
   _comboCounter: 0
   _attackSpeed: 5
   _attackWindow: 0.8
@@ -592,6 +595,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84d20161a54580d4b8ad4e74aa137ef0, type: 3}
+--- !u!20 &97297719460600154 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2768822855144752088, guid: 84d20161a54580d4b8ad4e74aa137ef0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2825303382808681090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1978813899290276521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4342409800916150315, guid: 84d20161a54580d4b8ad4e74aa137ef0,
