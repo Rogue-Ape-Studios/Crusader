@@ -7,6 +7,7 @@ namespace RogueApeStudio.Crusader.Units
     public class UnitMovement : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
+        [SerializeField] private float _aimTurnSpeed = 5;
 
         public Transform _playerTransform;
 
@@ -25,9 +26,13 @@ namespace RogueApeStudio.Crusader.Units
         public void StopMoving()
         {
             _navMeshAgent.SetDestination(transform.position);
-            Debug.Log("Stop");
         }
-
+        public void FacePlayer()
+        {
+            Vector3 direction = (_playerTransform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _aimTurnSpeed);
+        }
 
     }
 }

@@ -8,10 +8,22 @@ namespace RogueApeStudio
     {
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collision _target;
-        private void OnCollisionEnter(Collision collision)
+        [SerializeField] private float _despawnDuration = 1f;
+        [SerializeField] private float _playerLayer = 9;
+
+
+        private void OnTriggerEnter(Collider other)
         {
-            //StickOn(collision);
-            Invoke(nameof(DestroyThis), 1f);
+            if (other.gameObject.layer ==  _playerLayer)
+            {
+                //deal damage
+                DestroyThis();
+            }
+            else
+            {
+                Stick();
+                Invoke(nameof(DestroyThis), _despawnDuration);
+            }
         }
 
         private void DestroyThis()
@@ -19,10 +31,8 @@ namespace RogueApeStudio
             Destroy(gameObject);
         }
 
-        //Disscus if we need stick to projectile 
-        private void StickOn(Collision collision)
+        private void Stick()
         {
-            gameObject.transform.SetParent(collision.transform, true);
             _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         }
     }

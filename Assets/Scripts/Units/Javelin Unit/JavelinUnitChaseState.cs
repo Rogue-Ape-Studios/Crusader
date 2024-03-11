@@ -7,6 +7,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
 {
     public class JavelinUnitChaseState : IJavelinUnitState
     {
+        private float _lineOfSightTime = 0;
         public void EnterState(JavelinUnit javelinUnit)
         {
             //start run animation here when available
@@ -20,38 +21,31 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         public void UpdateState(JavelinUnit javelinUnit)
         {
             javelinUnit.LocalUnitMovement.MoveToPlayer();
-            Vector3 playerPosition = javelinUnit.LocalUnitMovement._playerTransform.position;
-            Vector3 unitPosition = javelinUnit.transform.position;
-            
-            if (IsInRange(playerPosition, unitPosition, javelinUnit.StartAttackDistance)
-                && HasLineOfSight(playerPosition, unitPosition, javelinUnit.AttackRange))
+
+            if (LosTimeHasPassed(javelinUnit))
             {
                 javelinUnit.LocalUnitMovement.StopMoving();
                 javelinUnit.ChangeState(JavelinUnitStateId.Attack);
             }
         }
 
-        private bool IsInRange(Vector3 playerPosition, Vector3 unitPosition, float range)
+        private bool LosTimeHasPassed(JavelinUnit javelinUnit)
         {
-            Vector3 vectorDistance = playerPosition - unitPosition;
-            return vectorDistance.magnitude <= range;
-
-        }
-
-        private bool HasLineOfSight(Vector3 playerPosition, Vector3 unitPosition, float attackRange)
-        {
-            RaycastHit hit;
-            Vector3 playerDirection = playerPosition - unitPosition;
-            Debug.DrawLine(playerPosition, playerDirection, Color.red);
-            if (Physics.Raycast(unitPosition, playerDirection, out hit, attackRange, ~LayerMask.GetMask("Character")))
+            if (javelinUnit.IsInRange() && javelinUnit.HasLineOfSight())
             {
-                Debug.DrawLine(unitPosition, playerDirection);
-                if (hit.transform.CompareTag("Player"))
+                _lineOfSightTime += Time.deltaTime;
+                if (_lineOfSightTime >= javelinUnit.SecondsLosNeeded)
                 {
                     return true;
                 }
+                else { return false; }
             }
-            return false;
+            else
+            {
+                _lineOfSightTime = 0;
+                return false;
+            }
         }
+
     }
 }
