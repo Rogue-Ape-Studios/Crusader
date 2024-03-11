@@ -71,7 +71,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 if (inputDirection != Vector2.zero)
                 {
                     dashDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-                    // Rotate the player's body towards the target rotation
+            
                     TurnPlayer(dashDirection);
                 }
                 else
@@ -102,11 +102,9 @@ namespace RogueApeStudio.Crusader.Player.Movement
                     TurnPlayer(movementDirection);
                 }
 
-                // Calculate movement vector with the specified speed
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
                 _lastMovementDirection = movementDirection;
 
-                // Move the character using Rigidbody
                 _rb.MovePosition(_rb.position + _movement);
             }
         }
@@ -122,7 +120,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
                 Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
 
-                // Smoothly rotate the player's body towards the target rotation
                 _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
             }
         }
