@@ -11,7 +11,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
     {
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
-        private InputAction _movementInput;
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private float _force = 10f;
 
@@ -20,7 +19,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private int _comboCounter = 0;
         [SerializeField] private int _attackSpeed = 5;
-        [SerializeField] private float _rotationSpeed = 1000;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
@@ -31,21 +29,18 @@ namespace RogueApeStudio.Crusader.Player.Combat
         {
             _crusaderInputActions = new();
             _attackInput = _crusaderInputActions.Player.BasicAttack;
-            _movementInput = _crusaderInputActions.Player.Move;
         }
 
         private void OnEnable()
         {
             _attackInput.started += OnAttack;
             EnableBasicAttack();
-            DisableMovement();
         }
 
         private void OnDisable()
         {
             _attackInput.started -= OnAttack;
             DisableBasicAttack();
-            EnableMovement();
         }
 
         private void OnAttack(InputAction.CallbackContext context)
@@ -67,14 +62,15 @@ namespace RogueApeStudio.Crusader.Player.Combat
             _windowCountdown = true;
             if (_comboCounter == 3)
                 _comboCounter = 0;
-
         }
 
         private async void Cooldown()
         {
             _canAttack = false;
+            _playerController.SetReadInput(false);
             await UniTask.WaitForSeconds(_delay);
             _rb.velocity = Vector3.zero;
+            _playerController.SetReadInput(true);
             _canAttack = true;
         }
 
@@ -103,15 +99,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void DisableBasicAttack()
         {
             _attackInput?.Disable();
-        }
-        private void DisableMovement()
-        {
-            _movementInput.Disable();
-        }
-
-        private void EnableMovement()
-        {
-            _movementInput.Enable();
         }
     }
 }
