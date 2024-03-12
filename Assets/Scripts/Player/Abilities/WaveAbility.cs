@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
+using RogueApeStudio.Crusader.UI.Cooldown;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -20,8 +21,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private float _radius;
         [SerializeField] private float _knockbackForce;
         [SerializeField] private float _cooldown;
-        [SerializeField] private Transform _root;
         [SerializeField] private GameObject _Effect;
+        [SerializeField] private AbilityCooldown _cooldownUI;
 
         // Start is called before the first frame update
         void Awake()
@@ -49,16 +50,16 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 Instantiate(_Effect, gameObject.transform);
 
-                Collider[] hitColliders = Physics.OverlapSphere(_root.position, _radius);
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
                 foreach (var hitCollider in hitColliders)
                 {
                     if (hitCollider.CompareTag("Enemy"))
                     {
-                        Vector3 knockbackDiraction = _root.position - hitCollider.transform.position;
+                        Vector3 knockbackDiraction = transform.position - hitCollider.transform.position;
                         knockbackDiraction = knockbackDiraction.normalized;
                         knockbackDiraction = new Vector3(knockbackDiraction.x, 0, knockbackDiraction.z);
 
-                        float force = (_knockbackForce + (1 / Vector3.Distance(_root.transform.position, hitCollider.transform.position) * 10));
+                        float force = (_knockbackForce + (1 / Vector3.Distance(transform.transform.position, hitCollider.transform.position) * 10));
 
                         hitCollider.transform.GetComponent<Rigidbody>().AddForce(-knockbackDiraction * force, ForceMode.Impulse);
                     }
@@ -77,6 +78,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             try
             {
                 _onCooldown = true;
+                _cooldownUI.StartCooldown((int)_cooldown);
                 await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
                 _onCooldown = false;
             }

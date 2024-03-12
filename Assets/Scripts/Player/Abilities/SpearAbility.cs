@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
+using RogueApeStudio.Crusader.UI.Cooldown;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -23,6 +24,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private Camera _cam;
         [SerializeField] private float _cooldown;
         [SerializeField] private float _speed;
+        [SerializeField] private AbilityCooldown _cooldownUI;
 
         private void Awake()
         {
@@ -82,6 +84,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             try
             {
                 _onCooldown = true;
+                _cooldownUI.StartCooldown((int)_cooldown);
                 await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
                 _onCooldown = false;
             }
