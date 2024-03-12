@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5443734498099995928}
   - component: {fileID: 8877999454911420437}
   - component: {fileID: 6449603843102643275}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,8 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sword: {fileID: 6576037821882633470, guid: cfbeb27c643fefa47960e3d947e5a22d, type: 3}
-  _cam: {fileID: 0}
-  _cooldown: 1
+  _cam: {fileID: 97297719460600154}
+  _cooldown: 2
+  _cooldownUI: {fileID: 0}
 --- !u!114 &8877999454911420437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,10 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f335c18cde8494d83ab7975f5427b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spear: {fileID: 7174106797136470899, guid: b5723c1f27abab44592866cf0932e43e, type: 3}
-  _cam: {fileID: 0}
-  _cooldown: 1
+  _spear: {fileID: 5493998137168221730, guid: 8fd6bce9f82b25d47b3ba710dd8118d2, type: 3}
+  _cam: {fileID: 97297719460600154}
+  _cooldown: 5
   _speed: 25
+  _cooldownUI: {fileID: 0}
 --- !u!114 &6449603843102643275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,9 +188,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 2.5
   _knockbackForce: 1
-  _cooldown: 1
-  _root: {fileID: 5465714956654886292}
+  _cooldown: 10
   _Effect: {fileID: 5413210425134656482, guid: 8ff0818fcfeb470459a316e857bc6d31, type: 3}
+  _cooldownUI: {fileID: 0}
 --- !u!1 &5378581706503760563
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +203,7 @@ GameObject:
   - component: {fileID: 288228467995220797}
   - component: {fileID: 8149381847073592278}
   - component: {fileID: 3001476292174536627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,9 +309,9 @@ GameObject:
   - component: {fileID: 8558667707596202813}
   - component: {fileID: 6241001038258853540}
   - component: {fileID: 1491985982234639182}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -429,7 +431,7 @@ GameObject:
   - component: {fileID: 2260780634626546085}
   - component: {fileID: 4775758154374021522}
   - component: {fileID: 7231768335506291107}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,6 +537,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 2764811118652087310, guid: 84d20161a54580d4b8ad4e74aa137ef0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4342409800916150315, guid: 84d20161a54580d4b8ad4e74aa137ef0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -585,6 +592,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4486216957897951226, guid: 84d20161a54580d4b8ad4e74aa137ef0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8357895939094421649, guid: 84d20161a54580d4b8ad4e74aa137ef0,
         type: 3}
       propertyPath: _playerBodyTransform
@@ -618,6 +630,10 @@ PrefabInstance:
     - target: {fileID: 106878, guid: d9997adaf286f9b45a050f836bce2f10, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Zweihander_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 106878, guid: d9997adaf286f9b45a050f836bce2f10, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 402282, guid: d9997adaf286f9b45a050f836bce2f10, type: 3}
       propertyPath: m_LocalScale.x

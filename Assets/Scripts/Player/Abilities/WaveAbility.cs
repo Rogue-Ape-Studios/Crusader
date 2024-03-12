@@ -17,10 +17,14 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private InputAction _waveAbility;
         private bool _onCooldown = false;
         private CancellationTokenSource _cancellationTokenSource;
+        //charges will come from the PlayerStats (item system)
+        private int _charges = 1;
+        private int _remainingCooldown;
+        private bool _startedUI = false;
 
         [SerializeField] private float _radius;
         [SerializeField] private float _knockbackForce;
-        [SerializeField] private float _cooldown;
+        [SerializeField] private int _cooldown;
         [SerializeField] private GameObject _Effect;
         [SerializeField] private AbilityCooldown _cooldownUI;
 
@@ -29,6 +33,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _actions = new();
             _waveAbility = _actions.Player.Ability_2;
+            _cooldownUI.GetCharges(_charges);
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -44,9 +49,23 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             _cancellationTokenSource.Dispose();
         }
 
+        private void Update()
+        {
+            if (_charges == 0 && !_startedUI)
+            {
+                _startedUI = true;
+                _cooldownUI.StartCooldown(_remainingCooldown);
+            }
+
+            if (_cooldownUI.IsCooldownEnded())
+            {
+                _startedUI = false;
+            }
+        }
+
         private void OnWaveAbility(InputAction.CallbackContext context)
         {
-            if (context.started && !_onCooldown)
+            if (_charges != 0)
             {
                 Instantiate(_Effect, gameObject.transform);
 
@@ -77,15 +96,42 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             try
             {
+                _charges--;
+                _cooldownUI.GetCharges(_charges);
+                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                CooldownAsync(_cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled");
+            }
+        }
+
+        private bool checkIfOnCooldown()
+        {
+            return !_onCooldown;
+        }
+
+        private async void CooldownAsync(CancellationToken token)
+        {
+            try
+            {
+                _remainingCooldown = _cooldown;
                 _onCooldown = true;
-                _cooldownUI.StartCooldown((int)_cooldown);
-                await UniTask.WaitForSeconds(_cooldown, cancellationToken: token);
+                for (int i = 0; i < _cooldown; i++)
+                {
+                    await UniTask.WaitForSeconds(1, cancellationToken: token);
+                    _remainingCooldown--;
+                }
+                _charges++;
+                _cooldownUI.GetCharges(_charges);
                 _onCooldown = false;
             }
             catch (OperationCanceledException)
             {
                 Debug.LogError("Cooldown was Canceled");
             }
+
         }
     }
 }

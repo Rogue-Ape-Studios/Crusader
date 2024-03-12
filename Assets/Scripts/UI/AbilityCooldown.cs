@@ -11,9 +11,11 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
         [SerializeField] private GameObject _icon;
         [SerializeField] private GameObject _emptyIcon;
         [SerializeField] private TextMeshProUGUI _counter;
+        [SerializeField] private TextMeshProUGUI _charges;
 
         private CancellationTokenSource _cancellationTokenSource;
         private int _currentCooldown;
+        private bool _cooldownEnded = false;
 
         private void Awake()
         {
@@ -35,6 +37,25 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
             CooldownAsync(_cancellationTokenSource.Token, cooldown);
         }
 
+        public bool IsCooldownEnded()
+        {
+            return _cooldownEnded;
+        }
+
+        public void GetCharges(int charges)
+        {
+            if (charges <= 1)
+            {
+                _charges.gameObject.SetActive(false);
+            }
+            else
+            {
+                _charges.gameObject.SetActive(true);
+                charges--;
+                _charges.text= charges.ToString();
+            }
+        }
+
         private async void CooldownAsync(CancellationToken token, int cooldown)
         {
             try
@@ -48,6 +69,7 @@ namespace RogueApeStudio.Crusader.UI.Cooldown
 
                 _icon.SetActive(true);
                 _emptyIcon.SetActive(false);
+                _cooldownEnded = true;
             }
             catch (OperationCanceledException)
             {
