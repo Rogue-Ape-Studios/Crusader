@@ -85,7 +85,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             {
                 _attackWindow = 0.5f;
                 _comboCounter = 0;
-                _animator.Play("Idle");
+                _animator.Play("Movement");
                 _windowCountdown = false;
                 _playerController.SetReadInput(true);
             }

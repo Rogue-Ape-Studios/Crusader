@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Codice.CM.Client.Differences;
 using RogueApeStudio.Crusader.Input;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {
@@ -22,6 +19,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Camera _cam;
+        [SerializeField] private Animator _animator;
         [SerializeField] private string[] _tags;
 
         [Header("Movement Options")]
@@ -45,7 +43,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnEnable()
         {
-            _dashInput.started += OnDash;
+            _dashInput.performed += OnDash;
             EnableDash();
             EnableMovement();
         }
@@ -54,12 +52,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             DisableMovement();
             DisableDash();
-            _dashInput.started -= OnDash;
+            _dashInput.performed -= OnDash;
         }
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            if (context.started && !_isDashing && _dashCooldownTimer <= 0 && _readInputs)
+            if (!_isDashing && _dashCooldownTimer <= 0 && _readInputs)
             {
                 Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
                 Vector3 dashDirection = Vector3.forward;
@@ -71,7 +69,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 if (inputDirection != Vector2.zero)
                 {
                     dashDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-            
+
                     TurnPlayer(dashDirection);
                 }
                 else
@@ -104,6 +102,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
                 _lastMovementDirection = movementDirection;
+
 
                 _rb.MovePosition(_rb.position + _movement);
             }
@@ -168,6 +167,129 @@ namespace RogueApeStudio.Crusader.Player.Movement
             _readInputs = readInput;
         }
 
+        private void HandleRunningAnimation()
+        {
+            Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
+
+            Vector3 moveDirection = new(inputDirection.x, 0f, inputDirection.y);
+
+            Vector3 currentEulerAngles = _rb.transform.rotation.eulerAngles;
+
+            // Get the rotation around the y-axis
+            float currentRotation = currentEulerAngles.y;
+            Debug.Log(inputDirection.x + "    " + inputDirection.y );
+
+            // Check input direction for forward, backward, left, or right movement
+            if (inputDirection.y > 0)
+            {
+                if ((currentRotation >= 315 && currentRotation <= 360) || (currentRotation >= 0 && currentRotation <= 45))
+                {
+                    // Forward animation
+                    _animator.SetFloat("Vertical", 1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 45 && currentRotation <= 135)
+                {
+                    // Right animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", 1f);
+                }
+                else if (currentRotation >= 135 && currentRotation <= 225)
+                {
+                    // Backward animation
+                    _animator.SetFloat("Vertical", -1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 225 && currentRotation <= 315)
+                {
+                    // Left animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", -1f);
+                }
+            }
+            else if (inputDirection.y < 0)
+            {
+                if ((currentRotation >= 315 && currentRotation <= 360) || (currentRotation >= 0 && currentRotation <= 45))
+                {
+                    // Backward animation
+                    _animator.SetFloat("Vertical", -1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 45 && currentRotation <= 135)
+                {
+                    // Left animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", -1f);
+                }
+                else if (currentRotation >= 135 && currentRotation <= 225)
+                {
+                    // Forward animation
+                    _animator.SetFloat("Vertical", 1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 225 && currentRotation <= 315)
+                {
+                    // Right animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", 1f);
+                }
+            }
+            else if (inputDirection.x < 0)
+            {
+                if ((currentRotation >= 315 && currentRotation <= 360) || (currentRotation >= 0 && currentRotation <= 45))
+                {
+                    // Right animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", 1f);
+                }
+                else if (currentRotation >= 45 && currentRotation <= 135)
+                {
+                    // Backward animation
+                    _animator.SetFloat("Vertical", -1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 135 && currentRotation <= 225)
+                {
+                    // Left animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", -1f);
+                }
+                else if (currentRotation >= 225 && currentRotation <= 315)
+                {
+                    // Forward animation
+                    _animator.SetFloat("Vertical", 1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+            }
+            else if (inputDirection.x > 0)
+            {
+                if ((currentRotation >= 315 && currentRotation <= 360) || (currentRotation >= 0 && currentRotation <= 45))
+                {
+                    // Left animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", -1f);
+                }
+                else if (currentRotation >= 45 && currentRotation <= 135)
+                {
+                    // Forward animation
+                    _animator.SetFloat("Vertical", 1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+                else if (currentRotation >= 135 && currentRotation <= 225)
+                {
+                    // Right animation
+                    _animator.SetFloat("Vertical", 0f);
+                    _animator.SetFloat("Horizontal", 1f);
+                }
+                else if (currentRotation >= 225 && currentRotation <= 315)
+                {
+                    // Backward animation
+                    _animator.SetFloat("Vertical", -1f);
+                    _animator.SetFloat("Horizontal", 0f);
+                }
+            }
+        }
+
         private void FixedUpdate()
         {
             OnMove();
@@ -178,6 +300,14 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (!_isDashing && _readInputs)
                 TurnPlayer();
+
+            if (_movementInput.ReadValue<Vector2>() != Vector2.zero)
+                HandleRunningAnimation();
+            else 
+            {
+                _animator.SetFloat("Vertical", 0f);
+                _animator.SetFloat("Horizontal", 0f);
+            }
         }
 
         private void EnableMovement()
