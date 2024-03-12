@@ -92,15 +92,11 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
                 if (Physics.Raycast(raycastPosition, playerDirection, out hit, AttackRange, ~LayerMask.GetMask("Character")))
                 {
                     Debug.DrawLine(raycastPosition, playerPosition, Color.red);
-                    if (hit.collider.gameObject.layer != 9)
-                    {
-                        Debug.Log("NO LOS");
-                        return false;
-                    }
+                    if (hit.collider.gameObject.layer != LocalUnitMovement._playerTransform.gameObject.layer)
+                    { return false; }
                 }
-                else { Debug.Log("no LOS"); return false; }
+                else { return false; }
             }
-            Debug.Log("LOS");
             return true;
         }
         #endregion
