@@ -9,7 +9,7 @@ namespace RogueApeStudio.Crusader.HealthSystem
 
         public event Action OnDeath;
         public event Action OnHeal;
-        public event Action OnDamage;
+        public event Action<float> OnDamage;
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace RogueApeStudio.Crusader.HealthSystem
             }
             else
             {
-                OnDamage?.Invoke();
+                OnDamage?.Invoke(damage);
             }
         }
 
