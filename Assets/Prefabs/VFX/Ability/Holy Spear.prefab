@@ -4843,6 +4843,7 @@ GameObject:
   - component: {fileID: 5493998137168221730}
   - component: {fileID: 2171922257191495122}
   - component: {fileID: 8784849794142896189}
+  - component: {fileID: -6050717098287794668}
   m_Layer: 0
   m_Name: Holy Spear
   m_TagString: Untagged
@@ -4930,6 +4931,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeToDestroy: 5
+--- !u!114 &-6050717098287794668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2507694909730110643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d521ea59b76f59c4785b84b7866b1b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 50
+  _tags:
+  - Enemy
 --- !u!1 &2593514419796504836
 GameObject:
   m_ObjectHideFlags: 0
