@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudio.Crusader.Units.AxeUnit
+namespace RogueApeStudios.Crusader.Units.AxeUnit
 {
     public enum AxeUnitStateId
     {

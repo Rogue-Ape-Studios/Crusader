@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace RogueApeStudio.Crusader.Units.AxeUnit
+namespace RogueApeStudios.Crusader.Units.AxeUnit
 {
     public class AxeUnitChaseState : IAxeUnitState
     {
