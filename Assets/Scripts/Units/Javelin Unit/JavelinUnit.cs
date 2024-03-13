@@ -71,7 +71,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             _currentState.EnterState(this);
         }
 
-        #region Commen Public Methods
+        #region Public Methods
         public bool IsInRange()
         {
             Vector3 vectorDistance = LocalUnitMovement._playerTransform.position - transform.position;
