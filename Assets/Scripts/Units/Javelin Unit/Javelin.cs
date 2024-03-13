@@ -9,12 +9,16 @@ namespace RogueApeStudio
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collision _target;
         [SerializeField] private float _despawnDuration = 1f;
-        [SerializeField] private float _playerLayer = 9;
+        [SerializeField] private LayerMask _playerLayer;
 
+        private void Awake()
+        {
+            _playerLayer = LayerMask.NameToLayer("Player");
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer ==  _playerLayer)
+            if (other.gameObject.layer ==  _playerLayer.value)
             {
                 //deal damage
                 DestroyThis();

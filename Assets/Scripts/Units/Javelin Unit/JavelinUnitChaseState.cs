@@ -22,19 +22,19 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         {
             javelinUnit.LocalUnitMovement.MoveToPlayer();
 
-            if (LosTimeHasPassed(javelinUnit))
+            if (LineOfSightTimeHasPassed(javelinUnit))
             {
                 javelinUnit.LocalUnitMovement.StopMoving();
                 javelinUnit.ChangeState(JavelinUnitStateId.Attack);
             }
         }
 
-        private bool LosTimeHasPassed(JavelinUnit javelinUnit)
+        private bool LineOfSightTimeHasPassed(JavelinUnit javelinUnit)
         {
             if (javelinUnit.IsInRange() && javelinUnit.HasLineOfSight())
             {
                 _lineOfSightTime += Time.deltaTime;
-                if (_lineOfSightTime >= javelinUnit.SecondsLosNeeded)
+                if (_lineOfSightTime >= javelinUnit.SecondsLineOfSightsNeeded)
                 {
                     return true;
                 }

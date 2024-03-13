@@ -17,7 +17,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         [Header("Line Of Sight Seetings")]
         [SerializeField] private int _amountOfRayCasts = 3;
         [SerializeField] private float _unitWidth = 1f;
-        [SerializeField] private float _secondsLosNeeded = 1f;
+        [SerializeField] private float _secondsLineOfSightNeeded = 1f;
         [Header("Dependencies")]
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
@@ -34,7 +34,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         public GameObject Projectile => _projectile;
         public Transform ProjectileSpawn => _projectileSpawn;
         public Vector2 ProjectileForce => _projectileForce;
-        public float SecondsLosNeeded => _secondsLosNeeded;
+        public float SecondsLineOfSightsNeeded => _secondsLineOfSightNeeded;
 
 
         private void Awake()
@@ -71,7 +71,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             _currentState.EnterState(this);
         }
 
-        #region Commen Methods
+        #region Commen Public Methods
         public bool IsInRange()
         {
             Vector3 vectorDistance = LocalUnitMovement._playerTransform.position - transform.position;
