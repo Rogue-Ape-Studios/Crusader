@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 3073436314343583269}
+  _aimTurnSpeed: 5
   _playerTransform: {fileID: 0}
 --- !u!114 &3374309651560392023
 MonoBehaviour:
@@ -107,9 +108,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stopDistance: 1.8
   _movementSpeed: 3.5
+  _startAttackDistance: 2
   _localUnitMovement: {fileID: 2380139643267298977}
   _localAnimator: {fileID: 106452270019244022}
-  _startAttackDistance: 2
 --- !u!1 &4247802419334897108
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +124,7 @@ GameObject:
   - component: {fileID: 4367531446779240425}
   - component: {fileID: 7898306849848799596}
   - component: {fileID: 8661744726804028055}
+  - component: {fileID: 2591111357330946217}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
@@ -237,6 +239,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &2591111357330946217
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247802419334897108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.12
+  m_Center: {x: 0.0000038146973, y: 0.00000047683716, z: 0.39}
 --- !u!1 &4515692610901448497
 GameObject:
   m_ObjectHideFlags: 0

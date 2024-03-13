@@ -2,7 +2,8 @@
     "name": "RogueApeStudios.Units.Axe",
     "rootNamespace": "",
     "references": [
-        "GUID:c526a6e5ef6390b4bac811a244d297e6"
+        "GUID:c526a6e5ef6390b4bac811a244d297e6",
+        "GUID:f7682a76ed81e8c49915bc28ca915c12"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
