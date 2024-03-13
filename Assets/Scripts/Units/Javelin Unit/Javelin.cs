@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudio
+namespace RogueApeStudios.Crusader.Units.JavelinUnit
 {
     public class Javelin : MonoBehaviour
     {

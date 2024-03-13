@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-namespace RogueApeStudio.Crusader.Units
+
+namespace RogueApeStudios.Crusader.Units
 {
     public class UnitMovement : MonoBehaviour
     {
