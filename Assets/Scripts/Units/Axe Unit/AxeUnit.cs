@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudios.Crusader.Units.AxeUnit
+namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnit : MonoBehaviour
     {
@@ -12,6 +12,7 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
         [SerializeField] private float _startAttackDistance = 2.0f;
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
+        [SerializeField] private Axe _axe;
 
         private IAxeUnitState _currentState;
         private IAxeUnitState[] _states;
@@ -37,22 +38,33 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
             _currentState.UpdateState(this);
         }
 
-        public void AddAxeUnitState(IAxeUnitState state)
+        private void AddAxeUnitState(IAxeUnitState state)
         {
             int index = (int)state.GetId();
             _states[index] = state;
         }
 
-        public IAxeUnitState GetAxeUnitState(AxeUnitStateId stateId)
+        internal IAxeUnitState GetAxeUnitState(AxeUnitStateId stateId)
         {
             int index = (int)stateId;
             return _states[index];
         }
 
-        public void ChangeState(AxeUnitStateId stateId)
+        internal void ChangeState(AxeUnitStateId stateId)
         {
             _currentState = GetAxeUnitState(stateId);
             _currentState.EnterState(this);
         }
+
+        #region Animation Events
+        internal void TurnOnAxeHitbox()
+        {
+            _axe.TurnOnHitbox();
+        }
+        internal void TurnOffAxeHitbox()
+        {
+            _axe.TurnOffHitbox();
+        }
+        #endregion
     }
 }

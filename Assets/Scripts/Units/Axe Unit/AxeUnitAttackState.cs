@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudios.Crusader.Units.AxeUnit
+namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnitAttackState : IAxeUnitState
     {

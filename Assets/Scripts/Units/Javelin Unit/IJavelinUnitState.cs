@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudios.Crusader.Units.JavelinUnit
+namespace RogueApeStudio.Crusader.Units.JavelinUnit
 {
     public enum JavelinUnitStateId
     {
