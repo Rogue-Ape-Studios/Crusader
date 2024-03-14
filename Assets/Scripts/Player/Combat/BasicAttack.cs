@@ -107,7 +107,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 _playerController.SetReadInput(false);
                 await UniTask.WaitForSeconds(_delay, cancellationToken: token);
                 _rb.velocity = Vector3.zero;
-                _playerController.SetReadInput(true);
+                
                 _canAttack = true;
             }
             catch (OperationCanceledException)
@@ -131,6 +131,8 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 _windowCountdown = false;
                 _playerController.SetReadInput(true);
             }
+            else if (_attackWindow < 0.4f)
+                _playerController.SetReadInput(true);
         }
 
         private void EnableBasicAttack()
