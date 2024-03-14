@@ -14,7 +14,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private float _force = 10f;
         [SerializeField] private Rigidbody _rb;
-        
+
         [Header("Raycast necessities")]
         [SerializeField] private Camera _cam;
         [SerializeField] private string[] _tags;
@@ -45,13 +45,13 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         private void OnEnable()
         {
-            _attackInput.started += OnAttack;
+            _attackInput.performed += OnAttack;
             EnableBasicAttack();
         }
 
         private void OnDisable()
         {
-            _attackInput.started -= OnAttack;
+            _attackInput.performed -= OnAttack;
             DisableBasicAttack();
         }
 
@@ -63,7 +63,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.started && _canAttack)
+            if (_canAttack)
             {
                 _comboCounter++;
                 Attack();
@@ -95,7 +95,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             }
             _windowCountdown = true;
             _windowCountdown = true;
-            if (_comboCounter == 3)
+            if (_comboCounter >= 3)
                 _comboCounter = 0;
         }
 
@@ -105,7 +105,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             {
                 _canAttack = false;
                 _playerController.SetReadInput(false);
-                await UniTask.WaitForSeconds(_delay);
+                await UniTask.WaitForSeconds(_delay, cancellationToken: token);
                 _rb.velocity = Vector3.zero;
                 _playerController.SetReadInput(true);
                 _canAttack = true;
