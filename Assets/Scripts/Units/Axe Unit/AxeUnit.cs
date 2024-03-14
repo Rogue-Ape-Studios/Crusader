@@ -10,6 +10,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         [SerializeField] private float _stopDistance = 1.8f;
         [SerializeField] private float _movementSpeed = 3.5f;
         [SerializeField] private float _startAttackDistance = 2.0f;
+        [SerializeField] private float _damageAmount = 10f;
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
         [SerializeField] private Axe _axe;
@@ -29,8 +30,10 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             AddAxeUnitState(new AxeUnitChaseState());
             AddAxeUnitState(new AxeUnitAttackState());
             _currentState = GetAxeUnitState(AxeUnitStateId.Chase);
+            _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
             LocalUnitMovement.SetSpeed(_movementSpeed);
+            _axe.SetDamageAmount(_damageAmount);
         }
 
         void Update()
@@ -54,6 +57,11 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         {
             _currentState = GetAxeUnitState(stateId);
             _currentState.EnterState(this);
+        }
+        internal bool IsInRange()
+        {
+            Vector3 vectorDistance = LocalUnitMovement._playerTransform.position - transform.position;
+            return vectorDistance.magnitude <= StartAttackDistance;
         }
 
         #region Animation Events

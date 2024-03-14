@@ -18,7 +18,10 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
 
         public void UpdateState(AxeUnit axeUnit)
         {
-            axeUnit.ChangeState(AxeUnitStateId.Chase);
+            if (!axeUnit.IsInRange())
+            {
+                axeUnit.ChangeState(AxeUnitStateId.Chase);
+            }
         }
     }
 }

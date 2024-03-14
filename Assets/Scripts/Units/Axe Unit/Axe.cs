@@ -19,6 +19,11 @@ public class Axe : MonoBehaviour
         health.Hit(_damageAmount);
     }
 
+    internal void SetDamageAmount(float damageAmount)
+    {
+        _damageAmount = damageAmount;
+    }
+
     internal void TurnOnHitbox()
     {
         _axeHitBox.enabled = true;

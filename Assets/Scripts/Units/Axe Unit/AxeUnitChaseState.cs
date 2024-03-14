@@ -9,7 +9,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
     {
         public void EnterState(AxeUnit axeUnit)
         {
-            //start run animation here when available
+            axeUnit.LocalAnimator.SetTrigger("Chase");
         }
 
         public AxeUnitStateId GetId()
