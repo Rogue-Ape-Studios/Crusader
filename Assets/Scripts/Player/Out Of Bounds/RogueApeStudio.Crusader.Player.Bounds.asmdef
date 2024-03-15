@@ -1,0 +1,14 @@
+{
+    "name": "RogueApeStudio.Crusader.Player.Bounds",
+    "rootNamespace": "RogueApeStudio.Crusader.Player.Bounds",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
