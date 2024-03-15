@@ -19,9 +19,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private bool _readInputs = true;
 
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private Camera _cam;
         [SerializeField] private Animator _animator;
-        [SerializeField] private string[] _tags;
 
         [Header("Movement Options")]
         [SerializeField] private int _moveSpeed = 5;
