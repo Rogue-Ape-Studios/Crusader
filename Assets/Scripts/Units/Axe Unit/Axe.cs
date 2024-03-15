@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Axe : MonoBehaviour
-{
-    [SerializeField] private float _damageAmount;
+{   
     [SerializeField] Collider _axeHitBox;
+    private float _damageAmount;
 
     private void OnTriggerEnter(Collider other)
     {

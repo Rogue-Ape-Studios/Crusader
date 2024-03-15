@@ -7,10 +7,13 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnit : MonoBehaviour
     {
+        [Header("Movement settings")]
         [SerializeField] private float _stopDistance = 1.8f;
         [SerializeField] private float _movementSpeed = 3.5f;
         [SerializeField] private float _startAttackDistance = 2.0f;
+        [Header("Attack settings")]
         [SerializeField] private float _damageAmount = 10f;
+        [Header("Dependancies")]
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
         [SerializeField] private Axe _axe;

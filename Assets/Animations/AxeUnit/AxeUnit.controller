@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ee22c011abf6abe49b63b9ece687565f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5c7759269930edd4db1ad307cf1abddc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -107,7 +107,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Generic Enemy
+  m_Name: AxeUnit
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Death
@@ -227,7 +227,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 99646997fb029d04c8723c44eb7baf6a, type: 2}
+  m_Motion: {fileID: 7400000, guid: b4df0266d21960b4385bc7e03cf16858, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -253,7 +253,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4f86fad6cd157e04b8ea588c3228a7dd, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8c6aa2cc93e6f5349b3cf43d206b81a5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -279,7 +279,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 239e3603d4e43bf40a3ca44d3ced83f2, type: 2}
+  m_Motion: {fileID: 7400000, guid: 18ae3b7949cccdf4fa9fbc09d98b4d0e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
