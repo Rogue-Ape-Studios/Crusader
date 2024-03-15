@@ -19,6 +19,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private bool _readInputs = true;
 
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Transform _transform;
         [SerializeField] private Animator _animator;
 
         [Header("Movement Options")]
@@ -64,7 +65,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 _animator.SetTrigger("Dash");
                 SetReadInput(false);
 
-                Vector3 dashForce = _rb.transform.forward * _dashSpeed;
+                Vector3 dashForce = _transform.forward * _dashSpeed;
 
                 _rb.AddForce(dashForce, ForceMode.Impulse);
             }
@@ -98,7 +99,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (_isDashing)
             {
-                _rb.transform.rotation = Quaternion.LookRotation(direction);
+                _transform.rotation = Quaternion.LookRotation(direction);
             }
             else 
             {
@@ -125,7 +126,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         public void AddForce(float force)
         {
             SetReadInput(false);
-            Vector3 forceDirection = _rb.transform.forward * force;
+            Vector3 forceDirection = _transform.forward * force;
             _rb.AddForce(forceDirection, ForceMode.Impulse);
         }
 
