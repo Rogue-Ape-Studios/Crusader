@@ -19,6 +19,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private bool _readInputs = true;
 
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Transform _transform;
         [SerializeField] private Animator _animator;
 
         [Header("Movement Options")]
@@ -59,27 +60,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (!_isDashing && _dashCooldownTimer <= 0 && _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
-                Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
-                Vector3 dashDirection = Vector3.forward;
-
                 _dashCooldownTimer = _dashCooldown;
                 _isDashing = true;
                 _animator.SetTrigger("Dash");
                 SetReadInput(false);
 
-                if (inputDirection != Vector2.zero)
-                {
-                    dashDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-                }
-                else
-                {
-                    if (_lastMovementDirection != Vector3.zero)
-                    {
-                        dashDirection = _lastMovementDirection.normalized;
-                    }
-                }
-
-                Vector3 dashForce = dashDirection * _dashSpeed;
+                Vector3 dashForce = _transform.forward * _dashSpeed;
 
                 _rb.AddForce(dashForce, ForceMode.Impulse);
             }
@@ -113,7 +99,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (_isDashing)
             {
-                _rb.transform.rotation = Quaternion.LookRotation(direction);
+                _transform.rotation = Quaternion.LookRotation(direction);
             }
             else 
             {
@@ -140,7 +126,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         public void AddForce(float force)
         {
             SetReadInput(false);
-            Vector3 forceDirection = _rb.transform.forward * force;
+            Vector3 forceDirection = _transform.forward * force;
             _rb.AddForce(forceDirection, ForceMode.Impulse);
         }
 
