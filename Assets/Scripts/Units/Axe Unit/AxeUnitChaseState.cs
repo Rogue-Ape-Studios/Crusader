@@ -20,8 +20,8 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         public void UpdateState(AxeUnit axeUnit)
         {
             axeUnit.LocalUnitMovement.MoveToPlayer();
-            Vector3 vectordistance = axeUnit.LocalUnitMovement._playerTransform.position - axeUnit.transform.position;
-            if (vectordistance.magnitude < axeUnit.StartAttackDistance)
+            if (axeUnit.PlayerDistance() < axeUnit.StartAttackDistance
+                && axeUnit.LocalAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {
                 axeUnit.ChangeState(AxeUnitStateId.Attack);
             }

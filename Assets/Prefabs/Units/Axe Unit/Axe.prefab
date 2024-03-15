@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2042852236199114820}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071067, y: 0.000000029802308, z: -0.000000076368416, w: 0.70710677}
-  m_LocalPosition: {x: 0.08200062, y: 0.02499989, z: -0.073000126}
+  m_LocalPosition: {x: -4.3, y: 1.29, z: -0.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -102,7 +102,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -124,7 +124,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -196,5 +196,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c5194792850ba4289776a8d4bcd9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 10
   _axeHitBox: {fileID: 6138377076980311478}

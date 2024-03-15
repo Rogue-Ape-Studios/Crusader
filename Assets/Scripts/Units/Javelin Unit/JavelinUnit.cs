@@ -74,7 +74,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         #region Public Methods
         public bool IsInRange()
         {
-            Vector3 vectorDistance = LocalUnitMovement._playerTransform.position - transform.position;
+            Vector3 vectorDistance = LocalUnitMovement.PlayerTransform.position - transform.position;
             return vectorDistance.magnitude <= StartAttackDistance;
         }
 
@@ -82,7 +82,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         {
             for (int i = 0; i < _amountOfRayCasts; i++)
             {
-                Vector3 playerPosition = LocalUnitMovement._playerTransform.position;
+                Vector3 playerPosition = LocalUnitMovement.PlayerTransform.position;
                 Vector3 unitPosition = transform.position;
                 float raycastX = (_unitWidth / (_amountOfRayCasts -1) * i) - (_unitWidth / 2);
                 Vector3 raycastPosition = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3( raycastX, 0, 0);
@@ -92,7 +92,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
                 if (Physics.Raycast(raycastPosition, playerDirection, out hit, AttackRange, ~LayerMask.GetMask("Character")))
                 {
                     Debug.DrawLine(raycastPosition, playerPosition, Color.red);
-                    if (hit.collider.gameObject.layer != LocalUnitMovement._playerTransform.gameObject.layer)
+                    if (hit.collider.gameObject.layer != LocalUnitMovement.PlayerTransform.gameObject.layer)
                     { return false; }
                 }
                 else { return false; }

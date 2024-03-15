@@ -18,7 +18,8 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
 
         public void UpdateState(AxeUnit axeUnit)
         {
-            if (!axeUnit.IsInRange())
+            if (axeUnit.PlayerDistance() > axeUnit.StopAttackDistance 
+                && axeUnit.LocalAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 axeUnit.ChangeState(AxeUnitStateId.Chase);
             }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2202621941329116366}
   - component: {fileID: 7794766668430407146}
   - component: {fileID: 5264771843949098203}
+  - component: {fileID: 6062539359108303844}
   m_Layer: 10
   m_Name: AxeUnit
   m_TagString: Untagged
@@ -89,6 +90,7 @@ MonoBehaviour:
   _movementSpeed: 3.5
   _startAttackDistance: 2
   _damageAmount: 10
+  _attackSpeed: 2
   _localUnitMovement: {fileID: 2202621941329116366}
   _localAnimator: {fileID: 5264771843949098203}
   _axe: {fileID: 2866790715923137253}
@@ -113,6 +115,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &6062539359108303844
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253549454546649992}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4628527435117529037
 GameObject:
   m_ObjectHideFlags: 0
@@ -3132,7 +3157,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -3154,7 +3179,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30

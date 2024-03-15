@@ -9,12 +9,13 @@ namespace RogueApeStudio.Crusader.Units
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private float _aimTurnSpeed = 5;
+        [SerializeField] private Transform _playerTranform;
 
-        public Transform _playerTransform;
+        public Transform PlayerTransform => _playerTranform;
 
         public void MoveToPlayer()
         {
-            _navMeshAgent.SetDestination(_playerTransform.position);
+            _navMeshAgent.SetDestination(PlayerTransform.position);
         }
         public void SetStopDistance(float stoppingdistance)
         {
@@ -30,7 +31,7 @@ namespace RogueApeStudio.Crusader.Units
         }
         public void FacePlayer()
         {
-            Vector3 direction = (_playerTransform.position - transform.position).normalized;
+            Vector3 direction = (PlayerTransform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _aimTurnSpeed);
         }
