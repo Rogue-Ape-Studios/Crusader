@@ -59,27 +59,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (!_isDashing && _dashCooldownTimer <= 0 && _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
-                Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
-                Vector3 dashDirection = Vector3.forward;
-
                 _dashCooldownTimer = _dashCooldown;
                 _isDashing = true;
                 _animator.SetTrigger("Dash");
                 SetReadInput(false);
 
-                if (inputDirection != Vector2.zero)
-                {
-                    dashDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-                }
-                else
-                {
-                    if (_lastMovementDirection != Vector3.zero)
-                    {
-                        dashDirection = _lastMovementDirection.normalized;
-                    }
-                }
-
-                Vector3 dashForce = dashDirection * _dashSpeed;
+                Vector3 dashForce = _rb.transform.forward * _dashSpeed;
 
                 _rb.AddForce(dashForce, ForceMode.Impulse);
             }
