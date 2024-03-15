@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudios.Crusader.Units.AxeUnit
+namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnit : MonoBehaviour
     {
+        [Header("Movement settings")]
         [SerializeField] private float _stopDistance = 1.8f;
         [SerializeField] private float _movementSpeed = 3.5f;
         [SerializeField] private float _startAttackDistance = 2.0f;
+        [SerializeField] private float _stopAttackDistance = 3.0f;
+        [Header("Attack settings")]
+        [SerializeField] private float _damageAmount = 10f;
+        [SerializeField] private float _attackSpeed = 1;
+        [Header("Dependancies")]
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
+        [SerializeField] private Axe _axe;
 
         private IAxeUnitState _currentState;
         private IAxeUnitState[] _states;
@@ -19,6 +26,7 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
         public UnitMovement LocalUnitMovement => _localUnitMovement;
         public Animator LocalAnimator => _localAnimator;
         public float StartAttackDistance => _startAttackDistance;
+        public float StopAttackDistance => _stopAttackDistance;
 
 
         private void Awake()
@@ -28,8 +36,11 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
             AddAxeUnitState(new AxeUnitChaseState());
             AddAxeUnitState(new AxeUnitAttackState());
             _currentState = GetAxeUnitState(AxeUnitStateId.Chase);
+            _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
             LocalUnitMovement.SetSpeed(_movementSpeed);
+            LocalAnimator.SetFloat("Attack Speed", _attackSpeed);
+            _axe.SetDamageAmount(_damageAmount);
         }
 
         void Update()
@@ -37,22 +48,38 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
             _currentState.UpdateState(this);
         }
 
-        public void AddAxeUnitState(IAxeUnitState state)
+        private void AddAxeUnitState(IAxeUnitState state)
         {
             int index = (int)state.GetId();
             _states[index] = state;
         }
 
-        public IAxeUnitState GetAxeUnitState(AxeUnitStateId stateId)
+        internal IAxeUnitState GetAxeUnitState(AxeUnitStateId stateId)
         {
             int index = (int)stateId;
             return _states[index];
         }
 
-        public void ChangeState(AxeUnitStateId stateId)
+        internal void ChangeState(AxeUnitStateId stateId)
         {
             _currentState = GetAxeUnitState(stateId);
             _currentState.EnterState(this);
         }
+        internal float PlayerDistance()
+        {
+            Vector3 vectorDistance = LocalUnitMovement.PlayerTransform.position - transform.position;
+            return vectorDistance.magnitude;
+        }
+
+        #region Animation Events
+        internal void TurnOnAxeHitbox()
+        {
+            _axe.TurnOnHitbox();
+        }
+        internal void TurnOffAxeHitbox()
+        {
+            _axe.TurnOffHitbox();
+        }
+        #endregion
     }
 }

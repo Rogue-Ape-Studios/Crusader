@@ -2,7 +2,8 @@
     "name": "RogueApeStudios.Units.JavelinUnit",
     "rootNamespace": "",
     "references": [
-        "RogueApeStudios.Units"
+        "RogueApeStudios.Units",
+        "RogueApeStudio.Crusader.HealthSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

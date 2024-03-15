@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RogueApeStudios.Crusader.Units.AxeUnit
+namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnitAttackState : IAxeUnitState
     {
@@ -18,7 +18,11 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
 
         public void UpdateState(AxeUnit axeUnit)
         {
-            axeUnit.ChangeState(AxeUnitStateId.Chase);
+            if (axeUnit.PlayerDistance() > axeUnit.StopAttackDistance 
+                && axeUnit.LocalAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                axeUnit.ChangeState(AxeUnitStateId.Chase);
+            }
         }
     }
 }

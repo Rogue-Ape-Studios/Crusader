@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace RogueApeStudios.Crusader.Units.AxeUnit
+namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnitChaseState : IAxeUnitState
     {
         public void EnterState(AxeUnit axeUnit)
         {
-            //start run animation here when available
+            axeUnit.LocalAnimator.SetTrigger("Chase");
         }
 
         public AxeUnitStateId GetId()
@@ -20,8 +20,8 @@ namespace RogueApeStudios.Crusader.Units.AxeUnit
         public void UpdateState(AxeUnit axeUnit)
         {
             axeUnit.LocalUnitMovement.MoveToPlayer();
-            Vector3 vectordistance = axeUnit.LocalUnitMovement._playerTransform.position - axeUnit.transform.position;
-            if (vectordistance.magnitude < axeUnit.StartAttackDistance)
+            if (axeUnit.PlayerDistance() < axeUnit.StartAttackDistance
+                && axeUnit.LocalAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {
                 axeUnit.ChangeState(AxeUnitStateId.Attack);
             }
