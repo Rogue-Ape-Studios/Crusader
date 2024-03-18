@@ -99,6 +99,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private void OnDestroy()
         {
             OnWaveComplete -= HandleWaveComplete;
+            OnLevelComplete -= HandleLevelComplete;
             _tokenSource.Cancel();
             _tokenSource.Dispose();
         }
