@@ -37540,10 +37540,20 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 68.7
       objectReference: {fileID: 0}
+    - target: {fileID: 7917757764212523961, guid: fd31b066f75af4847b279c65cb1c4b45,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.537
+      objectReference: {fileID: 0}
     - target: {fileID: 8092911469442555683, guid: fd31b066f75af4847b279c65cb1c4b45,
         type: 3}
       propertyPath: m_Name
       value: Out Of Bounds Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092911469442555683, guid: fd31b066f75af4847b279c65cb1c4b45,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 9115997825648630969, guid: fd31b066f75af4847b279c65cb1c4b45,
         type: 3}
@@ -37553,7 +37563,7 @@ PrefabInstance:
     - target: {fileID: 9115997825648630969, guid: fd31b066f75af4847b279c65cb1c4b45,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 9115997825648630969, guid: fd31b066f75af4847b279c65cb1c4b45,
         type: 3}
