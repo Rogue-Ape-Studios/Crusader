@@ -146,8 +146,10 @@ namespace RogueApeStudio.Crusader.Spawn
         /// <summary>
         /// Triggers the next wave to be spawned, or indicates that the level is complete.
         /// </summary>
-        internal async void NextWave()
+        internal async void NextWaveAsync()
         {
+            if(!enabled) return;
+            
             if (_currentWave >= _waves.Count)
             {
                 OnLevelComplete?.Invoke();
@@ -191,6 +193,7 @@ namespace RogueApeStudio.Crusader.Spawn
 
                     enemy.OnDeath += HandleEnemyDeath;
                     enemy.gameObject.SetActive(true);
+                    _remainingEnemies++;
                 }
                 await UniTask.Delay(TimeSpan.FromSeconds(CurrentWave.TimeBetweenSpawns), cancellationToken: token);
             }
@@ -199,6 +202,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private async UniTask RandomizedSpawnsAsync(CancellationToken token)
         {
             int enemyIndex = 0, enemyCount;
+
             while (CurrentWave.Enemies.Count != 0)
             {
                 enemyIndex = UnityEngine.Random.Range(0, CurrentWave.Enemies.Count);
@@ -212,6 +216,7 @@ namespace RogueApeStudio.Crusader.Spawn
                                             _waveHolder);
                     enemy.OnDeath += HandleEnemyDeath;
                     enemy.gameObject.SetActive(true);
+                    _remainingEnemies++;
                 }
 
                 CurrentWave.Enemies[enemyIndex].ReduceCount(enemyCount);
@@ -237,7 +242,7 @@ namespace RogueApeStudio.Crusader.Spawn
 
         private void HandleWaveComplete()
         {
-            NextWave();
+            NextWaveAsync();
         }
 
         private void HandleLevelComplete()
