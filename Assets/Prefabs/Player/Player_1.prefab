@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 5540765297703237006}
+  _transform: {fileID: 0}
   _animator: {fileID: 2085782947826321908}
   _moveSpeed: 5
   _rotationSpeed: 500
@@ -1661,15 +1662,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2749592132287825911}
-    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3460216242339283302}
     - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 70620539835829462}
+    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2749592132287825911}
   m_SourcePrefab: {fileID: 100100000, guid: 8f6b0c88789bc024189afa8e609cf122, type: 3}
 --- !u!4 &6998084461912407211 stripped
 Transform:
@@ -1745,21 +1746,6 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &2749592132287825911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998084461912713387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8286bcaa6ce0659469ff913f77f59c63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sword: {fileID: 6576037821882633470, guid: cfbeb27c643fefa47960e3d947e5a22d, type: 3}
-  _cam: {fileID: 9009624568066924811}
-  _cooldown: 1
 --- !u!114 &3460216242339283302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,10 +1758,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f335c18cde8494d83ab7975f5427b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spear: {fileID: 7174106797136470899, guid: b5723c1f27abab44592866cf0932e43e, type: 3}
+  _spear: {fileID: 5493998137168221730, guid: 8fd6bce9f82b25d47b3ba710dd8118d2, type: 3}
   _cam: {fileID: 9009624568066924811}
-  _cooldown: 1
+  _cooldown: 2
   _speed: 25
+  _cooldownUI: {fileID: 0}
 --- !u!114 &70620539835829462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1790,6 +1777,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 2.5
   _knockbackForce: 1
-  _cooldown: 1
-  _root: {fileID: 6998084461912411687}
-  _Effect: {fileID: 5413210425134656482, guid: 8ff0818fcfeb470459a316e857bc6d31, type: 3}
+  _cooldown: 5
+  _Effect: {fileID: 1015811141956628375, guid: e602738c458428444839d84795588688, type: 3}
+  _cooldownUI: {fileID: 0}
+--- !u!114 &2749592132287825911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998084461912713387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8286bcaa6ce0659469ff913f77f59c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sword: {fileID: 1527471427189726077, guid: 3a77e1dc66c0f6f48b28f5b838ee4478, type: 3}
+  _cam: {fileID: 9009624568066924811}
+  _cooldown: 10
+  _cooldownUI: {fileID: 0}
