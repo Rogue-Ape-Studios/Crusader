@@ -1,3 +1,4 @@
+using RogueApeStudio.Crusader.HealthSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +19,17 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         [SerializeField] private int _amountOfRayCasts = 3;
         [SerializeField] private float _unitWidth = 1f;
         [SerializeField] private float _secondsLineOfSightNeeded = 1f;
+        [SerializeField] private float _raycastHeight = 1f;
+        [SerializeField] private string _playerTag;
+        [Header("Death settings")]
+        [SerializeField] private float _destroyTime = 3;
         [Header("Dependencies")]
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
         [SerializeField] private GameObject _projectile;
         [SerializeField] private Transform _projectileSpawn;
+        [SerializeField] private Health _health;
+        [SerializeField] private Collider _collider;
 
         private IJavelinUnitState _currentState;
         private IJavelinUnitState[] _states;
@@ -35,6 +42,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         public Transform ProjectileSpawn => _projectileSpawn;
         public Vector2 ProjectileForce => _projectileForce;
         public float SecondsLineOfSightsNeeded => _secondsLineOfSightNeeded;
+        public float DestroyTime => _destroyTime;
 
 
         private void Awake()
@@ -43,9 +51,16 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             _states = new IJavelinUnitState[statesAmount];
             AddJavelinUnitState(new JavelinUnitChaseState());
             AddJavelinUnitState(new JavelinUnitAttackState());
+            AddJavelinUnitState(new JavelinUnitDeathState());
             _currentState = GetJavelinUnitState(JavelinUnitStateId.Chase);
+            _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
             LocalUnitMovement.SetSpeed(_movementSpeed);
+            _health.OnDeath += HandleDeath;
+        }
+        private void HandleDeath()
+        {
+            ChangeState(JavelinUnitStateId.Death);
         }
 
         void Update()
@@ -83,22 +98,36 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             for (int i = 0; i < _amountOfRayCasts; i++)
             {
                 Vector3 playerPosition = LocalUnitMovement.PlayerTransform.position;
+                playerPosition += new Vector3(0, _raycastHeight, 0);
                 Vector3 unitPosition = transform.position;
                 float raycastX = (_unitWidth / (_amountOfRayCasts -1) * i) - (_unitWidth / 2);
-                Vector3 raycastPosition = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3( raycastX, 0, 0);
+                Vector3 raycastPosition = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3( raycastX, _raycastHeight, 0);
                 raycastPosition = raycastPosition + unitPosition;
                 Vector3 playerDirection = playerPosition - raycastPosition;
                 RaycastHit hit;
                 if (Physics.Raycast(raycastPosition, playerDirection, out hit, AttackRange, ~LayerMask.GetMask("Character")))
                 {
                     Debug.DrawLine(raycastPosition, playerPosition, Color.red);
-                    if (hit.collider.gameObject.layer != LocalUnitMovement.PlayerTransform.gameObject.layer)
-                    { return false; }
+                    if (!hit.collider.gameObject.transform.root.CompareTag(_playerTag))
+                    {
+                        Debug.Log("lost");
+                        return false; 
+                    }
                 }
-                else { return false; }
+                else { Debug.Log("lost"); return false; }
             }
             return true;
         }
+
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
+        internal void TurnOffCollider()
+        {
+            _collider.enabled = false;
+        }
+
         #endregion
 
         #region Animation Events

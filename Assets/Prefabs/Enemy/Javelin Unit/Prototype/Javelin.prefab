@@ -148,3 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 5080865010677066659}
   _despawnDuration: 2
+  _damageAmount: 5
+  _tags:
+  - Player
