@@ -36,7 +36,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private int _currentWave = 0;
         private int _remainingEnemies;
 
-        private CancellationTokenSource _tokenSource = new();
+        private readonly CancellationTokenSource _tokenSource = new();
 
         #endregion
 
@@ -68,17 +68,12 @@ namespace RogueApeStudio.Crusader.Spawn
         internal Wave CurrentWave => _waves[_currentWave];
 
         /// <summary>
-        /// A random spawn position in the list.
-        /// </summary>
-        internal Vector3 SpawnPosition => _spawnLocations[UnityEngine.Random.Range(0, _spawnLocations.Count)].position;
-
-        /// <summary>
         /// The begin tangent for the Bezier curve.
         /// </summary>
         public Vector3 BeginTangent
         {
-            set {_beginTangent = value;}
-            get { return _beginTangent;}
+            set { _beginTangent = value; }
+            get { return _beginTangent; }
         }
 
         /// <summary>
@@ -86,8 +81,8 @@ namespace RogueApeStudio.Crusader.Spawn
         /// </summary>
         public Vector3 EndTangent
         {
-            set {_endTangent = value;}
-            get { return _endTangent;}
+            set { _endTangent = value; }
+            get { return _endTangent; }
         }
 
         #endregion
@@ -104,6 +99,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private void OnDestroy()
         {
             OnWaveComplete -= HandleWaveComplete;
+            OnLevelComplete -= HandleLevelComplete;
             _tokenSource.Cancel();
             _tokenSource.Dispose();
         }
@@ -117,7 +113,7 @@ namespace RogueApeStudio.Crusader.Spawn
         /// </summary>
         public void AddSpawn()
         {
-            _spawnLocations.Add(Instantiate(_spawnLocations[0],_spawnLocationHolder));
+            _spawnLocations.Add(Instantiate(_spawnLocations[0], _spawnLocationHolder));
         }
 
         /// <summary>
@@ -125,7 +121,7 @@ namespace RogueApeStudio.Crusader.Spawn
         /// </summary>
         public void DestroyLastSpawn()
         {
-            if(_spawnLocations.Count <= 1)
+            if (_spawnLocations.Count <= 1)
             {
                 Debug.LogError("Must have at least 1 spawnpoint!");
                 return;
@@ -150,8 +146,10 @@ namespace RogueApeStudio.Crusader.Spawn
         /// <summary>
         /// Triggers the next wave to be spawned, or indicates that the level is complete.
         /// </summary>
-        internal async void NextWave()
+        internal async void NextWaveAsync()
         {
+            if(!enabled) return;
+            
             if (_currentWave >= _waves.Count)
             {
                 OnLevelComplete?.Invoke();
@@ -189,12 +187,13 @@ namespace RogueApeStudio.Crusader.Spawn
                 for (var i = 0; i < enemySet.Count; i++)
                 {
                     var enemy = Instantiate(enemySet.EnemyPrefab,
-                                            SpawnPosition,
+                                            GetRandomSpawn(),
                                             Quaternion.identity,
                                             _waveHolder);
 
                     enemy.OnDeath += HandleEnemyDeath;
-                    enemy.enabled = true;
+                    enemy.gameObject.SetActive(true);
+                    _remainingEnemies++;
                 }
                 await UniTask.Delay(TimeSpan.FromSeconds(CurrentWave.TimeBetweenSpawns), cancellationToken: token);
             }
@@ -203,6 +202,7 @@ namespace RogueApeStudio.Crusader.Spawn
         private async UniTask RandomizedSpawnsAsync(CancellationToken token)
         {
             int enemyIndex = 0, enemyCount;
+
             while (CurrentWave.Enemies.Count != 0)
             {
                 enemyIndex = UnityEngine.Random.Range(0, CurrentWave.Enemies.Count);
@@ -211,11 +211,12 @@ namespace RogueApeStudio.Crusader.Spawn
                 for (int i = 0; i < enemyCount; i++)
                 {
                     var enemy = Instantiate(CurrentWave.Enemies[enemyIndex].EnemyPrefab,
-                                            SpawnPosition,
+                                            GetRandomSpawn(),
                                             Quaternion.identity,
                                             _waveHolder);
                     enemy.OnDeath += HandleEnemyDeath;
-                    enemy.enabled = true;
+                    enemy.gameObject.SetActive(true);
+                    _remainingEnemies++;
                 }
 
                 CurrentWave.Enemies[enemyIndex].ReduceCount(enemyCount);
@@ -241,12 +242,27 @@ namespace RogueApeStudio.Crusader.Spawn
 
         private void HandleWaveComplete()
         {
-            NextWave();
+            NextWaveAsync();
         }
 
         private void HandleLevelComplete()
         {
             Disable();
+        }
+
+        private Vector3 GetRandomSpawn()
+        {
+            int randomVal = UnityEngine.Random.Range(0, _spawnLocations.Count);
+            try
+            {
+                return _spawnLocations[randomVal].position;
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Debug.LogError("The value for the spawn positions was out of range!Value: " + randomVal + "\n" + ex.Message);
+            }
+
+            return _spawnLocations[0].position;
         }
 
         private void OnDrawGizmos()
