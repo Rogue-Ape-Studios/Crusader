@@ -6,12 +6,14 @@ using RogueApeStudio.Crusader.Input;
 using RogueApeStudio.Crusader.Player.Movement;
 using System.Threading;
 using System;
+using RogueApeStudio.Crusader.HealthSystem;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
     public class BasicAttack : MonoBehaviour
     {
         [SerializeField] private PlayerController _playerController;
+        [SerializeField] private Health _health;
         [SerializeField] private float _force = 10f;
         [SerializeField] private Rigidbody _rb;
 
@@ -47,12 +49,15 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void OnEnable()
         {
             _attackInput.performed += OnAttack;
+            _health.OnDeath += HandleDeath;
             EnableBasicAttack();
         }
+
 
         private void OnDisable()
         {
             _attackInput.performed -= OnAttack;
+            _health.OnDeath -= HandleDeath;
             DisableBasicAttack();
         }
 
@@ -145,6 +150,11 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void DisableBasicAttack()
         {
             _attackInput?.Disable();
+        }
+
+        private void HandleDeath()
+        {
+            _canAttack = false;
         }
     }
 }

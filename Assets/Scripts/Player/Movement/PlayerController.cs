@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
+using RogueApeStudio.Crusader.HealthSystem;
 using System.Linq;
 using UnityEngine.EventSystems;
 using System.Threading;
@@ -21,6 +22,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Transform _transform;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Health _health;
 
         [Header("Movement Options")]
         [SerializeField] private int _moveSpeed = 5;
@@ -43,6 +45,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnEnable()
         {
+            _health.OnDeath += HandleDeath;
             _dashInput.performed += OnDash;
             EnableDash();
             EnableMovement();
@@ -53,6 +56,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             DisableMovement();
             DisableDash();
             _dashInput.performed -= OnDash;
+            _health.OnDeath -= HandleDeath;
         }
 
 
@@ -139,6 +143,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             OnMove();
             HandleDashTimers();
+        }
+
+        private void HandleDeath()
+        {
+            _crusaderInputActions.Player.Disable();
+            _crusaderInputActions.UI.Enable();
         }
 
         private void EnableMovement()
