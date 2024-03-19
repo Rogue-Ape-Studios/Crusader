@@ -14,10 +14,6 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         [SerializeField] private float _damageAmount = 5f;
         [SerializeField] private string[] _tags;
 
-        private void Awake()
-        {
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (_tags.Any(tag => other.transform.root.CompareTag(tag)))

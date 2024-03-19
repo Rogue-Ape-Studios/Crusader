@@ -6,7 +6,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
     public class AxeUnitDeathState : IAxeUnitState
     {
-        private float timer = 0f;
+        private float _timer = 0f;
         public void EnterState(AxeUnit axeUnit)
         {
             axeUnit.LocalAnimator.SetTrigger("Death");
@@ -27,8 +27,8 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         }
         private bool Timer(float time)
         {
-            timer += Time.deltaTime;
-            if(timer >= time)
+            _timer += Time.deltaTime;
+            if(_timer >= time)
             {
                 return true;
             }

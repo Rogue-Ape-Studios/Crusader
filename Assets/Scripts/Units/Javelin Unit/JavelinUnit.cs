@@ -68,32 +68,32 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             _currentState.UpdateState(this);
         }
 
-        public void AddJavelinUnitState(IJavelinUnitState state)
+        internal void AddJavelinUnitState(IJavelinUnitState state)
         {
             int index = (int)state.GetId();
             _states[index] = state;
         }
 
-        public IJavelinUnitState GetJavelinUnitState(JavelinUnitStateId stateId)
+        internal IJavelinUnitState GetJavelinUnitState(JavelinUnitStateId stateId)
         {
             int index = (int)stateId;
             return _states[index];
         }
 
-        public void ChangeState(JavelinUnitStateId stateId)
+        internal void ChangeState(JavelinUnitStateId stateId)
         {
             _currentState = GetJavelinUnitState(stateId);
             _currentState.EnterState(this);
         }
 
         #region Public Methods
-        public bool IsInRange()
+        internal bool IsInRange()
         {
             Vector3 vectorDistance = LocalUnitMovement.PlayerTransform.position - transform.position;
             return vectorDistance.magnitude <= StartAttackDistance;
         }
 
-        public bool HasLineOfSight()
+        internal bool HasLineOfSight()
         {
             for (int i = 0; i < _amountOfRayCasts; i++)
             {
@@ -119,7 +119,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             return true;
         }
 
-        public void DestroySelf()
+        internal void DestroySelf()
         {
             Destroy(gameObject);
         }
@@ -132,7 +132,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
 
         #region Animation Events
 
-        public void SpawnProjectile()
+        internal void SpawnProjectile()
         {
             Rigidbody rb = Instantiate(Projectile, ProjectileSpawn.transform.position, transform.rotation).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * ProjectileForce.x, ForceMode.Impulse);
