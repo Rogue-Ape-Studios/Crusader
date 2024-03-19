@@ -22,7 +22,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Transform _transform;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Health _health;
 
         [Header("Movement Options")]
         [SerializeField] private int _moveSpeed = 5;
@@ -45,7 +44,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnEnable()
         {
-            _health.OnDeath += HandleDeath;
             _dashInput.performed += OnDash;
             EnableDash();
             EnableMovement();
@@ -56,7 +54,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
             DisableMovement();
             DisableDash();
             _dashInput.performed -= OnDash;
-            _health.OnDeath -= HandleDeath;
         }
 
 
@@ -95,7 +92,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             else
             {
                 _animator.SetFloat("Speed", 0f);
-            } 
+            }
 
         }
 
@@ -105,7 +102,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             {
                 _transform.rotation = Quaternion.LookRotation(direction);
             }
-            else 
+            else
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
                 Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
@@ -127,28 +124,10 @@ namespace RogueApeStudio.Crusader.Player.Movement
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
         }
 
-        public void AddForce(float force)
-        {
-            SetReadInput(false);
-            Vector3 forceDirection = _transform.forward * force;
-            _rb.AddForce(forceDirection, ForceMode.Impulse);
-        }
-
-        public void SetReadInput(bool readInput)
-        {
-            _readInputs = readInput;
-        }
-
         private void FixedUpdate()
         {
             OnMove();
             HandleDashTimers();
-        }
-
-        private void HandleDeath()
-        {
-            _crusaderInputActions.Player.Disable();
-            _crusaderInputActions.UI.Enable();
         }
 
         private void EnableMovement()
@@ -170,5 +149,22 @@ namespace RogueApeStudio.Crusader.Player.Movement
             _dashInput.Disable();
         }
 
+        public void SetReadInput(bool readInput)
+        {
+            _readInputs = readInput;
+        }
+
+        public void AddForce(float force)
+        {
+            SetReadInput(false);
+            Vector3 forceDirection = _transform.forward * force;
+            _rb.AddForce(forceDirection, ForceMode.Impulse);
+        }
+
+        public void ToggleInputActions()
+        {
+            _crusaderInputActions.Player.Disable();
+            _crusaderInputActions.UI.Enable();
+        }
     }
 }

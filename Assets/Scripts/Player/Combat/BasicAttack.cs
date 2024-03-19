@@ -13,7 +13,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
     public class BasicAttack : MonoBehaviour
     {
         [SerializeField] private PlayerController _playerController;
-        [SerializeField] private Health _health;
         [SerializeField] private float _force = 10f;
         [SerializeField] private Rigidbody _rb;
 
@@ -49,7 +48,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void OnEnable()
         {
             _attackInput.performed += OnAttack;
-            _health.OnDeath += HandleDeath;
             EnableBasicAttack();
         }
 
@@ -57,7 +55,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void OnDisable()
         {
             _attackInput.performed -= OnAttack;
-            _health.OnDeath -= HandleDeath;
             DisableBasicAttack();
         }
 
@@ -152,9 +149,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
             _attackInput?.Disable();
         }
 
-        private void HandleDeath()
+        public void SetCanAttack(bool canAttack)
         {
-            _canAttack = false;
+            _canAttack = canAttack;
         }
     }
 }
