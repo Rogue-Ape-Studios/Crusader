@@ -13,15 +13,15 @@ namespace RogueApeStudio.Crusader.UI
 
         void Start()
         {
-            _health.OnDeath += HandleDeath;
+            _health.OnDeath += HandleOnDeath;
         }
 
         private void OnDestroy()
         {
-            _health.OnDeath -= HandleDeath;
+            _health.OnDeath -= HandleOnDeath;
         }
 
-        private void HandleDeath()
+        private void HandleOnDeath()
         {
             _canvas.gameObject.SetActive(true);
         }
