@@ -1,3 +1,4 @@
+using RogueApeStudio.Crusader.HealthSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,10 +16,14 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         [Header("Attack settings")]
         [SerializeField] private float _damageAmount = 10f;
         [SerializeField] private float _attackSpeed = 1;
+        [Header("Death settings")]
+        [SerializeField] private float _destroyTime = 3;
         [Header("Dependancies")]
         [SerializeField] private UnitMovement _localUnitMovement;
         [SerializeField] private Animator _localAnimator;
         [SerializeField] private Axe _axe;
+        [SerializeField] private Health _health;
+        [SerializeField] private Collider _collider;
 
         private IAxeUnitState _currentState;
         private IAxeUnitState[] _states;
@@ -27,6 +32,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         public Animator LocalAnimator => _localAnimator;
         public float StartAttackDistance => _startAttackDistance;
         public float StopAttackDistance => _stopAttackDistance;
+        public float DestroyTime => _destroyTime;
 
 
         private void Awake()
@@ -35,14 +41,19 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             _states = new IAxeUnitState[statesAmount];
             AddAxeUnitState(new AxeUnitChaseState());
             AddAxeUnitState(new AxeUnitAttackState());
+            AddAxeUnitState(new AxeUnitDeathState());
             _currentState = GetAxeUnitState(AxeUnitStateId.Chase);
             _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
             LocalUnitMovement.SetSpeed(_movementSpeed);
             LocalAnimator.SetFloat("Attack Speed", _attackSpeed);
             _axe.SetDamageAmount(_damageAmount);
+            _health.OnDeath += HandleDeath;
         }
-
+        private void HandleDeath()
+        {
+            ChangeState(AxeUnitStateId.Death);
+        }
         void Update()
         {
             _currentState.UpdateState(this);
@@ -65,10 +76,21 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             _currentState = GetAxeUnitState(stateId);
             _currentState.EnterState(this);
         }
+
         internal float PlayerDistance()
         {
             Vector3 vectorDistance = LocalUnitMovement.PlayerTransform.position - transform.position;
             return vectorDistance.magnitude;
+        }
+
+        internal void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
+
+        internal void TurnOffCollider()
+        {
+            _collider.enabled = false;
         }
 
         #region Animation Events

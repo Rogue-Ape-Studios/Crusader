@@ -7,7 +7,8 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
     public enum AxeUnitStateId
     {
         Chase,
-        Attack
+        Attack,
+        Death
     }
 
     public interface IAxeUnitState

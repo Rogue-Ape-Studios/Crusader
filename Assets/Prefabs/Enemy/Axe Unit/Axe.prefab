@@ -197,3 +197,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _axeHitBox: {fileID: 6138377076980311478}
+  _tags:
+  - Player
