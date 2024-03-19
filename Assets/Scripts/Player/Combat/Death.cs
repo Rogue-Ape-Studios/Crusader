@@ -13,6 +13,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private Health _health;
         [SerializeField] private BasicAttack _basicAttack;
         [SerializeField] private PlayerController _playerController;
+        [SerializeField] private Animator _animator;
 
         void Start()
         {
@@ -28,6 +29,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         {
             _playerController.ToggleInputActions();
             _basicAttack.SetCanAttack(false);
+            _animator.SetTrigger("Death");
         }
     }
 }
