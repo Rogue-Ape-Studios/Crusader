@@ -49,7 +49,7 @@ namespace RogueApeStudio.Crusader.HealthSystem
         public void Hit(float damage)
         {
             _currentHealth -= damage;
-            if (_currentHealth < 0)
+            if (_currentHealth <= 0)
             {
                 _currentHealth = 0;
                 OnDeath?.Invoke();
