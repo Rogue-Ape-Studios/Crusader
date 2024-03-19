@@ -17,15 +17,15 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         void Start()
         {
-            _health.OnDeath += HandleDeath;
+            _health.OnDeath += HandleOnDeath;
         }
 
         private void OnDestroy()
         {
-            _health.OnDeath -= HandleDeath;
+            _health.OnDeath -= HandleOnDeath;
         }
 
-        private void HandleDeath()
+        private void HandleOnDeath()
         {
             _playerController.ToggleInputActions();
             _basicAttack.SetCanAttack(false);

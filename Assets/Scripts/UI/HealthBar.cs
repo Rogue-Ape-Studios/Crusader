@@ -17,16 +17,16 @@ namespace RogueApeStudio.Crusader.UI.Healthbar
 
         private void Start()
         {
-            _player.OnDeath += HandleDeath;
+            _player.OnDeath += HandleOnDeath;
             _barMaxWidth = _bar.sizeDelta.x;
         }
 
         private void OnDestroy()
         {
-            _player.OnDeath -= HandleDeath;
+            _player.OnDeath -= HandleOnDeath;
         }
 
-        private void HandleDeath()
+        private void HandleOnDeath()
         {
             _bar.sizeDelta = new(0, 0);
         }
