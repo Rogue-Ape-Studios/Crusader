@@ -6,7 +6,8 @@
         "Unity.InputSystem",
         "UniTask",
         "Unity.Mathematics",
-        "RogueApeStudio.Crusader.UI"
+        "RogueApeStudio.Crusader.UI",
+        "RogueApeStudio.Crusader.HealthSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
