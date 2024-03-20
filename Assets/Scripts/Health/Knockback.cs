@@ -28,16 +28,16 @@ namespace RogueApeStudio.Crusader.HealthSystem.Knockback
             _cancellationTokenSource.Dispose();
         }
 
-        public void AddKnockback(float force, Vector3 diraction)
+        public void AddKnockback(float force, Vector3 direction)
         {
             _rb.isKinematic = false;
             _agent.enabled = false;
             _wait = true;
             Physics.IgnoreLayerCollision(10, 10, true);
 
-            diraction.y = 0;
+            direction.y = 0;
 
-            _rb.AddForce(diraction * force, ForceMode.Impulse);
+            _rb.AddForce(direction * force, ForceMode.Impulse);
 
             //play stun animation
             DelayAsync(_cancellationTokenSource.Token);
