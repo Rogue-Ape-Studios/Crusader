@@ -110,11 +110,15 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
                     Debug.DrawLine(raycastPosition, playerPosition, Color.red);
                     if (!hit.collider.gameObject.transform.root.CompareTag(_playerTag))
                     {
-                        Debug.Log("lost");
+                        //Debug.Log("lost");
                         return false; 
                     }
                 }
-                else { Debug.Log("lost"); return false; }
+                else 
+                { 
+                    //Debug.Log("lost");
+                    return false; 
+                }
             }
             return true;
         }

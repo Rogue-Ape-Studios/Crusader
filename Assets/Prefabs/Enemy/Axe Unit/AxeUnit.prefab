@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5264771843949098203}
   - component: {fileID: 2202621941329116366}
   - component: {fileID: 7794766668430407146}
+  - component: {fileID: 8986351465688801691}
   m_Layer: 10
   m_Name: AxeUnit
   m_TagString: Enemy
@@ -138,7 +139,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 53ba27dcec1cb3d428db6306fb576391, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -185,6 +186,20 @@ MonoBehaviour:
   _axe: {fileID: 2866790715923137253}
   _health: {fileID: 2999792976781402285}
   _collider: {fileID: 6062539359108303844}
+--- !u!114 &8986351465688801691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253549454546649992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812494f8a0909394d9e4be137abda9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agent: {fileID: 5429882494769872060}
+  _rb: {fileID: 8592876430026617398}
 --- !u!1 &4628527435117529037
 GameObject:
   m_ObjectHideFlags: 0
