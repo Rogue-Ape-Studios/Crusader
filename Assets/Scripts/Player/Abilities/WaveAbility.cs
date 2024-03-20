@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
+using RogueApeStudio.Crusader.Audio;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -27,6 +28,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private int _cooldown;
         [SerializeField] private GameObject _Effect;
         [SerializeField] private AbilityCooldown _cooldownUI;
+        [SerializeField] private AudioClip _waveSFX;
 
         // Start is called before the first frame update
         void Awake()
@@ -68,6 +70,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             if (_charges != 0)
             {
                 Instantiate(_Effect, gameObject.transform);
+                AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
 
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
                 foreach (var hitCollider in hitColliders)
