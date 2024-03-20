@@ -6,7 +6,6 @@ using RogueApeStudio.Crusader.Input;
 using RogueApeStudio.Crusader.Player.Movement;
 using System.Threading;
 using System;
-using RogueApeStudio.Crusader.HealthSystem;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
