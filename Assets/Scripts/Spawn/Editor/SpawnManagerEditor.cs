@@ -8,10 +8,12 @@ namespace RogueApeStudio.Crusader.Spawn.Editor
     public class SpawnManagerEditor : UnityEditor.Editor
     {
         private SpawnManager _spawnManager;
+        private Transform _spawnManagerTransform;
         private bool _enableEditorSettings;
         public override void OnInspectorGUI()
         {
             _spawnManager = target as SpawnManager;
+            _spawnManagerTransform = _spawnManager.transform;
 
             base.DrawDefaultInspector();
 
@@ -49,5 +51,6 @@ namespace RogueApeStudio.Crusader.Spawn.Editor
             _spawnManager.BeginTangent = EditorGUILayout.Vector3Field("Begin Tangent", _spawnManager.BeginTangent);
             _spawnManager.EndTangent = EditorGUILayout.Vector3Field("End Tangent", _spawnManager.EndTangent);
         }
+        
     }
 }
