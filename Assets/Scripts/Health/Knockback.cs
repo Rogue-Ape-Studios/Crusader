@@ -35,6 +35,8 @@ namespace RogueApeStudio.Crusader.HealthSystem.Knockback
             _wait = true;
             Physics.IgnoreLayerCollision(10, 10, true);
 
+            diraction.y = 0;
+
             _rb.AddForce(diraction * force, ForceMode.Impulse);
 
             //play stun animation
