@@ -121,7 +121,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             {
                 _isDashing = false;
                 SetReadInput(true);
-                _rb.excludeLayers = LayerMask.GetMask("Nothing");
+                _rb.excludeLayers = LayerMask.GetMask("");
                 
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
