@@ -17,7 +17,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private Vector3 _lastMovementDirection = Vector3.zero;
         private Vector3 _lastLookDirection = Vector3.zero;
         private RaycastHit _cameraRayHit;
-        private bool _readInputs = true;
+        [SerializeField] private bool _readInputs = true;
 
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Transform _transform;
@@ -62,15 +62,16 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (!_isDashing && _dashCooldownTimer <= 0 && _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
+                print("DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASHIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
+
                 _dashCooldownTimer = _dashCooldown;
-                _isDashing = true;
                 _animator.SetTrigger("Dash");
+                _isDashing = true;
                 SetReadInput(false);
 
                 Vector3 dashForce = _transform.forward * _dashSpeed;
-
                 _rb.AddForce(dashForce, ForceMode.Impulse);
-                _rb.excludeLayers =  LayerMask.GetMask(_invulnerableLayers);
+                _rb.excludeLayers = LayerMask.GetMask(_invulnerableLayers);
             }
         }
 
@@ -119,10 +120,11 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
             if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward") && _isDashing)
             {
+                print("NO LONGER DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASHIIIIIIIIIIIIIIIIIIIIIIIING");
                 _isDashing = false;
                 SetReadInput(true);
                 _rb.excludeLayers = LayerMask.GetMask("");
-                
+
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
         }
