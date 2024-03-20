@@ -28,6 +28,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         [SerializeField] private float _rotationSpeed;
 
         [Header("Dash Options")]
+        [SerializeField] private string[] _invulnerableLayers;
         [SerializeField] private float _dashSpeed = 10f;
         [SerializeField] private float _dashDuration = 0.5f;
         [SerializeField] private float _dashCooldown = 1f;
@@ -69,6 +70,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 Vector3 dashForce = _transform.forward * _dashSpeed;
 
                 _rb.AddForce(dashForce, ForceMode.Impulse);
+                _rb.excludeLayers =  LayerMask.GetMask(_invulnerableLayers);
             }
         }
 
@@ -119,7 +121,8 @@ namespace RogueApeStudio.Crusader.Player.Movement
             {
                 _isDashing = false;
                 SetReadInput(true);
-                _rb.velocity = Vector3.zero;
+                _rb.excludeLayers = LayerMask.GetMask("Nothing");
+                
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
         }
