@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7996122149865799560}
   - component: {fileID: 8556124983684740710}
   - component: {fileID: 8290017133117632831}
+  - component: {fileID: 6491815975511140138}
   - component: {fileID: 2085782947826321908}
   m_Layer: 10
   m_Name: Player_1
@@ -107,6 +108,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currentHealth: 0
+--- !u!114 &6491815975511140138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847993872955573288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd6b9a39e2b0c54baab5852645195e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 8290017133117632831}
+  _basicAttack: {fileID: 8556124983684740710}
+  _playerController: {fileID: 7996122149865799560}
+  _animator: {fileID: 2085782947826321908}
+  _collider: {fileID: 6540079509727857635}
 --- !u!95 &2085782947826321908
 Animator:
   serializedVersion: 5
@@ -142,7 +160,7 @@ GameObject:
   - component: {fileID: 1910005954556340578}
   - component: {fileID: 11393158695039202}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: AttackHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

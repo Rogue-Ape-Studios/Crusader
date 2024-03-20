@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
+using RogueApeStudio.Crusader.HealthSystem;
 using System.Linq;
 using UnityEngine.EventSystems;
 using System.Threading;
@@ -91,7 +92,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             else
             {
                 _animator.SetFloat("Speed", 0f);
-            } 
+            }
 
         }
 
@@ -101,7 +102,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             {
                 _transform.rotation = Quaternion.LookRotation(direction);
             }
-            else 
+            else
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
                 Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
@@ -121,18 +122,6 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 _rb.velocity = Vector3.zero;
             }
             else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
-        }
-
-        public void AddForce(float force)
-        {
-            SetReadInput(false);
-            Vector3 forceDirection = _transform.forward * force;
-            _rb.AddForce(forceDirection, ForceMode.Impulse);
-        }
-
-        public void SetReadInput(bool readInput)
-        {
-            _readInputs = readInput;
         }
 
         private void FixedUpdate()
@@ -160,5 +149,22 @@ namespace RogueApeStudio.Crusader.Player.Movement
             _dashInput.Disable();
         }
 
+        public void SetReadInput(bool readInput)
+        {
+            _readInputs = readInput;
+        }
+
+        public void AddForce(float force)
+        {
+            SetReadInput(false);
+            Vector3 forceDirection = _transform.forward * force;
+            _rb.AddForce(forceDirection, ForceMode.Impulse);
+        }
+
+        public void ToggleInputActions()
+        {
+            _crusaderInputActions.Player.Disable();
+            _crusaderInputActions.UI.Enable();
+        }
     }
 }

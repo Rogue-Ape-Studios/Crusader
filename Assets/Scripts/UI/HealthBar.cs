@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RogueApeStudio.Crusader.HealthSystem;
+using System;
 
 namespace RogueApeStudio.Crusader.UI.Healthbar
 {
@@ -16,7 +17,18 @@ namespace RogueApeStudio.Crusader.UI.Healthbar
 
         private void Start()
         {
+            _player.OnDeath += HandleOnDeath;
             _barMaxWidth = _bar.sizeDelta.x;
+        }
+
+        private void OnDestroy()
+        {
+            _player.OnDeath -= HandleOnDeath;
+        }
+
+        private void HandleOnDeath()
+        {
+            _bar.sizeDelta = new(0, 0);
         }
 
         private void Update()

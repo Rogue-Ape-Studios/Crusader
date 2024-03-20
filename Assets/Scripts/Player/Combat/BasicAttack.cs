@@ -50,6 +50,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             EnableBasicAttack();
         }
 
+
         private void OnDisable()
         {
             _attackInput.performed -= OnAttack;
@@ -145,6 +146,11 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void DisableBasicAttack()
         {
             _attackInput?.Disable();
+        }
+
+        public void SetCanAttack(bool canAttack)
+        {
+            _canAttack = canAttack;
         }
     }
 }
