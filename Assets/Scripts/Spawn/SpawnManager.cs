@@ -269,7 +269,7 @@ namespace RogueApeStudio.Crusader.Spawn
 
         #if UNITY_EDITOR
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             foreach (var spawns in _spawnLocations)
             {
