@@ -9383,6 +9383,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 474268921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &483675490 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2957727084570333733, guid: 49b062202ce45074d8c05cdeda7786df,
+    type: 3}
+  m_PrefabInstance: {fileID: 510115742}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &484662566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10027,30 +10033,10 @@ PrefabInstance:
       propertyPath: _cooldownUI
       value: 
       objectReference: {fileID: 1301604173}
-    - target: {fileID: 70620539835829462, guid: 49b062202ce45074d8c05cdeda7786df,
-        type: 3}
-      propertyPath: _knockbackForce
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 847993872955573288, guid: 49b062202ce45074d8c05cdeda7786df,
         type: 3}
       propertyPath: m_Name
       value: Player_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1910005954556340578, guid: 49b062202ce45074d8c05cdeda7786df,
-        type: 3}
-      propertyPath: _force
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1910005954556340578, guid: 49b062202ce45074d8c05cdeda7786df,
-        type: 3}
-      propertyPath: _damageAmount
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1910005954556340578, guid: 49b062202ce45074d8c05cdeda7786df,
-        type: 3}
-      propertyPath: _applyKnockback
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2749592132287825911, guid: 49b062202ce45074d8c05cdeda7786df,
         type: 3}
@@ -10112,11 +10098,11 @@ PrefabInstance:
       propertyPath: _cooldownUI
       value: 
       objectReference: {fileID: 559431373}
-    - target: {fileID: 7288643842213373225, guid: 49b062202ce45074d8c05cdeda7786df,
+    - target: {fileID: 8556124983684740710, guid: 49b062202ce45074d8c05cdeda7786df,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: _vfx
+      value: 
+      objectReference: {fileID: 483675490}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
