@@ -33,7 +33,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
         [SerializeField] private float _dashDuration = 0.5f;
         [SerializeField] private float _dashCooldown = 1f;
         [SerializeField] private bool _isDashing = false;
-        [SerializeField] private float _dashTimer = 0.5f;
+        [SerializeField] private float _dashTimer;
         [SerializeField] private float _dashCooldownTimer = 0.5f;
 
         private void Awake()
@@ -60,12 +60,12 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            if (!_isDashing && _dashCooldownTimer <= 0 && _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
+            if (!_isDashing && _dashCooldownTimer <= 0 && 
+                _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
-                print("DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASHIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
-
                 _dashCooldownTimer = _dashCooldown;
                 _animator.SetTrigger("Dash");
+                _dashTimer = 1f;
                 _isDashing = true;
                 SetReadInput(false);
 
@@ -118,15 +118,13 @@ namespace RogueApeStudio.Crusader.Player.Movement
         {
             if (_dashCooldownTimer > 0 && !_isDashing) _dashCooldownTimer -= Time.fixedDeltaTime;
 
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward") && _isDashing)
+            if (_dashTimer <= 0 && _isDashing)
             {
-                print("NO LONGER DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASHIIIIIIIIIIIIIIIIIIIIIIIING");
                 _isDashing = false;
                 SetReadInput(true);
                 _rb.excludeLayers = LayerMask.GetMask("");
-
             }
-            else if (_isDashing) _dashTimer -= Time.fixedDeltaTime;
+            else if (_isDashing && _dashTimer >= 0) _dashTimer -= Time.fixedDeltaTime;
         }
 
         private void FixedUpdate()
