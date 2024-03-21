@@ -6,16 +6,17 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.AxeUnit
 {
-    public class AxeUnit : MonoBehaviour
+    public class AxeUnit : Enemy
     {
         [Header("Movement settings")]
         [SerializeField] private float _stopDistance = 1.8f;
         [SerializeField] private float _movementSpeed = 3.5f;
         [SerializeField] private float _startAttackDistance = 2.0f;
         [SerializeField] private float _stopAttackDistance = 3.0f;
-        [Header("Attack settings")]
+        [Header("Combat settings")]
         [SerializeField] private float _damageAmount = 10f;
         [SerializeField] private float _attackSpeed = 1;
+        [SerializeField] private float _selfStunDuration = 1;
         [Header("Death settings")]
         [SerializeField] private float _destroyTime = 3;
         [Header("Dependancies")]
@@ -33,6 +34,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         public float StartAttackDistance => _startAttackDistance;
         public float StopAttackDistance => _stopAttackDistance;
         public float DestroyTime => _destroyTime;
+        public float SelfStunDuration => _selfStunDuration;
 
 
         private void Awake()
@@ -42,6 +44,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             AddAxeUnitState(new AxeUnitChaseState());
             AddAxeUnitState(new AxeUnitAttackState());
             AddAxeUnitState(new AxeUnitDeathState());
+            AddAxeUnitState(new AxeUnitStunnedState());
             _currentState = GetAxeUnitState(AxeUnitStateId.Chase);
             _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
@@ -50,6 +53,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             _axe.SetDamageAmount(_damageAmount);
             _health.OnDeath += HandleDeath;
         }
+
         private void HandleDeath()
         {
             ChangeState(AxeUnitStateId.Death);
@@ -93,6 +97,11 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
             _collider.enabled = false;
         }
 
+        public override void Stun()
+        {
+            ChangeState(AxeUnitStateId.Stunned);
+        }
+
         #region Animation Events
         internal void TurnOnAxeHitbox()
         {
@@ -102,6 +111,7 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
         {
             _axe.TurnOffHitbox();
         }
+
         #endregion
     }
 }

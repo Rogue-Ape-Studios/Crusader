@@ -6,15 +6,16 @@ using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.JavelinUnit
 {
-    public class JavelinUnit : MonoBehaviour
+    public class JavelinUnit : Enemy
     {
         [Header("Movement settings")]
         [SerializeField] private float _stopDistance = 1.8f;
         [SerializeField] private float _movementSpeed = 3.5f;
         [SerializeField] private float _startAttackDistance = 50.0f;
-        [Header("Attack settings")]
+        [Header("Combat settings")]
         [SerializeField] private float _attackRange = 500.0f;
         [SerializeField] private Vector2 _projectileForce = new(32, 2);
+        [SerializeField] private float _selfStunDuration = 1;
         [Header("Line Of Sight Seetings")]
         [SerializeField] private int _amountOfRayCasts = 3;
         [SerializeField] private float _unitWidth = 1f;
@@ -43,6 +44,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         public Vector2 ProjectileForce => _projectileForce;
         public float SecondsLineOfSightsNeeded => _secondsLineOfSightNeeded;
         public float DestroyTime => _destroyTime;
+        public float SelfStunDuration => _selfStunDuration;
 
 
         private void Awake()
@@ -52,6 +54,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
             AddJavelinUnitState(new JavelinUnitChaseState());
             AddJavelinUnitState(new JavelinUnitAttackState());
             AddJavelinUnitState(new JavelinUnitDeathState());
+            AddJavelinUnitState(new JavelinUnitStunnedState());
             _currentState = GetJavelinUnitState(JavelinUnitStateId.Chase);
             _currentState.EnterState(this);
             LocalUnitMovement.SetStopDistance(_stopDistance);
@@ -130,6 +133,10 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         internal void TurnOffCollider()
         {
             _collider.enabled = false;
+        }
+        public override void Stun()
+        {
+            ChangeState(JavelinUnitStateId.Stunned);
         }
 
         #endregion

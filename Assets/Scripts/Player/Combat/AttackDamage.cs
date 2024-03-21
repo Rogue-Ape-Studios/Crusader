@@ -1,5 +1,5 @@
 using RogueApeStudio.Crusader.HealthSystem;
-using RogueApeStudio.Crusader.HealthSystem.Knockback;
+using RogueApeStudio.Crusader.Units.Knockback;
 using System;
 using System.Collections;
 using System.Collections.Generic;
