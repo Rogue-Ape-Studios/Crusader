@@ -16,7 +16,7 @@ namespace RogueApeStudio.Crusader.Units.Knockback
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private Enemy enemy;
+        [SerializeField] private Enemy _enemy;
 
         private void Awake()
         {
@@ -39,7 +39,7 @@ namespace RogueApeStudio.Crusader.Units.Knockback
             direction.y = 0;
 
             _rb.AddForce(direction * force, ForceMode.Impulse);
-            enemy.Stun();
+            _enemy.Stun();
 
             //play stun animation
             DelayAsync(_cancellationTokenSource.Token);
