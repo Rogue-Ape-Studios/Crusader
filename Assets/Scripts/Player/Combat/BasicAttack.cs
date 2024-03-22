@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using RogueApeStudio.Crusader.Input;
 using RogueApeStudio.Crusader.Player.Movement;
+using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
 
@@ -23,6 +24,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip[] _animations;
         [SerializeField] private Collider _sword;
+        [SerializeField] private GameObject _vfx;
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
@@ -30,6 +32,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
+
+        [Header("Sword Swings SFX")]
+        [SerializeField] private AudioClip[] _swingSoundClips;
 
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
@@ -71,12 +76,15 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 Attack();
                 _playerController.AddForce(_force);
                 StartCooldownAsync(_cancellationTokenSource.Token);
+                AudioManager.instance.PlayRandomSwordSFX(_swingSoundClips, transform, 1f);
             }
+
         }
 
         private void Attack()
         {
             _sword.enabled = true;
+            _vfx.SetActive(true);
             _animator.Play(_animations[_comboCounter - 1].name);
             _delay = _animations[_comboCounter - 1].length / _attackSpeed;
             _attackWindow = 0.5f;
@@ -111,6 +119,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 await UniTask.WaitForSeconds(_delay, cancellationToken: token);
                 _rb.velocity = Vector3.zero;
                 _sword.enabled = false;
+                _vfx.SetActive(false);
                 _canAttack = true;
             }
             catch (OperationCanceledException)
