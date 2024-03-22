@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
+using RogueApeStudio.Crusader.Audio;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -28,6 +29,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private Camera _cam;
         [SerializeField] private int _cooldown;
         [SerializeField] private AbilityCooldown _cooldownUI;
+        [SerializeField] private AudioClip _smiteSFX;
 
         private void Awake()
         {
@@ -82,6 +84,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 GameObject sword = Instantiate(_sword,
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
+                AudioManager.instance.PlaySFX(_smiteSFX, transform, 1f);
 
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }

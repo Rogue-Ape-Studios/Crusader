@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using RogueApeStudio.Crusader.Input;
 using RogueApeStudio.Crusader.Player.Movement;
+using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
 
@@ -31,6 +32,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
+
+        [Header("Sword Swings SFX")]
+        [SerializeField] private AudioClip[] _swingSoundClips;
 
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
@@ -72,7 +76,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 Attack();
                 _playerController.AddForce(_force);
                 StartCooldownAsync(_cancellationTokenSource.Token);
+                AudioManager.instance.PlayRandomSwordSFX(_swingSoundClips, transform, 1f);
             }
+
         }
 
         private void Attack()

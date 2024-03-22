@@ -6,7 +6,8 @@
         "Unity.InputSystem",
         "RogueApeStudio.Crusader.Input",
         "RogueApeStudio.Crusader.HealthSystem",
-        "RogueApeStudio.Crusader.Movement"
+        "RogueApeStudio.Crusader.Movement",
+        "RogueApeStudio.Crusader.Audio"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
