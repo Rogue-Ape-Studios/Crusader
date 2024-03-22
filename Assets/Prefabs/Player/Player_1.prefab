@@ -110,6 +110,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currentHealth: 0
+  _canRegenerate: 1
+  _regenerationAmount: 5
+  _regenerationTickDelaySeconds: 2
+  _initalRegenerationDelaySeconds: 3
 --- !u!114 &6491815975511140138
 MonoBehaviour:
   m_ObjectHideFlags: 0
