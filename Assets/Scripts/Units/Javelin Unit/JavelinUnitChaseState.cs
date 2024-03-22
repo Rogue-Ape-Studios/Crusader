@@ -10,7 +10,7 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         private float _lineOfSightTime = 0;
         public void EnterState(JavelinUnit javelinUnit)
         {
-            //start run animation here when available
+            javelinUnit.LocalAnimator.SetTrigger("Chase");
         }
 
         public JavelinUnitStateId GetId()

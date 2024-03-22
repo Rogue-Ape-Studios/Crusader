@@ -24,6 +24,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip[] _animations;
         [SerializeField] private Collider _sword;
+        [SerializeField] private GameObject _vfx;
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
@@ -54,6 +55,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             EnableBasicAttack();
         }
 
+
         private void OnDisable()
         {
             _attackInput.performed -= OnAttack;
@@ -82,6 +84,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void Attack()
         {
             _sword.enabled = true;
+            _vfx.SetActive(true);
             _animator.Play(_animations[_comboCounter - 1].name);
             _delay = _animations[_comboCounter - 1].length / _attackSpeed;
             _attackWindow = 0.5f;
@@ -116,6 +119,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 await UniTask.WaitForSeconds(_delay, cancellationToken: token);
                 _rb.velocity = Vector3.zero;
                 _sword.enabled = false;
+                _vfx.SetActive(false);
                 _canAttack = true;
             }
             catch (OperationCanceledException)
@@ -151,6 +155,11 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private void DisableBasicAttack()
         {
             _attackInput?.Disable();
+        }
+
+        public void SetCanAttack(bool canAttack)
+        {
+            _canAttack = canAttack;
         }
     }
 }

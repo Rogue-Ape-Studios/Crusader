@@ -3,7 +3,8 @@
     "rootNamespace": "RogueApeStudio.Crusader.Movement",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:4a4fa8e03a9c0ac4a98da02e9f978dcb"
+        "GUID:4a4fa8e03a9c0ac4a98da02e9f978dcb",
+        "GUID:f7682a76ed81e8c49915bc28ca915c12"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

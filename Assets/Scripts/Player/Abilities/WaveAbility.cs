@@ -9,6 +9,7 @@ using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
 using RogueApeStudio.Crusader.Audio;
+using RogueApeStudio.Crusader.HealthSystem.Knockback;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -83,7 +84,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
                         float force = (_knockbackForce + (1 / Vector3.Distance(transform.transform.position, hitCollider.transform.position) * 10));
 
-                        hitCollider.transform.GetComponent<Rigidbody>().AddForce(-knockbackDiraction * force, ForceMode.Impulse);
+                        hitCollider.transform.GetComponent<Knockback>().AddKnockback(force, -knockbackDiraction);
                     }
                 }
                 StartCooldownAsync(_cancellationTokenSource.Token);

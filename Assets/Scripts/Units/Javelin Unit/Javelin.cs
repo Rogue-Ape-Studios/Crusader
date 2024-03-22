@@ -1,6 +1,7 @@
 using RogueApeStudio.Crusader.HealthSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RogueApeStudio.Crusader.Units.JavelinUnit
@@ -11,16 +12,11 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         [SerializeField] private Collision _target;
         [SerializeField] private float _despawnDuration = 1f;
         [SerializeField] private float _damageAmount = 5f;
-        [SerializeField] private LayerMask _playerLayer;
-
-        private void Awake()
-        {
-            _playerLayer = LayerMask.NameToLayer("Player");
-        }
+        [SerializeField] private string[] _tags;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == _playerLayer.value)
+            if (_tags.Any(tag => other.transform.root.CompareTag(tag)))
             {
                 Damage(other);
                 DestroyThis();

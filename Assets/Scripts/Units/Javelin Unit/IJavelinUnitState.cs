@@ -7,7 +7,8 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
     public enum JavelinUnitStateId
     {
         Chase,
-        Attack
+        Attack,
+        Death
     }
 
     public interface IJavelinUnitState
