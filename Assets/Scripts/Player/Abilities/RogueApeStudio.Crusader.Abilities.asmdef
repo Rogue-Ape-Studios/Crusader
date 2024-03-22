@@ -7,6 +7,7 @@
         "UniTask",
         "Unity.Mathematics",
         "RogueApeStudio.Crusader.UI",
+        "RogueApeStudio.Crusader.Units",
         "RogueApeStudio.Crusader.Audio",
         "RogueApeStudio.Crusader.HealthSystem"
     ],

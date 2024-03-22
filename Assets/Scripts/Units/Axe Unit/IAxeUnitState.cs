@@ -8,7 +8,8 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
     {
         Chase,
         Attack,
-        Death
+        Death,
+        Stunned
     }
 
     public interface IAxeUnitState

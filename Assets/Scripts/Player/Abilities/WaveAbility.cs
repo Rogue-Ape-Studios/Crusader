@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
+using RogueApeStudio.Crusader.Units.Knockback;
 using RogueApeStudio.Crusader.Audio;
-using RogueApeStudio.Crusader.HealthSystem.Knockback;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {

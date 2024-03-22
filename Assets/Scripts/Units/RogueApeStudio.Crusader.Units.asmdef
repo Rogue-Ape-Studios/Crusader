@@ -1,9 +1,9 @@
 {
-    "name": "RogueApeStudio.Crusader.Units.JavelinUnit",
+    "name": "RogueApeStudio.Crusader.Units",
     "rootNamespace": "",
     "references": [
-        "RogueApeStudio.Crusader.HealthSystem",
-        "RogueApeStudio.Crusader.Units"
+        "GUID:f7682a76ed81e8c49915bc28ca915c12",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.PlayerLoop;
 
-namespace RogueApeStudio.Crusader.HealthSystem.Knockback
+namespace RogueApeStudio.Crusader.Units.Knockback
 {
     public class Knockback : MonoBehaviour
     {
@@ -16,6 +16,7 @@ namespace RogueApeStudio.Crusader.HealthSystem.Knockback
 
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Enemy _enemy;
 
         private void Awake()
         {
@@ -38,6 +39,7 @@ namespace RogueApeStudio.Crusader.HealthSystem.Knockback
             direction.y = 0;
 
             _rb.AddForce(direction * force, ForceMode.Impulse);
+            _enemy.Stun();
 
             //play stun animation
             DelayAsync(_cancellationTokenSource.Token);

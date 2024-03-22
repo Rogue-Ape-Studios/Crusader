@@ -8,13 +8,14 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
     {
         Chase,
         Attack,
-        Death
+        Death,
+        Stunned
     }
 
     public interface IJavelinUnitState
     {
         public JavelinUnitStateId GetId();
-        public void EnterState(JavelinUnit axeUnit);
-        public void UpdateState(JavelinUnit axeUnit);
+        public void EnterState(JavelinUnit javelinUnit);
+        public void UpdateState(JavelinUnit javlinUnit);
     }
 }
