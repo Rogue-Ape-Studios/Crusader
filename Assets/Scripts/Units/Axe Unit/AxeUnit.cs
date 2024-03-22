@@ -99,7 +99,10 @@ namespace RogueApeStudio.Crusader.Units.AxeUnit
 
         public override void Stun()
         {
-            ChangeState(AxeUnitStateId.Stunned);
+            if (_currentState.GetId() != AxeUnitStateId.Death)
+            {
+                ChangeState(AxeUnitStateId.Stunned);
+            }
         }
 
         #region Animation Events

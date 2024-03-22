@@ -136,7 +136,10 @@ namespace RogueApeStudio.Crusader.Units.JavelinUnit
         }
         public override void Stun()
         {
-            ChangeState(JavelinUnitStateId.Stunned);
+            if (_currentState.GetId() != JavelinUnitStateId.Death)
+            {
+                ChangeState(JavelinUnitStateId.Stunned);
+            }
         }
 
         #endregion
