@@ -265,7 +265,11 @@ namespace RogueApeStudio.Crusader.Spawn
             return _spawnLocations[0].position;
         }
 
-        private void OnDrawGizmos()
+        #endregion
+
+        #if UNITY_EDITOR
+
+        private void OnDrawGizmosSelected()
         {
             foreach (var spawns in _spawnLocations)
             {
@@ -273,6 +277,6 @@ namespace RogueApeStudio.Crusader.Spawn
             }
         }
 
-        #endregion
+        #endif
     }
 }
