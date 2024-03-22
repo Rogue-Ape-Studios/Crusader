@@ -7,7 +7,7 @@
         "RogueApeStudio.Crusader.Input",
         "RogueApeStudio.Crusader.HealthSystem",
         "RogueApeStudio.Crusader.Movement",
-        "RogueApeStudios.Units"
+        "RogueApeStudio.Crusader.Units"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

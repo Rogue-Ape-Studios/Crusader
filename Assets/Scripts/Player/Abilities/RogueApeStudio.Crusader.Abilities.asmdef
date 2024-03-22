@@ -8,7 +8,7 @@
         "Unity.Mathematics",
         "RogueApeStudio.Crusader.UI",
         "RogueApeStudio.Crusader.HealthSystem",
-        "RogueApeStudios.Units"
+        "RogueApeStudio.Crusader.Units"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
