@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
+using RogueApeStudio.Crusader.Audio;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -29,6 +30,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private int _cooldown;
         [SerializeField] private float _speed;
         [SerializeField] private AbilityCooldown _cooldownUI;
+        [SerializeField] private AudioClip _throwSFX;
 
         private void Awake()
         {
@@ -84,6 +86,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
                 spear.AddForce(_direction * _speed, ForceMode.Impulse);
+                AudioManager.instance.PlaySFX(_throwSFX, transform, 1f);
 
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
