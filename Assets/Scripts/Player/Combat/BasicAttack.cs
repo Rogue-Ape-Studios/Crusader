@@ -44,12 +44,14 @@ namespace RogueApeStudio.Crusader.Player.Combat
         private RaycastHit _cameraRayHit;
         private float _delay = 0f;
         private CancellationTokenSource _cancellationTokenSource;
+        private float _baseAttackSpeed;
 
         private void Awake()
         {
             _crusaderInputActions = new();
             _attackInput = _crusaderInputActions.Player.BasicAttack;
             _cancellationTokenSource = new CancellationTokenSource();
+            _baseAttackSpeed = _attackSpeed;
         }
 
         private void OnEnable()
@@ -149,6 +151,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             {
                 _attackWindow = 0.5f;
                 _comboCounter = 0;
+                _attackSpeed = _baseAttackSpeed;
                 _windowCountdown = false;
             }
             else if (_attackWindow < 0.4f)
