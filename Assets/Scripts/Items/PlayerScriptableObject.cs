@@ -3,7 +3,7 @@ using UnityEngine;
 namespace RogueApeStudio.Crusader.Items
 {
     [CreateAssetMenu(menuName ="CustomConfig/Player", fileName = "PlayerConfig")]
-    public class BasePlayerConfig : ScriptableObject
+    public class PlayerScriptableObject : ScriptableObject
     {
         [Header("Health")]
         public int HitPoints = 100;
