@@ -10,6 +10,6 @@ namespace RogueApeStudio.Crusader.Items
         AttackDamage,
         AttackSpeed,
         MovementSpeed,
-        _dashSpeed
+        DashSpeed
     };
 }
