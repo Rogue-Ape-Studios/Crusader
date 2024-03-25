@@ -78,13 +78,11 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 {
                     if (hitCollider.CompareTag("Enemy"))
                     {
-                        Vector3 knockbackDiraction = transform.position - hitCollider.transform.position;
-                        knockbackDiraction = knockbackDiraction.normalized;
-                        knockbackDiraction = new Vector3(knockbackDiraction.x, 0, knockbackDiraction.z);
-
-                        float force = (_knockbackForce + (1 / Vector3.Distance(transform.transform.position, hitCollider.transform.position) * 10));
-
-                        hitCollider.transform.GetComponent<Knockback>().AddKnockback(force, -knockbackDiraction);
+                        Vector3 knockbackDirection = transform.position - hitCollider.transform.position;
+                        knockbackDirection = knockbackDirection.normalized;
+                        knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
+                                               
+                        hitCollider.transform.GetComponent<Knockback>().AddKnockback(_knockbackForce, -knockbackDirection);
                     }
                 }
                 StartCooldownAsync(_cancellationTokenSource.Token);
