@@ -18,6 +18,9 @@ namespace RogueApeStudio.Crusader.Units.Knockback
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Enemy _enemy;
 
+        [Header("Stun settings")]
+        [SerializeField] private float _stunDuration = 1f;
+
         private void Awake()
         {
             _cancellationTokenSource = new CancellationTokenSource();
@@ -49,7 +52,7 @@ namespace RogueApeStudio.Crusader.Units.Knockback
         {
             try
             {
-                await UniTask.WaitForSeconds(1, cancellationToken: token);
+                await UniTask.WaitForSeconds(_stunDuration, cancellationToken: token);
                 _rb.isKinematic = true;
                 _agent.enabled = true;
                 Physics.IgnoreLayerCollision(10, 10, false);
