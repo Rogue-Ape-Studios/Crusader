@@ -78,8 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 7996122149865799560}
-  _force: 3
+  _force: 7
   _rb: {fileID: 5540765297703237006}
+  _cursorDirection: 1
   _cam: {fileID: 9009624568066924811}
   _tags:
   - Ground
@@ -88,13 +89,13 @@ MonoBehaviour:
   - Player
   _animator: {fileID: 2085782947826321908}
   _animations:
-  - {fileID: 1827226128182048838, guid: 69eef411d1f501541811bdb58dfad440, type: 3}
-  - {fileID: 1827226128182048838, guid: ef246deaf3c3aa84d8cc0c47f176ba3c, type: 3}
-  - {fileID: 1827226128182048838, guid: 4f1e8a8ddb928d746aad6fb2479a831f, type: 3}
+  - {fileID: 1827226128182048838, guid: f4733b71de5e6e04eb041cf95a14fff0, type: 3}
+  - {fileID: 1827226128182048838, guid: 693f971d66ef1e446a775b8021dec926, type: 3}
+  - {fileID: -4791504522942941401, guid: c8b671e0502d7a946a48fe66241259bd, type: 3}
   _sword: {fileID: 7473156766230854026}
   _vfx: {fileID: 2957727084570333733}
   _comboCounter: 0
-  _attackSpeed: 3
+  _attackSpeed: 2
   _attackWindow: 0.8
   _canAttack: 1
   _windowCountdown: 0

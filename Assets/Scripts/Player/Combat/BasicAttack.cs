@@ -77,20 +77,29 @@ namespace RogueApeStudio.Crusader.Player.Combat
             {
                 _comboCounter++;
                 Attack();
-                _playerController.AddForce(_force);
+                if (_comboCounter == 3)
+                    _playerController.AddForce(_force);
                 StartCooldownAsync(_cancellationTokenSource.Token);
                 AudioManager.instance.PlayRandomSwordSFX(_swingSoundClips, transform, 1f);
+                if (_comboCounter >= 3)
+                {
+                    _attackSpeed--;
+                    _comboCounter = 0;
+                }
             }
 
         }
 
         private void Attack()
         {
+            if (_comboCounter == 2)
+                _attackSpeed++;
             _sword.enabled = true;
             _vfx.SetActive(true);
             _animator.Play(_animations[_comboCounter - 1].name);
             _delay = _animations[_comboCounter - 1].length / _attackSpeed;
             _attackWindow = 0.5f;
+            
             if (Keyboard.current != null && _cursorDirection)
             {
                 Ray cameraRay = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -109,8 +118,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
             }
             _windowCountdown = true;
             _windowCountdown = true;
-            if (_comboCounter >= 3)
-                _comboCounter = 0;
         }
 
         private async void StartCooldownAsync(CancellationToken token)
