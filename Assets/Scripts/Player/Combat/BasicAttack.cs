@@ -16,6 +16,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private float _force = 10f;
         [SerializeField] private Rigidbody _rb;
 
+        [Header("Player preferences")]
+        [SerializeField] bool _cursorDirection = true;
+
         [Header("Raycast necessities")]
         [SerializeField] private Camera _cam;
         [SerializeField] private string[] _tags;
@@ -30,7 +33,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private int _comboCounter = 0;
         [SerializeField] private int _attackSpeed = 5;
         [SerializeField] private float _attackWindow = 0.5f;
-        [SerializeField] private bool _canAttack = true;
+        [SerializeField] private bool _canAttack;
         [SerializeField] private bool _windowCountdown = false;
 
         [Header("Sword Swings SFX")]
@@ -88,7 +91,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             _animator.Play(_animations[_comboCounter - 1].name);
             _delay = _animations[_comboCounter - 1].length / _attackSpeed;
             _attackWindow = 0.5f;
-            if (Keyboard.current != null)
+            if (Keyboard.current != null && _cursorDirection)
             {
                 Ray cameraRay = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
