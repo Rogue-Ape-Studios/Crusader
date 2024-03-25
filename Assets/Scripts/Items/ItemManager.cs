@@ -6,12 +6,21 @@ namespace RogueApeStudio.Crusader.Items
 {
     public class ItemManager : MonoBehaviour
     {
+        /// <summary>
+        /// Used exclusively for passive items.
+        /// </summary>
         public event Action<float> OnPropertyUpdate;
 
         [SerializeField] private BasePlayerConfig _currentPlayer;
         [SerializeField] private List<Item> _items;
         [SerializeField] private List<Transform> _itemSpawns;
         
+        /// <summary>
+        /// Request the given value of a specific stat.
+        /// </summary>
+        /// <param name="property">The property to request.</param>
+        /// <returns>The float value in the player configuration</returns>
+        /// <exception cref="NotImplementedException">If the statistic has not been implemented yet.</exception>
         public float RequestStat(PlayerProperty property) => property switch
         {
             PlayerProperty.Hitpoints => _currentPlayer.HitPoints,
