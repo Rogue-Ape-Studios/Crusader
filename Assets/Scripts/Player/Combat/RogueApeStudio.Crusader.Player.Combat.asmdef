@@ -8,7 +8,8 @@
         "RogueApeStudio.Crusader.HealthSystem",
         "RogueApeStudio.Crusader.Movement",
         "RogueApeStudio.Crusader.Units",
-        "RogueApeStudio.Crusader.Audio"
+        "RogueApeStudio.Crusader.Audio",
+        "RogueApeStudio.Crusader.Items"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

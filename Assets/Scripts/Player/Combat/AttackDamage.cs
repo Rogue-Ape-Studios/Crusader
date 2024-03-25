@@ -1,8 +1,6 @@
 using RogueApeStudio.Crusader.HealthSystem;
+using RogueApeStudio.Crusader.Items;
 using RogueApeStudio.Crusader.Units.Knockback;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,10 +8,12 @@ namespace RogueApeStudio.Crusader.Player.Combat
 {
     public class AttackDamage : MonoBehaviour
     {
-        [SerializeField] private float _damageAmount = 10f;
+        [SerializeField] private float _damageAmount => _playerStats.AttackDamage;
         [SerializeField] private string[] _tags;
         [SerializeField] private bool _applyKnockback = false;
         [SerializeField] private float _force;
+        [Header("Dependencies")]
+        [SerializeField] private PlayerScriptableObject _playerStats;
 
         private void OnTriggerEnter(Collider other)
         {

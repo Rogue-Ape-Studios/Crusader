@@ -7,6 +7,7 @@ using RogueApeStudio.Crusader.Player.Movement;
 using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
+using RogueApeStudio.Crusader.Items;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -28,14 +29,16 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
-        [SerializeField] private int _attackSpeed = 5;
+        [SerializeField] private int _attackSpeed => _playerStats.AttackSpeed;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
 
         [Header("Sword Swings SFX")]
         [SerializeField] private AudioClip[] _swingSoundClips;
-
+        
+        [Header("Dependencies")]
+        [SerializeField] private PlayerScriptableObject _playerStats;
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
         private RaycastHit _cameraRayHit;
