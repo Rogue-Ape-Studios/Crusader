@@ -3,7 +3,7 @@ using System;
 namespace RogueApeStudio.Crusader.Items
 {
     [Serializable]
-    internal enum PlayerProperty
+    public enum PlayerProperty
     {
         Hitpoints,
         Regeneration,

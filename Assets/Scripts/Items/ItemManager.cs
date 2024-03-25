@@ -6,12 +6,23 @@ namespace RogueApeStudio.Crusader.Items
 {
     public class ItemManager : MonoBehaviour
     {
-        public event Action OnPropertyUpdate;
+        public event Action<float> OnPropertyUpdate;
 
         [SerializeField] private BasePlayerConfig _currentPlayer;
         [SerializeField] private List<Item> _items;
         [SerializeField] private List<Transform> _itemSpawns;
         
+        public float RequestStat(PlayerProperty property) => property switch
+        {
+            PlayerProperty.Hitpoints => _currentPlayer.HitPoints,
+            PlayerProperty.Regeneration => _currentPlayer.RegenPerSecond,
+            PlayerProperty.AttackDamage => _currentPlayer.AttackDamage,
+            PlayerProperty.AttackSpeed => _currentPlayer.AttackSpeed,
+            PlayerProperty.MovementSpeed => _currentPlayer.MovementSpeed,
+            PlayerProperty.DashSpeed => _currentPlayer.DashSpeed,
+            _ => throw new NotImplementedException("The requested stat was not implemented yet!")
+        };
+
         /// <summary>
         /// Spawns a random item.
         /// </summary>
