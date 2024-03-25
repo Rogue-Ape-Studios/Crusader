@@ -33,7 +33,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private int _comboCounter = 0;
         [SerializeField] private int _attackSpeed = 5;
         [SerializeField] private float _attackWindow = 0.5f;
-        [SerializeField] private bool _canAttack;
+        [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
 
         [Header("Sword Swings SFX")]
