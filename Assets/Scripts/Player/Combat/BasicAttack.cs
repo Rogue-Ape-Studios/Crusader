@@ -29,7 +29,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
-        [SerializeField] private int _attackSpeed => _playerStats.AttackSpeed;
+        [SerializeField] private float _attackSpeed => 5f;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
