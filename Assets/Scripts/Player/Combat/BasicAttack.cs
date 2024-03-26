@@ -8,6 +8,7 @@ using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
 using RogueApeStudio.Crusader.Items;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -28,7 +29,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip[] _animations;
         [SerializeField] private Collider _sword;
-        [SerializeField] private GameObject _vfx;
+        [SerializeField] private GameObject[] _vfx;
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
@@ -100,7 +101,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
             if (_comboCounter == 2)
                 _attackSpeed++;
             _sword.enabled = true;
-            _vfx.SetActive(true);
+            playVFX(_comboCounter);
             _animator.Play(_animations[_comboCounter - 1].name);
             _delay = _animations[_comboCounter - 1].length / _attackSpeed;
             _attackWindow = 0.5f;
@@ -134,7 +135,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 await UniTask.WaitForSeconds(_delay, cancellationToken: token);
                 _rb.velocity = Vector3.zero;
                 _sword.enabled = false;
-                _vfx.SetActive(false);
                 _canAttack = true;
             }
             catch (OperationCanceledException)
@@ -176,6 +176,36 @@ namespace RogueApeStudio.Crusader.Player.Combat
         public void SetCanAttack(bool canAttack)
         {
             _canAttack = canAttack;
+        }
+
+        private void playVFX(int counter)
+        {
+            switch (counter)
+            {
+                case 1:
+                    DelayAsync(_cancellationTokenSource.Token, 0.2f, _vfx[0]);
+                    break;
+                case 2:
+                    DelayAsync(_cancellationTokenSource.Token, 0.3f, _vfx[1]);
+                    break;
+                case 3:
+                    DelayAsync(_cancellationTokenSource.Token, 0.2f, _vfx[2]);
+                    break;
+            }
+        }
+
+        private async void DelayAsync(CancellationToken token, float delay, GameObject vfx)
+        {
+            try
+            {
+                await UniTask.WaitForSeconds(delay, cancellationToken: token);
+                vfx.SetActive(false);
+                vfx.SetActive(true);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Cooldown was Canceled because operation was cancelled");
+            }
         }
     }
 }
