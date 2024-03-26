@@ -40,6 +40,9 @@ namespace RogueApeStudio.Crusader.Items
                 case PlayerProperty.Hitpoints:
                 _currentPlayer.HitPoints = (int)(_currentPlayer.HitPoints * percentage);
                     break;
+                case PlayerProperty.Regeneration:
+                _currentPlayer.RegenPerSecond = (int)(_currentPlayer.HitPoints * percentage);
+                    break;
                 case PlayerProperty.AttackDamage:
                 _currentPlayer.AttackDamage *= (int)(_currentPlayer.AttackDamage * percentage);
                     break;
