@@ -73,7 +73,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-            if (_canAttack)
+            if (_canAttack && !_playerController.GetIsDashing())
             {
                 _comboCounter++;
                 Attack();

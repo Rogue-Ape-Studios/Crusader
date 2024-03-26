@@ -153,6 +153,11 @@ namespace RogueApeStudio.Crusader.Player.Movement
             _dashInput.Disable();
         }
 
+        public bool GetIsDashing()
+        {
+            return _isDashing;
+        }
+
         public void SetReadInput(bool readInput)
         {
             _readInputs = readInput;
