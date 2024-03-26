@@ -8,7 +8,6 @@ using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
 using RogueApeStudio.Crusader.Items;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
