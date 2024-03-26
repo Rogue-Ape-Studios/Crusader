@@ -11,8 +11,5 @@ namespace RogueApeStudio.Crusader.Items
         [Header("Attack")]
         public int AttackDamage = 5;
         public int AttackSpeed = 1;
-        [Header("Mobility")]
-        public int MovementSpeed = 1;
-        public int DashSpeed = 1;
     }
 }
