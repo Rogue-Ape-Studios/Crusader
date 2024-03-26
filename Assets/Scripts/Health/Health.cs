@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using RogueApeStudio.Crusader.Items;
 using UnityEngine;
 
 namespace RogueApeStudio.Crusader.HealthSystem
@@ -19,13 +20,13 @@ namespace RogueApeStudio.Crusader.HealthSystem
         #region Serialized Fields
 
         [Header("Health Bar Properties")]
-        [SerializeField] protected float _maxHealth = 100f;
         [SerializeField] protected float _currentHealth;
         [Header("Regeneration Stats")]
         [SerializeField] protected bool _canRegenerate;
-        [SerializeField, Tooltip("Will be replaced with stats later.")] protected float _regenerationAmount;
-        [SerializeField, Tooltip("Will be replaced with stats later.")] protected float _regenerationTickDelaySeconds;
-        [SerializeField, Tooltip("Will be replaced with stats later.")] protected float _initalRegenerationDelaySeconds;
+        [SerializeField] protected float _regenerationTickDelaySeconds;
+        [SerializeField] protected float _initalRegenerationDelaySeconds;
+        [Header("Dependencies")]
+        [SerializeField] private PlayerScriptableObject _playerStats;
 
         #endregion
 
@@ -33,6 +34,8 @@ namespace RogueApeStudio.Crusader.HealthSystem
 
         private bool _isRegenerating = false;
         private CancellationTokenSource _cancellationTokenSource;
+        private float _regenerationAmount => _playerStats.RegenPerSecond;
+        private float _maxHealth => _playerStats.HitPoints;
 
         #endregion
  

@@ -7,6 +7,7 @@ using RogueApeStudio.Crusader.Player.Movement;
 using RogueApeStudio.Crusader.Audio;
 using System.Threading;
 using System;
+using RogueApeStudio.Crusader.Items;
 
 namespace RogueApeStudio.Crusader.Player.Combat
 {
@@ -38,7 +39,9 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         [Header("Sword Swings SFX")]
         [SerializeField] private AudioClip[] _swingSoundClips;
-
+        
+        [Header("Dependencies")]
+        [SerializeField] private PlayerScriptableObject _playerStats;
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
         private RaycastHit _cameraRayHit;
