@@ -103,6 +103,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 37153ede7dde2af43b8f6039997cdf87, type: 3}
   - {fileID: 8300000, guid: e206e2c52a644cf43a1e32c0d7fd0839, type: 3}
   - {fileID: 8300000, guid: 870e0e37bfdfa3e42a829314c94d876e, type: 3}
+  _playerStats: {fileID: 11400000, guid: 17f906094abc5614e84ea397e706cbdd, type: 2}
 --- !u!114 &8290017133117632831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,12 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad5b2fe2daecbd4980215b4e0138bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
   _currentHealth: 0
   _canRegenerate: 1
-  _regenerationAmount: 5
   _regenerationTickDelaySeconds: 2
   _initalRegenerationDelaySeconds: 3
+  _playerStats: {fileID: 11400000, guid: 17f906094abc5614e84ea397e706cbdd, type: 2}
 --- !u!114 &6491815975511140138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,11 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d521ea59b76f59c4785b84b7866b1b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 35
   _tags:
   - Enemy
   _applyKnockback: 1
   _force: 1
+  _playerStats: {fileID: 0}
 --- !u!23 &11393158695039202
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -6,18 +6,10 @@ namespace RogueApeStudio.Crusader.Items
 {
     public class ItemManager : MonoBehaviour
     {
-        public event Action OnPropertyUpdate;
-
-        [SerializeField] private BasePlayerConfig _currentPlayer;
+        [SerializeField] private PlayerScriptableObject _currentPlayer;
         [SerializeField] private List<Item> _items;
         [SerializeField] private List<Transform> _itemSpawns;
 
-        [ContextMenu("Spawn Item")]
-        private void SpawnItem()
-        {
-            SpawnRandomItem(_itemSpawns[0].position);
-        }
-        
         /// <summary>
         /// Spawns a random item.
         /// </summary>
@@ -28,11 +20,6 @@ namespace RogueApeStudio.Crusader.Items
 
             if(item is PassiveItem)
                 HandlePassiveItem(item as PassiveItem);
-        }
-
-        private void HandlePassiveItem(PassiveItem item)
-        {
-                item.OnCollect += HandleCommonItemCollection;       
         }
 
         /// <summary>
@@ -53,15 +40,29 @@ namespace RogueApeStudio.Crusader.Items
                 case PlayerProperty.Hitpoints:
                 _currentPlayer.HitPoints = (int)(_currentPlayer.HitPoints * percentage);
                     break;
+                case PlayerProperty.Regeneration:
+                _currentPlayer.RegenPerSecond = (int)(_currentPlayer.HitPoints * percentage);
+                    break;
                 case PlayerProperty.AttackDamage:
-                _currentPlayer.AttackDamage *= (int)(_currentPlayer.AttackDamage * percentage);;
+                _currentPlayer.AttackDamage *= (int)(_currentPlayer.AttackDamage * percentage);
                     break;
                 case PlayerProperty.AttackSpeed:
-                _currentPlayer.AttackSpeed *= (int)(_currentPlayer.AttackSpeed * percentage);;
+                _currentPlayer.AttackSpeed *= (int)(_currentPlayer.AttackSpeed * percentage);
                     break;
                 default:
                 throw new NotImplementedException("That property has not been implemented yet!");
             }
+        }
+
+        [ContextMenu("Spawn Item")]
+        private void SpawnItem()
+        {
+            SpawnRandomItem(_itemSpawns[0].position);
+        }
+
+        private void HandlePassiveItem(PassiveItem item)
+        {
+            item.OnCollect += HandleCommonItemCollection;       
         }
 
     }
