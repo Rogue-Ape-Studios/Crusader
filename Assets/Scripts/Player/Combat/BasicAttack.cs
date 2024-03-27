@@ -154,7 +154,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 _attackWindow = 0.5f;
                 _comboCounter = 0;
                 _attackSpeed = _baseAttackSpeed;
-                _animator.Play("Movement");
                 _windowCountdown = false;
             }
             else if (_attackWindow < 0.4f)
