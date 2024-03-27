@@ -10032,6 +10032,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_1
       objectReference: {fileID: 0}
+    - target: {fileID: 1910005954556340578, guid: 49b062202ce45074d8c05cdeda7786df,
+        type: 3}
+      propertyPath: _playerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 17f906094abc5614e84ea397e706cbdd,
+        type: 2}
     - target: {fileID: 2749592132287825911, guid: 49b062202ce45074d8c05cdeda7786df,
         type: 3}
       propertyPath: _cooldownUI
@@ -39192,6 +39198,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2606461827671494603, guid: a9f69c317a3fea04a86e8d6739a9a1ff, type: 3}
     - {fileID: -156067013940870753, guid: a9f69c317a3fea04a86e8d6739a9a1ff, type: 3}
+    - {fileID: 6477753996341901030, guid: a9f69c317a3fea04a86e8d6739a9a1ff, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4665530305536945430, guid: a9f69c317a3fea04a86e8d6739a9a1ff,
         type: 3}
