@@ -64,9 +64,9 @@ namespace RogueApeStudio.Crusader.Player.Movement
                 _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
                 _dashCooldownTimer = _dashCooldown;
-                _animator.SetTrigger("Dash");
-                _dashTimer = 1f;
                 _isDashing = true;
+                _animator.SetBool("Dash", _isDashing);
+                _dashTimer = 1f;
                 SetReadInput(false);
 
                 Vector3 dashForce = _transform.forward * _dashSpeed;
@@ -121,6 +121,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             if (_dashTimer <= 0 && _isDashing)
             {
                 _isDashing = false;
+                _animator.SetBool("Dash", _isDashing);
                 SetReadInput(true);
                 _rb.excludeLayers = LayerMask.GetMask("");
             }
@@ -150,6 +151,11 @@ namespace RogueApeStudio.Crusader.Player.Movement
         private void DisableDash()
         {
             _dashInput.Disable();
+        }
+
+        public bool GetIsDashing()
+        {
+            return _isDashing;
         }
 
         public void SetReadInput(bool readInput)

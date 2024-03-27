@@ -78,7 +78,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-            if (_canAttack)
+            if (_canAttack && !_playerController.GetIsDashing())
             {
                 _comboCounter++;
                 Attack();
@@ -156,7 +156,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 _attackSpeed = _baseAttackSpeed;
                 _animator.Play("Movement");
                 _windowCountdown = false;
-                _playerController.SetReadInput(true);
             }
             else if (_attackWindow < 0.4f)
                 _playerController.SetReadInput(true);
