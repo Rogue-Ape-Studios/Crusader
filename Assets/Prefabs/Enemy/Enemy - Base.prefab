@@ -120,8 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad5b2fe2daecbd4980215b4e0138bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
   _currentHealth: 0
+  _canRegenerate: 0
+  _regenerationTickDelaySeconds: 0
+  _initalRegenerationDelaySeconds: 0
+  _playerStats: {fileID: 11400000, guid: 0fda5015a0f4d784c81698208c8cf5cd, type: 2}
 --- !u!114 &-6467656087371411358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,3 +139,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 2387061069884689505}
   _rb: {fileID: 4912261048125209221}
+  _enemy: {fileID: 0}
