@@ -5,6 +5,7 @@ using RogueApeStudio.Crusader.HealthSystem;
 using System.Linq;
 using UnityEngine.EventSystems;
 using System.Threading;
+using System;
 
 namespace RogueApeStudio.Crusader.Player.Movement
 {
@@ -60,9 +61,14 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         private void OnDash(InputAction.CallbackContext context)
         {
-            if (!_isDashing && _dashCooldownTimer <= 0 && 
+            if (!_isDashing && _dashCooldownTimer <= 0 &&
                 _readInputs && !_animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerDiveForward"))
             {
+                Vector2 inputDirection = _movementInput.ReadValue<Vector2>();
+                Vector3 movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
+
+                TurnPlayer(movementDirection, "dash");
+
                 _dashCooldownTimer = _dashCooldown;
                 _isDashing = true;
                 _animator.SetBool("Dash", _isDashing);
@@ -83,7 +89,7 @@ namespace RogueApeStudio.Crusader.Player.Movement
             {
                 Vector3 movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
 
-                TurnPlayer(movementDirection);
+                TurnPlayer(movementDirection, "run");
 
                 Vector3 _movement = _moveSpeed * Time.fixedDeltaTime * movementDirection;
                 _lastMovementDirection = movementDirection;
@@ -99,18 +105,21 @@ namespace RogueApeStudio.Crusader.Player.Movement
 
         }
 
-        private void TurnPlayer(Vector3 direction)
+        private void TurnPlayer(Vector3 direction, string action)
         {
-            if (_isDashing)
+            switch (action)
             {
-                _transform.rotation = Quaternion.LookRotation(direction);
-            }
-            else
-            {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-                Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+                case "dash":
+                    _transform.rotation = Quaternion.LookRotation(direction);
+                    break;
+                case "run":
+                    float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                    Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
 
-                _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                    _rb.rotation = Quaternion.RotateTowards(_rb.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                    break;
+                default:
+                    throw new NotImplementedException(nameof(action));
             }
         }
 
