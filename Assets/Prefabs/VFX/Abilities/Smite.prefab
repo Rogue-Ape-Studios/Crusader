@@ -69,9 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d521ea59b76f59c4785b84b7866b1b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 100
   _tags:
   - Enemy
+  _applyKnockback: 0
+  _force: 0
+  _playerStats: {fileID: 11400000, guid: 17f906094abc5614e84ea397e706cbdd, type: 2}
 --- !u!114 &4227199815311615150
 MonoBehaviour:
   m_ObjectHideFlags: 0
