@@ -4,7 +4,7 @@ using UnityEngine.VFX;
 
 namespace RogueApeStudio.Crusader.Items.Conditional
 {
-    internal abstract class ConditionalItem : MonoBehaviour
+    public abstract class ConditionalItem : MonoBehaviour
     {
         [Header("Conditon Settings")]
         [SerializeField, Tooltip("Will be cast to the correct value")] protected MonoBehaviour _conditionTarget;
@@ -15,6 +15,20 @@ namespace RogueApeStudio.Crusader.Items.Conditional
         [SerializeField] protected Transform _soundTarget;
         [SerializeField] protected float _volume = 1f;
 
+        private int _itemCount = 1; 
+
+        protected int ItemCount
+        {
+            get
+            {
+                return _itemCount;
+            }
+            set
+            {
+                _itemCount += value;
+            }
+        }
+
         /// <summary>
         /// Sets up the condition to be invoked. Cast the _conditonTarget and subscribe to the correct event here.
         /// </summary>
@@ -23,7 +37,7 @@ namespace RogueApeStudio.Crusader.Items.Conditional
         /// <summary>
         /// Is invoked when a condition is met, and handles any base logic. Can be overriden, but not necessary.
         /// </summary>
-        internal void HandleConditionMet()
+        internal virtual void HandleConditionMet()
         {
             if(_itemVisualEffect != null)
             {
@@ -34,7 +48,6 @@ namespace RogueApeStudio.Crusader.Items.Conditional
             {
                 AudioManager.instance.PlaySFX(_audioClip, _soundTarget, _volume);
             }
-
             ConditionalItemEffect();
         }
 
@@ -42,5 +55,6 @@ namespace RogueApeStudio.Crusader.Items.Conditional
         /// Override this with the specific implementation of the item, be it spherecast, raycast, or whatever else.
         /// </summary>
         internal virtual void ConditionalItemEffect() {}
+
     }
 }
