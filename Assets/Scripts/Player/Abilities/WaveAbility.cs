@@ -72,23 +72,26 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             if (_charges != 0)
             {
                 _animator.SetTrigger("WaveAbility");
-
-                Instantiate(_Effect, gameObject.transform);
-                AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
-
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
-                foreach (var hitCollider in hitColliders)
-                {
-                    if (hitCollider.CompareTag("Enemy"))
-                    {
-                        Vector3 knockbackDirection = transform.position - hitCollider.transform.position;
-                        knockbackDirection = knockbackDirection.normalized;
-                        knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
-                                               
-                        hitCollider.transform.GetComponent<Knockback>().AddKnockback(_knockbackForce, -knockbackDirection);
-                    }
-                }
                 StartCooldownAsync(_cancellationTokenSource.Token);
+            }
+        }
+
+        public void TriggerWaveAbilityEffects()
+        {
+            Instantiate(_Effect, gameObject.transform);
+            AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    Vector3 knockbackDirection = transform.position - hitCollider.transform.position;
+                    knockbackDirection = knockbackDirection.normalized;
+                    knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
+
+                    hitCollider.transform.GetComponent<Knockback>().AddKnockback(_knockbackForce, -knockbackDirection);
+                }
             }
         }
 
@@ -103,7 +106,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -112,7 +115,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }

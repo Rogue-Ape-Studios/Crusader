@@ -82,14 +82,18 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
+                transform.rotation = Quaternion.LookRotation(_direction);
                 _animator.SetTrigger("SmiteAbility");
-                GameObject sword = Instantiate(_sword,
-                    new Vector3(transform.position.x, 1, transform.position.z),
-                    Quaternion.LookRotation(_direction));
-                AudioManager.instance.PlaySFX(_smiteSFX, transform, 1f);
-
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
+        }
+
+        public void TriggerSmiteAbilityEffects()
+        {
+            Instantiate(_sword,
+                    new Vector3(transform.position.x, 1, transform.position.z),
+                    Quaternion.LookRotation(_direction));
+            AudioManager.instance.PlaySFX(_smiteSFX, transform, 1f);
         }
 
         private void EnableWaveAbility()
@@ -103,7 +107,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -112,7 +116,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }

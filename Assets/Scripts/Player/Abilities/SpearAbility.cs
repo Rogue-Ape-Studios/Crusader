@@ -9,6 +9,7 @@ using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
 using RogueApeStudio.Crusader.Audio;
+using log4net.Util;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -83,15 +84,20 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
+                transform.rotation = Quaternion.LookRotation(_direction);
                 _animator.SetTrigger("SpearAbility");
-                Rigidbody spear = Instantiate(_spear,
-                    new Vector3(transform.position.x, 1, transform.position.z),
-                    Quaternion.LookRotation(_direction));
-                spear.AddForce(_direction * _speed, ForceMode.Impulse);
-                AudioManager.instance.PlaySFX(_throwSFX, transform, 1f);
-
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
+        }
+
+        public void TriggerSpearAblityEffects()
+        {
+            Rigidbody spear = Instantiate(_spear,
+                   new Vector3(transform.position.x, 1, transform.position.z),
+                   Quaternion.LookRotation(_direction));
+            spear.AddForce(_direction * _speed, ForceMode.Impulse);
+            AudioManager.instance.PlaySFX(_throwSFX, transform, 1f);
+
         }
 
         private void EnableSpearAbility()
@@ -105,7 +111,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -114,7 +120,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }
@@ -138,7 +144,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 Debug.LogError("Cooldown was Canceled");
             }
-            
+
         }
     }
 }
