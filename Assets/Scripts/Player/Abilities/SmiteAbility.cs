@@ -16,6 +16,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
     {
         private CrusaderInputActions _actions;
         private InputAction _smiteAbility;
+        private Vector3 _cursorPosition;
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
@@ -43,7 +44,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void OnEnable()
         {
-            _smiteAbility.started += OnSmiteAbility;
+            _smiteAbility.performed += OnSmiteAbility;
             EnableWaveAbility();
         }
 
@@ -51,6 +52,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
+            _smiteAbility.performed -= OnSmiteAbility;
         }
 
         private void Update()
@@ -62,8 +64,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
                     Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
-                    _direction = targetPosition - _transform.position;
-                    _direction.Normalize();
+                    _cursorPosition = targetPosition - _transform.position;
+                    _cursorPosition.Normalize();
                 }
             }
 
@@ -81,6 +83,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void OnSmiteAbility(InputAction.CallbackContext context)
         {
+            _direction = _cursorPosition;
             if (_charges != 0)
             {
                 _transform.rotation = Quaternion.LookRotation(_direction);
