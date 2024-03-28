@@ -11,8 +11,12 @@ GameObject:
   - component: {fileID: 3366299626430957726}
   - component: {fileID: 7996122149865799560}
   - component: {fileID: 8556124983684740710}
+  - component: {fileID: 4652010802133424666}
+  - component: {fileID: 6742215399484826946}
+  - component: {fileID: 2835750346673464465}
   - component: {fileID: 8290017133117632831}
   - component: {fileID: 6491815975511140138}
+  - component: {fileID: 2388353978356555289}
   m_Layer: 9
   m_Name: Player_1
   m_TagString: Player
@@ -54,7 +58,7 @@ MonoBehaviour:
   _readInputs: 1
   _rb: {fileID: 5540765297703237006}
   _transform: {fileID: 6998084461912411687}
-  _animator: {fileID: 8414638257795467068}
+  _animator: {fileID: 2388353978356555289}
   _moveSpeed: 5
   _rotationSpeed: 500
   _invulnerableLayers:
@@ -88,7 +92,7 @@ MonoBehaviour:
   - Untagged
   - Enemy
   - Player
-  _animator: {fileID: 8414638257795467068}
+  _animator: {fileID: 2388353978356555289}
   _animations:
   - {fileID: 1827226128182048838, guid: f4733b71de5e6e04eb041cf95a14fff0, type: 3}
   - {fileID: 1827226128182048838, guid: 693f971d66ef1e446a775b8021dec926, type: 3}
@@ -108,6 +112,65 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e206e2c52a644cf43a1e32c0d7fd0839, type: 3}
   - {fileID: 8300000, guid: 870e0e37bfdfa3e42a829314c94d876e, type: 3}
   _playerStats: {fileID: 11400000, guid: 17f906094abc5614e84ea397e706cbdd, type: 2}
+--- !u!114 &4652010802133424666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847993872955573288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f335c18cde8494d83ab7975f5427b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spear: {fileID: 5493998137168221730, guid: 8fd6bce9f82b25d47b3ba710dd8118d2, type: 3}
+  _cam: {fileID: 9009624568066924811}
+  _cooldown: 2
+  _speed: 25
+  _cooldownUI: {fileID: 0}
+  _throwSFX: {fileID: 8300000, guid: ba0465ea00704154b8417b22422b2581, type: 3}
+  _animator: {fileID: 2388353978356555289}
+  _transform: {fileID: 6998084461912411687}
+--- !u!114 &6742215399484826946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847993872955573288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd58cd1c094373d49bc8214768e51499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 4
+  _knockbackForce: 8
+  _cooldown: 5
+  _Effect: {fileID: 1015811141956628375, guid: e602738c458428444839d84795588688, type: 3}
+  _cooldownUI: {fileID: 0}
+  _waveSFX: {fileID: 8300000, guid: a317e09cd783fd44d81ed94af8d6f93f, type: 3}
+  _animator: {fileID: 2388353978356555289}
+  _transform: {fileID: 6998084461912411687}
+--- !u!114 &2835750346673464465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847993872955573288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8286bcaa6ce0659469ff913f77f59c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sword: {fileID: 1527471427189726077, guid: 3a77e1dc66c0f6f48b28f5b838ee4478, type: 3}
+  _cam: {fileID: 9009624568066924811}
+  _cooldown: 10
+  _cooldownUI: {fileID: 0}
+  _smiteSFX: {fileID: 8300000, guid: 8c2ae739df1293a418965a6035ec7d9b, type: 3}
+  _animator: {fileID: 2388353978356555289}
+  _transform: {fileID: 6998084461912411687}
 --- !u!114 &8290017133117632831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +203,28 @@ MonoBehaviour:
   _health: {fileID: 8290017133117632831}
   _basicAttack: {fileID: 8556124983684740710}
   _playerController: {fileID: 7996122149865799560}
-  _animator: {fileID: 8414638257795467068}
+  _animator: {fileID: 0}
+--- !u!95 &2388353978356555289
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847993872955573288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+  m_Controller: {fileID: 9100000, guid: 3be1cfa761a99684ba32868d3791d4da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7135326745155939621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2357,6 +2441,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.7005675
       objectReference: {fileID: 0}
+    - target: {fileID: 9501528, guid: 8f6b0c88789bc024189afa8e609cf122, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2389,22 +2477,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6540079509727857635}
-    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3460216242339283302}
-    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 70620539835829462}
-    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2749592132287825911}
-    - targetCorrespondingSourceObject: {fileID: 171874, guid: 8f6b0c88789bc024189afa8e609cf122,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8414638257795467068}
   m_SourcePrefab: {fileID: 100100000, guid: 8f6b0c88789bc024189afa8e609cf122, type: 3}
 --- !u!4 &6998084461912407211 stripped
 Transform:
@@ -2480,83 +2552,6 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &3460216242339283302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998084461912713387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4f335c18cde8494d83ab7975f5427b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spear: {fileID: 5493998137168221730, guid: 8fd6bce9f82b25d47b3ba710dd8118d2, type: 3}
-  _cam: {fileID: 9009624568066924811}
-  _cooldown: 2
-  _speed: 25
-  _cooldownUI: {fileID: 0}
-  _throwSFX: {fileID: 8300000, guid: ba0465ea00704154b8417b22422b2581, type: 3}
-  _animator: {fileID: 8414638257795467068}
---- !u!114 &70620539835829462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998084461912713387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd58cd1c094373d49bc8214768e51499, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _radius: 2.5
-  _knockbackForce: 1
-  _cooldown: 5
-  _Effect: {fileID: 1015811141956628375, guid: e602738c458428444839d84795588688, type: 3}
-  _cooldownUI: {fileID: 0}
-  _waveSFX: {fileID: 8300000, guid: a317e09cd783fd44d81ed94af8d6f93f, type: 3}
-  _animator: {fileID: 8414638257795467068}
---- !u!114 &2749592132287825911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998084461912713387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8286bcaa6ce0659469ff913f77f59c63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sword: {fileID: 1527471427189726077, guid: 3a77e1dc66c0f6f48b28f5b838ee4478, type: 3}
-  _cam: {fileID: 9009624568066924811}
-  _cooldown: 10
-  _cooldownUI: {fileID: 0}
-  _smiteSFX: {fileID: 8300000, guid: 8c2ae739df1293a418965a6035ec7d9b, type: 3}
-  _animator: {fileID: 8414638257795467068}
---- !u!95 &8414638257795467068
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998084461912713387}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3be1cfa761a99684ba32868d3791d4da, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8838234421213320313
 PrefabInstance:
   m_ObjectHideFlags: 0
