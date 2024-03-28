@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8284291833680576524}
   - component: {fileID: 5620890706302365885}
+  - component: {fileID: 8198209558196675126}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -56,10 +57,24 @@ MonoBehaviour:
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_OverrideTileSize: 1
+  m_TileSize: 512
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 2ebd8c1bb44b5604d91afda66f0b80f9, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ca47548dbd202294998a4cceffd5ebab, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &8198209558196675126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5658991691214281876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a764ac4d782479b4799a3310ae25c972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _avoidancePredictionTime: 2
+  _pathfindingIterationsPerFrame: 100

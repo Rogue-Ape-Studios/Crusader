@@ -3152,6 +3152,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1502410987117931669}
+    - targetCorrespondingSourceObject: {fileID: 5257865216883489105, guid: 818e591ec71be2449b818741dc3230ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1563754214848279002}
   m_SourcePrefab: {fileID: 100100000, guid: 818e591ec71be2449b818741dc3230ad, type: 3}
 --- !u!1 &975690970216120944 stripped
 GameObject:
@@ -3195,6 +3199,8 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 7232044532724217664}
   _aimTurnSpeed: 5
   _playerTranform: {fileID: 0}
+  _avoidanceMultiplier: 0.5
+  _speed: 4
 --- !u!114 &1502410987117931669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,6 +3226,27 @@ MonoBehaviour:
   _axe: {fileID: 7727179362594133219}
   _health: {fileID: 3171749250739316080}
   _collider: {fileID: 4710377249472421548}
+--- !u!135 &-1563754214848279002
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975690970216120944}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.55
+  m_Center: {x: 0, y: 0.92, z: 0}
 --- !u!114 &3171749250739316080 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7600308610054004305, guid: 818e591ec71be2449b818741dc3230ad,
