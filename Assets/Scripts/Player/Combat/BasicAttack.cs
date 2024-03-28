@@ -32,7 +32,6 @@ namespace RogueApeStudio.Crusader.Player.Combat
 
         [Header("Attack Info")]
         [SerializeField] private int _comboCounter = 0;
-        [SerializeField] private float _attackSpeed = 5;
         [SerializeField] private float _attackWindow = 0.5f;
         [SerializeField] private bool _canAttack = true;
         [SerializeField] private bool _windowCountdown = false;
@@ -42,19 +41,20 @@ namespace RogueApeStudio.Crusader.Player.Combat
         
         [Header("Dependencies")]
         [SerializeField] private PlayerScriptableObject _playerStats;
+        private float _attackSpeed = 0;
         private CrusaderInputActions _crusaderInputActions;
         private InputAction _attackInput;
         private RaycastHit _cameraRayHit;
         private float _delay = 0f;
         private CancellationTokenSource _cancellationTokenSource;
-        private float _baseAttackSpeed;
+        private float _baseAttackSpeed => _playerStats.AttackSpeed;
 
         private void Awake()
         {
             _crusaderInputActions = new();
             _attackInput = _crusaderInputActions.Player.BasicAttack;
             _cancellationTokenSource = new CancellationTokenSource();
-            _baseAttackSpeed = _attackSpeed;
+            _attackSpeed = _baseAttackSpeed;
         }
 
         private void OnEnable()
