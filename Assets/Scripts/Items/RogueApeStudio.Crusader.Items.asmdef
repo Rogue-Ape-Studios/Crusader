@@ -1,7 +1,9 @@
 {
     "name": "RogueApeStudio.Crusader.Items",
     "rootNamespace": "RogueApeStudio.Crusader.Items",
-    "references": [],
+    "references": [
+        "GUID:c3d4380505771994cadc8e569dc87b0f"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
