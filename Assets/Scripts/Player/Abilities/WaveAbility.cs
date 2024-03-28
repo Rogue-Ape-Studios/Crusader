@@ -30,6 +30,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private GameObject _Effect;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _waveSFX;
+        [SerializeField] private Animator _animator;
 
         // Start is called before the first frame update
         void Awake()
@@ -70,6 +71,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
+                _animator.SetTrigger("WaveAbility");
+
                 Instantiate(_Effect, gameObject.transform);
                 AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
 

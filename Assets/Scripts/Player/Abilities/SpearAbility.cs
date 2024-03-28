@@ -31,6 +31,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private float _speed;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _throwSFX;
+        [SerializeField] private Animator _animator;
 
         private void Awake()
         {
@@ -43,7 +44,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         private void OnEnable()
         {
             _spearAbility.canceled += ReleaseSpearAbility;
-            EnableWaveAbility();
+            EnableSpearAbility();
         }
 
         private void OnDestroy()
@@ -82,6 +83,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
+                _animator.SetTrigger("SpearAbility");
                 Rigidbody spear = Instantiate(_spear,
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
@@ -92,7 +94,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private void EnableWaveAbility()
+        private void EnableSpearAbility()
         {
             _spearAbility.Enable();
         }

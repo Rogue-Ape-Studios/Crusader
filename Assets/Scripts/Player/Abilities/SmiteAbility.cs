@@ -30,6 +30,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private int _cooldown;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _smiteSFX;
+        [SerializeField] private Animator _animator;
 
         private void Awake()
         {
@@ -81,6 +82,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
+                _animator.SetTrigger("SmiteAbility");
                 GameObject sword = Instantiate(_sword,
                     new Vector3(transform.position.x, 1, transform.position.z),
                     Quaternion.LookRotation(_direction));
