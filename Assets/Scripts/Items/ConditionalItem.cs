@@ -6,11 +6,23 @@ namespace RogueApeStudio.Crusader.Items
 {
     public abstract class ConditionalItem : MonoBehaviour
     {
-        [SerializeField] Transform _target;
+        [Header("Conditon Settings")]
+        [SerializeField, Tooltip("Will be cast to the correct value")] MonoBehaviour _conditionTarget;
+        [Header("Visuals Effects Settings")]
         [SerializeField] VisualEffect _itemVisualEffect;
         [Header("Sound settings")]
         [SerializeField] AudioClip _audioClip;
+        [SerializeField] Transform _soundTarget;
         [SerializeField] float _volume = 1f;
+
+        /// <summary>
+        /// Sets up the condition to be invoked. Cast the _conditonTarget and subscribe to the correct event here.
+        /// </summary>
+        public virtual void SetupCondition() {}
+
+        /// <summary>
+        /// Is invoked when a condition is met, and handles any base logic. Can be overriden, but not necessary.
+        /// </summary>
         public void HandleConditionMet()
         {
             if(_itemVisualEffect != null)
@@ -20,7 +32,7 @@ namespace RogueApeStudio.Crusader.Items
 
             if(_audioClip != null)
             {
-                AudioManager.instance.PlaySFX(_audioClip, _target, _volume);
+                AudioManager.instance.PlaySFX(_audioClip, _soundTarget, _volume);
             }
 
             ConditionalItemEffect();
