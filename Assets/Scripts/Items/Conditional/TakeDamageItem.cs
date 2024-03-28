@@ -3,7 +3,7 @@ using RogueApeStudio.Crusader.HealthSystem;
 
 namespace RogueApeStudio.Crusader.Items.Conditional
 {
-    internal class TakeDamageItem : ConditionalItem
+    public class TakeDamageItem : ConditionalItem
     {
         internal override void SetupCondition()
         {

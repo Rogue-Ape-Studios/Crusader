@@ -3,7 +3,8 @@
     "rootNamespace": "RogueApeStudio.Crusader.Items.Conditional",
     "references": [
         "GUID:c3d4380505771994cadc8e569dc87b0f",
-        "GUID:f7682a76ed81e8c49915bc28ca915c12"
+        "GUID:f7682a76ed81e8c49915bc28ca915c12",
+        "GUID:35731e3bcb3213a499f16aad9aa6d5b2"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
