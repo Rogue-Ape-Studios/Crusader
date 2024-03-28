@@ -31,6 +31,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _waveSFX;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _transform;
 
         // Start is called before the first frame update
         void Awake()
@@ -78,15 +79,15 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         public void TriggerWaveAbilityEffects()
         {
-            Instantiate(_Effect, gameObject.transform);
-            AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
+            Instantiate(_Effect, _transform);
+            AudioManager.instance.PlaySFX(_waveSFX, _transform, 1f);
 
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.CompareTag("Enemy"))
                 {
-                    Vector3 knockbackDirection = transform.position - hitCollider.transform.position;
+                    Vector3 knockbackDirection = _transform.position - hitCollider.transform.position;
                     knockbackDirection = knockbackDirection.normalized;
                     knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
 

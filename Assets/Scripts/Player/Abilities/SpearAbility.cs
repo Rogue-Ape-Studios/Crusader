@@ -33,6 +33,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _throwSFX;
         [SerializeField] private Animator _animator;
+        [SerializeField] private UnityEngine.Transform _transform;
 
         private void Awake()
         {
@@ -63,7 +64,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
                     Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
-                    _direction = targetPosition - transform.position;
+                    _direction = targetPosition - _transform.position;
                     _direction.Normalize();
                 }
             }
@@ -84,7 +85,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
-                transform.rotation = Quaternion.LookRotation(_direction);
+                _transform.rotation = Quaternion.LookRotation(_direction);
                 _animator.SetTrigger("SpearAbility");
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
@@ -93,10 +94,10 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         public void TriggerSpearAblityEffects()
         {
             Rigidbody spear = Instantiate(_spear,
-                   new Vector3(transform.position.x, 1, transform.position.z),
+                   new Vector3(_transform.position.x, 1, _transform.position.z),
                    Quaternion.LookRotation(_direction));
             spear.AddForce(_direction * _speed, ForceMode.Impulse);
-            AudioManager.instance.PlaySFX(_throwSFX, transform, 1f);
+            AudioManager.instance.PlaySFX(_throwSFX, _transform, 1f);
 
         }
 
