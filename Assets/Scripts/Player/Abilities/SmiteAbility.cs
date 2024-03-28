@@ -16,6 +16,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
     {
         private CrusaderInputActions _actions;
         private InputAction _smiteAbility;
+        private Vector3 _cursorPosition;
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
@@ -30,6 +31,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private int _cooldown;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _smiteSFX;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _transform;
 
         private void Awake()
         {
@@ -41,7 +44,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void OnEnable()
         {
-            _smiteAbility.started += OnSmiteAbility;
+            _smiteAbility.performed += OnSmiteAbility;
             EnableWaveAbility();
         }
 
@@ -49,6 +52,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
+            _smiteAbility.performed -= OnSmiteAbility;
         }
 
         private void Update()
@@ -60,8 +64,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
                     Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
-                    _direction = targetPosition - transform.position;
-                    _direction.Normalize();
+                    _cursorPosition = targetPosition - _transform.position;
+                    _cursorPosition.Normalize();
                 }
             }
 
@@ -79,15 +83,21 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void OnSmiteAbility(InputAction.CallbackContext context)
         {
+            _direction = _cursorPosition;
             if (_charges != 0)
             {
-                GameObject sword = Instantiate(_sword,
-                    new Vector3(transform.position.x, 1, transform.position.z),
-                    Quaternion.LookRotation(_direction));
-                AudioManager.instance.PlaySFX(_smiteSFX, transform, 1f);
-
+                _transform.rotation = Quaternion.LookRotation(_direction);
+                _animator.SetTrigger("SmiteAbility");
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
+        }
+
+        public void TriggerSmiteAbilityEffects()
+        {
+            Instantiate(_sword,
+                    new Vector3(_transform.position.x, 1, _transform.position.z),
+                    Quaternion.LookRotation(_direction));
+            AudioManager.instance.PlaySFX(_smiteSFX, _transform, 1f);
         }
 
         private void EnableWaveAbility()
@@ -101,7 +111,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -110,7 +120,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }

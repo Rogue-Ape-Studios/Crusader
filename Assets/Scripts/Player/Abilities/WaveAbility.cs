@@ -30,6 +30,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private GameObject _Effect;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _waveSFX;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _transform;
 
         // Start is called before the first frame update
         void Awake()
@@ -70,22 +72,27 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         {
             if (_charges != 0)
             {
-                Instantiate(_Effect, gameObject.transform);
-                AudioManager.instance.PlaySFX(_waveSFX, transform, 1f);
-
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
-                foreach (var hitCollider in hitColliders)
-                {
-                    if (hitCollider.CompareTag("Enemy"))
-                    {
-                        Vector3 knockbackDirection = transform.position - hitCollider.transform.position;
-                        knockbackDirection = knockbackDirection.normalized;
-                        knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
-                                               
-                        hitCollider.transform.GetComponent<Knockback>().AddKnockback(_knockbackForce, -knockbackDirection);
-                    }
-                }
+                _animator.SetTrigger("WaveAbility");
                 StartCooldownAsync(_cancellationTokenSource.Token);
+            }
+        }
+
+        public void TriggerWaveAbilityEffects()
+        {
+            Instantiate(_Effect, _transform);
+            AudioManager.instance.PlaySFX(_waveSFX, _transform, 1f);
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _radius);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    Vector3 knockbackDirection = _transform.position - hitCollider.transform.position;
+                    knockbackDirection = knockbackDirection.normalized;
+                    knockbackDirection = new Vector3(knockbackDirection.x, 0, knockbackDirection.z);
+
+                    hitCollider.transform.GetComponent<Knockback>().AddKnockback(_knockbackForce, -knockbackDirection);
+                }
             }
         }
 
@@ -100,7 +107,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -109,7 +116,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }

@@ -9,6 +9,7 @@ using RogueApeStudio.Crusader.Input;
 using System.Threading;
 using RogueApeStudio.Crusader.UI.Cooldown;
 using RogueApeStudio.Crusader.Audio;
+using log4net.Util;
 
 namespace RogueApeStudio.Crusader.Player.Abilities
 {
@@ -16,6 +17,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
     {
         private CrusaderInputActions _actions;
         private InputAction _spearAbility;
+        private Vector3 _cursorPosition;
         private Vector3 _direction;
         private RaycastHit _cameraRayHit;
         private bool _onCooldown = false;
@@ -31,6 +33,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
         [SerializeField] private float _speed;
         [SerializeField] private AbilityCooldown _cooldownUI;
         [SerializeField] private AudioClip _throwSFX;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private UnityEngine.Transform _transform;
 
         private void Awake()
         {
@@ -42,14 +46,15 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void OnEnable()
         {
-            _spearAbility.canceled += ReleaseSpearAbility;
-            EnableWaveAbility();
+            _spearAbility.performed += ReleaseSpearAbility;
+            EnableSpearAbility();
         }
 
         private void OnDestroy()
         {
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
+            _spearAbility.performed -= ReleaseSpearAbility;
         }
 
         private void Update()
@@ -61,8 +66,8 @@ namespace RogueApeStudio.Crusader.Player.Abilities
                 if (_cameraRayHit.transform.tag == "Ground")
                 {
                     Vector3 targetPosition = new Vector3(_cameraRayHit.point.x, 1, _cameraRayHit.point.z);
-                    _direction = targetPosition - transform.position;
-                    _direction.Normalize();
+                    _cursorPosition = targetPosition - _transform.position;
+                    _cursorPosition.Normalize();
                 }
             }
 
@@ -80,19 +85,26 @@ namespace RogueApeStudio.Crusader.Player.Abilities
 
         private void ReleaseSpearAbility(InputAction.CallbackContext context)
         {
+            _direction = _cursorPosition;
             if (_charges != 0)
             {
-                Rigidbody spear = Instantiate(_spear,
-                    new Vector3(transform.position.x, 1, transform.position.z),
-                    Quaternion.LookRotation(_direction));
-                spear.AddForce(_direction * _speed, ForceMode.Impulse);
-                AudioManager.instance.PlaySFX(_throwSFX, transform, 1f);
-
+                _transform.rotation = Quaternion.LookRotation(_direction);
+                _animator.SetTrigger("SpearAbility");
                 StartCooldownAsync(_cancellationTokenSource.Token);
             }
         }
 
-        private void EnableWaveAbility()
+        public void TriggerSpearAblityEffects()
+        {
+            Rigidbody spear = Instantiate(_spear,
+                   new Vector3(_transform.position.x, 1, _transform.position.z),
+                   Quaternion.LookRotation(_direction));
+            spear.AddForce(_direction * _speed, ForceMode.Impulse);
+            AudioManager.instance.PlaySFX(_throwSFX, _transform, 1f);
+
+        }
+
+        private void EnableSpearAbility()
         {
             _spearAbility.Enable();
         }
@@ -103,7 +115,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 _charges--;
                 _cooldownUI.GetCharges(_charges);
-                await UniTask.WaitUntil(() => checkIfOnCooldown(), cancellationToken: token);
+                await UniTask.WaitUntil(() => CheckIfOnCooldown(), cancellationToken: token);
                 CooldownAsync(_cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -112,7 +124,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             }
         }
 
-        private bool checkIfOnCooldown()
+        private bool CheckIfOnCooldown()
         {
             return !_onCooldown;
         }
@@ -136,7 +148,7 @@ namespace RogueApeStudio.Crusader.Player.Abilities
             {
                 Debug.LogError("Cooldown was Canceled");
             }
-            
+
         }
     }
 }
