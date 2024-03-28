@@ -1,6 +1,7 @@
 using RogueApeStudio.Crusader.HealthSystem;
 using RogueApeStudio.Crusader.Items;
 using RogueApeStudio.Crusader.Units.Knockback;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
 {
     public class AttackDamage : MonoBehaviour
     {
+        public event Action<float> OnDealDamage;
         [SerializeField] private float _damageAmount => _playerStats.AttackDamage;
         [SerializeField] private string[] _tags;
         [SerializeField] private bool _applyKnockback = false;
@@ -26,6 +28,7 @@ namespace RogueApeStudio.Crusader.Player.Combat
                 if (healthComponent != null)
                 {
                     healthComponent.Hit(_damageAmount);
+                    OnDealDamage?.Invoke(_damageAmount);
                 }
 
                 if (_applyKnockback && knockbackComponent != null)
