@@ -1,0 +1,17 @@
+{
+    "name": "RogueApeStudio.Crusader.Items.Conditional",
+    "rootNamespace": "RogueApeStudio.Crusader.Items.Conditional",
+    "references": [
+        "GUID:c3d4380505771994cadc8e569dc87b0f",
+        "GUID:f7682a76ed81e8c49915bc28ca915c12"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
